@@ -1,3 +1,4 @@
+import { CredentialResponse } from "../../sections/auth/providers/auth";
 import { http } from "../../utils/http";
 
 export interface RegisterCredentialDTO {
@@ -5,12 +6,9 @@ export interface RegisterCredentialDTO {
     password: string;
   }
 
-  export interface RegisterResponse {
-    message: string;
-  }
   
   export async function registerUser(formData: RegisterCredentialDTO) {
-    return http<RegisterResponse>('/v1/auth/signup', {
+    return http<CredentialResponse>('/v1/auth/signup', {
       data: {
         email: formData.email,
         password: formData.password,

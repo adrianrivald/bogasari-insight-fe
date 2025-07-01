@@ -4,21 +4,22 @@ import { useNavigate } from "react-router-dom";
 import * as sessionService from "../session/session";
 import { loginUser } from "../../../services/auth/login";
 import { createContext } from "../../../utils/create.context";
-import {
-  RegisterResponse,
-  registerUser,
-} from "../../../services/auth/register";
+import { registerUser } from "../../../services/auth/register";
 import { forgotPasswordUser } from "../../../services/auth/forgot-password";
+import { resetPasswordUser } from "../../../services/auth/reset-password";
 
 interface AuthContextValue {
   // user: AuthUser | null;
   isAuth: boolean;
   logout: () => Promise<void>;
-  login: (formField: CredentialsDTO) => Promise<RegisterResponse>;
-  register: (formField: CredentialsDTO) => Promise<RegisterResponse>;
+  login: (formField: CredentialsDTO) => Promise<CredentialResponse>;
+  register: (formField: CredentialsDTO) => Promise<CredentialResponse>;
   forgotPassword: (
     formField: Pick<CredentialsDTO, "email">
-  ) => Promise<RegisterResponse>;
+  ) => Promise<CredentialResponse>;
+  resetPassword: (
+    formField: CredentialsResetPasswordDTO
+  ) => Promise<CredentialResponse>;
   currentInternalCompany?: number | null;
 }
 
@@ -28,9 +29,18 @@ const [useAuth, AuthInternalProvider] = createContext<AuthContextValue>({
 
 export { useAuth };
 
+export interface CredentialResponse {
+  message: string;
+}
 interface CredentialsDTO {
   email: string;
   password: string;
+}
+
+interface CredentialsResetPasswordDTO {
+  email: string;
+  otp: string;
+  newPassword: string;
 }
 
 export function AuthProvider(props: React.PropsWithChildren) {
@@ -56,6 +66,10 @@ export function AuthProvider(props: React.PropsWithChildren) {
     const res = await forgotPasswordUser(formField);
     return res;
   }
+  async function resetPassword(formField: CredentialsResetPasswordDTO) {
+    const res = await resetPasswordUser(formField);
+    return res;
+  }
 
   async function logout() {
     try {
@@ -78,6 +92,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
         logout,
         register,
         forgotPassword,
+        resetPassword,
       }}
     >
       {props?.children}

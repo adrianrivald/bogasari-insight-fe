@@ -16,8 +16,10 @@ import { LoadingButton } from "@mui/lab";
 import { useAuth } from "./providers/auth";
 import { CheckEmailForgotPasswordView } from "./check-email-forgot-password-view";
 import { ResetPasswordSuccessView } from "./reset-password-success-view";
+import { Bounce, toast } from "react-toastify";
 
 export function ResetPasswordView() {
+  const { resetPassword } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -27,14 +29,28 @@ export function ResetPasswordView() {
     setShowConfirmPassword(!showConfirmPassword);
 
   const handleSubmit = useCallback(async (formData: any) => {
-    console.log("Form data:", formData);
     setIsSubmitting(true);
     try {
-      // await login({ email: formData?.email, password: formData?.password });
+      await resetPassword({
+        email: formData?.email,
+        newPassword: formData?.password,
+        otp: "123", // TODO: fix this
+      });
       setIsSubmitting(false);
       setIsSubmitted(true);
-    } catch (error) {
-      console.log("error");
+    } catch (error: any) {
+      const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } finally {
       setIsSubmitting(false);
     }
