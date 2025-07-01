@@ -35,7 +35,7 @@ export function LayoutSection({
         id="root__layout"
         className={layoutClasses.root}
         sx={sx}
-        maxWidth={1024}
+        maxWidth={768}
         justifyContent="center"
         margin="auto"
         width="100%"
