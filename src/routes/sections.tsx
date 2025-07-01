@@ -1,0 +1,110 @@
+import { lazy, Suspense } from "react";
+import {
+  Outlet,
+  Navigate,
+  useRoutes,
+  type NonIndexRouteObject,
+} from "react-router-dom";
+
+import Box from "@mui/material/Box";
+import LinearProgress, {
+  linearProgressClasses,
+} from "@mui/material/LinearProgress";
+import { varAlpha } from "../theme/styles";
+import { useAuth } from "../sections/auth/providers/auth";
+
+// ----------------------------------------------------------------------
+export const HomePage = lazy(() => import("../pages/home"));
+
+// Authentication pages
+export const SignInPage = lazy(() => import("../pages/auth/sign-in"));
+export const SignUpPage = lazy(() => import("../pages/auth/sign-up"));
+export const CheckEmailPage = lazy(() => import("../pages/auth/check-email"));
+export const SuccessRegistrationPage = lazy(
+  () => import("../pages/auth/success-registration")
+);
+export const ForgotPasswordPage = lazy(
+  () => import("../pages/auth/forgot-password")
+);
+
+export const ResetPasswordPage = lazy(
+  () => import("../pages/auth/reset-password")
+);
+export const CompleteProfilePage = lazy(
+  () => import("../pages/auth/complete-profile")
+);
+
+export const DashboardHomePage = lazy(() => import("../pages/home/index"));
+
+// ----------------------------------------------------------------------
+
+const renderFallback = (
+  <Box
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+    flex="1 1 auto"
+  >
+    <LinearProgress
+      sx={{
+        width: 1,
+        maxWidth: 320,
+        bgcolor: (theme) =>
+          varAlpha(theme.vars.palette.text.primaryChannel, 0.16),
+        [`& .${linearProgressClasses.bar}`]: { bgcolor: "text.primary" },
+      }}
+    />
+  </Box>
+);
+
+export function Router() {
+  const { isAuth } = useAuth();
+
+  const authenticatedRoutes = useRoutes([
+    {
+      element: (
+        <Suspense fallback={renderFallback}>
+          <Outlet />
+        </Suspense>
+      ),
+      children: [{ path: "/", element: <DashboardHomePage />, index: true }],
+    },
+  ]);
+
+  const unAuthenticatedRoutes = useRoutes([
+    {
+      path: "/",
+      element: <SignInPage />,
+    },
+    {
+      path: "/sign-up",
+      element: <SignUpPage />,
+    },
+    {
+      path: "/check-email",
+      element: <CheckEmailPage />,
+    },
+    {
+      path: "/success-registration",
+      element: <SuccessRegistrationPage />,
+    },
+    {
+      path: "/forgot-password",
+      element: <ForgotPasswordPage />,
+    },
+    {
+      path: "/reset-password",
+      element: <ResetPasswordPage />,
+    },
+    {
+      path: "/complete-profile",
+      element: <CompleteProfilePage />,
+    },
+    {
+      path: "*",
+      element: <Navigate to="/404" replace />,
+    },
+  ]);
+
+  return isAuth ? authenticatedRoutes : unAuthenticatedRoutes;
+}
