@@ -19,6 +19,7 @@ import { SvgColor } from "../../components/svg-color";
 import { Form } from "../../components/form/form";
 import { LoadingButton } from "@mui/lab";
 import { useAuth } from "./providers/auth";
+import { Bounce, toast } from "react-toastify";
 
 export function SignInView() {
   const { login } = useAuth();
@@ -27,13 +28,23 @@ export function SignInView() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const handleSubmit = useCallback(async (formData: any) => {
-    console.log("Form data:", formData);
     setIsSubmitting(true);
     try {
       await login({ email: formData?.email, password: formData?.password });
       setIsSubmitting(false);
-    } catch (error) {
-      console.log("error");
+    } catch (error: any) {
+      const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } finally {
       setIsSubmitting(false);
     }

@@ -9,6 +9,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./sections/auth/providers/auth.tsx";
 import { queryClient } from "./utils/query-client.ts";
 import { AppLayout } from "./layouts/layout.tsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AppWithAuth = withAuth(App);
 
@@ -22,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <AuthProvider>
                 <AppLayout>
                   <App />
+                  <ToastContainer hideProgressBar closeOnClick draggable />
                 </AppLayout>
               </AuthProvider>
             </QueryClientProvider>

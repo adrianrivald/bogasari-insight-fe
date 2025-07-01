@@ -23,12 +23,14 @@
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.59.0",
     "react-router-dom": "^7.6.3",
+    "react-toastify": "^10.0.6",
     "ufo": "^1.6.1",
     "zod": "^3.25.67"
   },
   "devDependencies": {
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/react-toastify": "^4.1.0",
     "@vitejs/plugin-react": "latest",
     "typescript": "latest",
     "vite": "latest"

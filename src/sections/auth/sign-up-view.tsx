@@ -20,9 +20,10 @@ import { Form } from "../../components/form/form";
 import { LoadingButton } from "@mui/lab";
 import { useAuth } from "./providers/auth";
 import { CheckEmailView } from "./check-email-view";
+import { Bounce, toast } from "react-toastify";
 
 export function SignUpView() {
-  const { login } = useAuth();
+  const { register } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,14 +33,28 @@ export function SignUpView() {
     setShowConfirmPassword(!showConfirmPassword);
 
   const handleSubmit = useCallback(async (formData: any) => {
-    console.log("Form data:", formData);
     setIsSubmitting(true);
     try {
-      // await login({ email: formData?.email, password: formData?.password });
+      const res = await register({
+        email: formData?.email,
+        password: formData?.password,
+      });
+      console.log(res, "res");
       setIsSubmitting(false);
       setIsSubmitted(true);
-    } catch (error) {
-      console.log("error");
+    } catch (error: any) {
+      const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -49,6 +64,8 @@ export function SignUpView() {
     console.log("Google login");
     // Add your Google login logic here
   };
+
+  console.log(isSubmitted, "issubmitted");
 
   if (isSubmitted) {
     return <CheckEmailView />;
@@ -92,7 +109,7 @@ export function SignUpView() {
 
         {/* Form */}
         <Form width="100%" mt={4} onSubmit={handleSubmit}>
-          {({ register, formState }) => (
+          {({ register, formState, watch }) => (
             <>
               <Box sx={{ mb: 3 }}>
                 <TextField
@@ -175,7 +192,15 @@ export function SignUpView() {
                     ),
                   }}
                   {...register("confirm_password", {
-                    required: "Konfirmasi Password harus diisi",
+                    required: {
+                      value: true,
+                      message: "Konfirmasi Password wajib diisi",
+                    },
+                    validate: (val: string) => {
+                      if (watch("password") !== val) {
+                        return "Password tidak cocok";
+                      }
+                    },
                   })}
                 />
                 {formState?.errors?.confirm_password && (

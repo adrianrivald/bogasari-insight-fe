@@ -15,21 +15,33 @@ import { Form } from "../../components/form/form";
 import { LoadingButton } from "@mui/lab";
 import { useAuth } from "./providers/auth";
 import { CheckEmailForgotPasswordView } from "./check-email-forgot-password-view";
+import { Bounce, toast } from "react-toastify";
 
 export function ForgotPasswordView() {
+  const { forgotPassword } = useAuth();
   const [inputtedEmail, setInputtedEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = useCallback(async (formData: any) => {
-    console.log("Form data:", formData);
     setIsSubmitting(true);
     try {
-      // await login({ email: formData?.email, password: formData?.password });
+      await forgotPassword({ email: formData?.email });
       setIsSubmitting(false);
       setIsSubmitted(true);
-    } catch (error) {
-      console.log("error");
+    } catch (error: any) {
+      const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } finally {
       setIsSubmitting(false);
     }

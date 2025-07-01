@@ -18,7 +18,7 @@ export interface LoginCredentialsDTO {
   }
   
   export async function loginUser(formData: LoginCredentialsDTO) {
-    return http<LoginResponse>('/login', {
+    return http<LoginResponse>('/v1/auth/login', {
       data: {
         email: formData.email,
         password: formData.password,
