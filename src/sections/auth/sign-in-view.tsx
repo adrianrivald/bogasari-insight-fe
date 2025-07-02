@@ -62,8 +62,11 @@ export function SignInView() {
         src="/images/signup-illustration.png"
         sx={{
           width: {
+            // xs: "35%",
             xs: "100%",
           },
+          margin: "auto",
+          display: "flex",
         }}
       />
 

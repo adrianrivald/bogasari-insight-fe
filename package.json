@@ -18,6 +18,7 @@
     "@mui/x-date-pickers": "^8.6.0",
     "@tanstack/react-query": "^4.36.1",
     "dayjs": "^1.11.13",
+    "js-cookie": "^3.0.5",
     "react": "latest",
     "react-dom": "latest",
     "react-helmet-async": "^2.0.5",
@@ -28,6 +29,7 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@types/react-toastify": "^4.1.0",

@@ -1,9 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import { Helmet } from "react-helmet-async";
+import { useAuth } from "../../sections/auth/providers/auth";
 
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
+  const { userInfo } = useAuth();
   return (
     <>
       <Helmet>
@@ -19,8 +21,8 @@ export default function HomePage() {
       </Helmet>
 
       <Box display="flex" justifyContent="center">
-        <Typography fontWeight="bold" fontSize={36}>
-          Welcome, User
+        <Typography fontWeight="bold" fontSize={24}>
+          Welcome, {userInfo.email}
         </Typography>
       </Box>
     </>

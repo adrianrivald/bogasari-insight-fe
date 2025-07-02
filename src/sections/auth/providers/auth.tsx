@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import * as sessionService from "../session/session";
-import { loginUser } from "../../../services/auth/login";
+import { LoginResponse, loginUser } from "../../../services/auth/login";
 import { createContext } from "../../../utils/create.context";
 import { registerUser } from "../../../services/auth/register";
 import { forgotPasswordUser } from "../../../services/auth/forgot-password";
@@ -16,7 +16,7 @@ interface AuthContextValue {
   // user: AuthUser | null;
   isAuth: boolean;
   logout: () => Promise<void>;
-  login: (formField: CredentialsDTO) => Promise<CredentialResponse>;
+  login: (formField: CredentialsDTO) => Promise<LoginResponse>;
   register: (formField: CredentialsDTO) => Promise<CredentialResponse>;
   forgotPassword: (
     formField: Pick<CredentialsDTO, "email">
@@ -26,6 +26,7 @@ interface AuthContextValue {
   ) => Promise<CredentialResponse>;
   verifyOtp: (formField: VerifyOTPCredentialDTO) => Promise<CredentialResponse>;
   currentInternalCompany?: number | null;
+  userInfo: sessionService.User;
 }
 
 const [useAuth, AuthInternalProvider] = createContext<AuthContextValue>({
@@ -50,15 +51,21 @@ interface CredentialsResetPasswordDTO {
 
 export function AuthProvider(props: React.PropsWithChildren) {
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = React.useState<string | null>(() =>
-    sessionService.getSession()
-  );
+  const [accessToken, setAccessToken] = React.useState<
+    string | undefined | null
+  >(() => sessionService.getSession());
   const [userInfo, setUserInfo] = React.useState<string | null>(() =>
     sessionService.getUser()
   );
 
   async function login(formField: CredentialsDTO) {
     const res = await loginUser(formField);
+    const { token, expires, ...rest } = res;
+
+    sessionService.setSession(token, expires, rest);
+    setAccessToken(token);
+    setUserInfo(JSON.stringify(rest));
+    navigate("/");
     return res;
   }
 
@@ -86,10 +93,12 @@ export function AuthProvider(props: React.PropsWithChildren) {
       // Ensure session flush completes
       await sessionService.flushSession();
       setAccessToken(null);
+      setUserInfo("{}");
       navigate("/");
     } catch (error) {
       await sessionService.flushSession();
       setAccessToken(null);
+      setUserInfo("{}");
       navigate("/");
     }
   }
@@ -104,6 +113,11 @@ export function AuthProvider(props: React.PropsWithChildren) {
         forgotPassword,
         resetPassword,
         verifyOtp,
+        userInfo: accessToken
+          ? userInfo
+            ? JSON.parse(userInfo ?? "")
+            : {}
+          : {},
       }}
     >
       {props?.children}

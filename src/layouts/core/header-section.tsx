@@ -11,6 +11,9 @@ import { useTheme } from "@mui/material/styles";
 
 import { layoutClasses } from "../classes";
 import { Link } from "react-router-dom";
+import { Dispatch, SetStateAction, useState } from "react";
+import { Typography } from "@mui/material";
+import { useAuth } from "../../sections/auth/providers/auth";
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +30,8 @@ export type HeaderSectionProps = AppBarProps & {
     toolbar?: ToolbarProps;
     container?: ContainerProps;
   };
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export function HeaderSection({
@@ -34,8 +39,14 @@ export function HeaderSection({
   slots,
   slotProps,
   layoutQuery = "md",
+  isOpen,
+  setIsOpen,
   ...other
 }: HeaderSectionProps) {
+  const { isAuth } = useAuth();
+  const onOpenMobileMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
   return (
     <AppBar
       position="sticky"
@@ -59,20 +70,38 @@ export function HeaderSection({
       }}
       {...other}
     >
-      <Link
-        to="/"
-        style={{
-          width: "40%",
-        }}
-      >
-        <Box component="img" src="/images/logo/logo.png" />
-      </Link>
-      <Box
-        component="img"
-        src="/images/icons/menu.svg"
-        width={24}
-        height={24}
-      />
+      {!isOpen ? (
+        <Link
+          to="/"
+          style={{
+            width: "40%",
+          }}
+        >
+          <Box component="img" src="/images/logo/logo.png" />
+        </Link>
+      ) : (
+        <Box display="flex" gap={2} alignItems="center">
+          <Box
+            onClick={() => setIsOpen((prev) => !prev)}
+            component="img"
+            src="/images/icons/back.svg"
+            width={24}
+            height={24}
+          />
+          <Typography fontWeight="bold" fontSize={20}>
+            Menu
+          </Typography>
+        </Box>
+      )}
+      {isAuth && (
+        <Box
+          onClick={onOpenMobileMenu}
+          component="img"
+          src="/images/icons/menu.svg"
+          width={24}
+          height={24}
+        />
+      )}
     </AppBar>
   );
 }

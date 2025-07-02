@@ -5,10 +5,12 @@ export interface LoginCredentialsDTO {
     password: string;
   }
 
-  interface LoginResponse {
-    code: number;
-    data: Data;
-    message: string;
+  export interface LoginResponse {
+   email: string;
+   expires: string;
+   id: number;
+   role: string;
+   token: string
   }
 
   interface Data {

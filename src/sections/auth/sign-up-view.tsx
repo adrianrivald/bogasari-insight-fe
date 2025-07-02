@@ -21,6 +21,7 @@ import { LoadingButton } from "@mui/lab";
 import { useAuth } from "./providers/auth";
 import { CheckEmailView } from "./check-email-view";
 import { Bounce, toast } from "react-toastify";
+import { VerifyOtpView } from "./verify-otp-view";
 
 export function SignUpView() {
   const { register } = useAuth();
@@ -65,10 +66,8 @@ export function SignUpView() {
     // Add your Google login logic here
   };
 
-  console.log(isSubmitted, "issubmitted");
-
   if (isSubmitted) {
-    return <CheckEmailView />;
+    return <VerifyOtpView />;
   }
 
   return (
@@ -79,8 +78,11 @@ export function SignUpView() {
         src="/images/signup-illustration.png"
         sx={{
           width: {
+            // xs: "35%",
             xs: "100%",
           },
+          margin: "auto",
+          display: "flex",
         }}
       />
 
