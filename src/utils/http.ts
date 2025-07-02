@@ -99,11 +99,11 @@ export function http<TData = any>(
       return responseData as TData;
     }
 
-    if (response.status === 401 && !response.url.includes('login')) {
-      flushStorage();
-      window.location.href= "/"
-      // window.location.reload();
-    }
+    // if (response.status === 401 && !response.url.includes('login')) {
+    //   flushStorage();
+    //   window.location.href= "/"
+    //   // window.location.reload();
+    // }
 
     const reason = (responseData as HttpResponseError).message;
     const subReason = (responseData as HttpResponseError).error;

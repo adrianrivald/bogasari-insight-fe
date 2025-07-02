@@ -7,6 +7,10 @@ import { createContext } from "../../../utils/create.context";
 import { registerUser } from "../../../services/auth/register";
 import { forgotPasswordUser } from "../../../services/auth/forgot-password";
 import { resetPasswordUser } from "../../../services/auth/reset-password";
+import {
+  VerifyOTPCredentialDTO,
+  verifyOtpUser,
+} from "../../../services/auth/verify-otp";
 
 interface AuthContextValue {
   // user: AuthUser | null;
@@ -20,6 +24,7 @@ interface AuthContextValue {
   resetPassword: (
     formField: CredentialsResetPasswordDTO
   ) => Promise<CredentialResponse>;
+  verifyOtp: (formField: VerifyOTPCredentialDTO) => Promise<CredentialResponse>;
   currentInternalCompany?: number | null;
 }
 
@@ -62,6 +67,11 @@ export function AuthProvider(props: React.PropsWithChildren) {
     return res;
   }
 
+  async function verifyOtp(formField: VerifyOTPCredentialDTO) {
+    const res = await verifyOtpUser(formField);
+    return res;
+  }
+
   async function forgotPassword(formField: Pick<CredentialsDTO, "email">) {
     const res = await forgotPasswordUser(formField);
     return res;
@@ -93,6 +103,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
         register,
         forgotPassword,
         resetPassword,
+        verifyOtp,
       }}
     >
       {props?.children}

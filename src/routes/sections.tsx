@@ -34,6 +34,8 @@ export const CompleteProfilePage = lazy(
   () => import("../pages/auth/complete-profile")
 );
 
+export const VerifyOtpPage = lazy(() => import("../pages/auth/verify-otp"));
+
 export const DashboardHomePage = lazy(() => import("../pages/home/index"));
 
 // ----------------------------------------------------------------------
@@ -99,6 +101,10 @@ export function Router() {
     {
       path: "/complete-profile",
       element: <CompleteProfilePage />,
+    },
+    {
+      path: "/verify-otp",
+      element: <VerifyOtpPage />,
     },
     {
       path: "*",
