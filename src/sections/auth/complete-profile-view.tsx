@@ -13,7 +13,8 @@ import { Form } from "../../components/form/form";
 import { LoadingButton } from "@mui/lab";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { useCompleteProfile } from "../../services/user";
 
 const countries = [
   { code: "+62", label: "🇮🇩", name: "Indonesia" },
@@ -23,6 +24,7 @@ const countries = [
 ];
 
 export function CompleteProfileView() {
+  const { mutate: completeProfile } = useCompleteProfile();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [countryCode, setCountryCode] = useState("+62");
@@ -31,7 +33,13 @@ export function CompleteProfileView() {
     console.log("Form data:", formData);
     setIsSubmitting(true);
     try {
-      // await login({ email: formData?.email, password: formData?.password });
+      await completeProfile({
+        fullName: formData.fullName,
+        birthDate: dayjs(dateValue).format("YYYY-MM-DD"),
+        nikEmployee: formData.nikEmployee,
+        noKtp: formData.noKtp,
+        phoneNumber: formData.phoneNumber,
+      });
       setIsSubmitting(false);
     } catch (error) {
       console.log("error");
@@ -73,63 +81,63 @@ export function CompleteProfileView() {
             <>
               <Box sx={{ mb: 3 }}>
                 <TextField
-                  error={Boolean(formState?.errors?.no_ktp)}
+                  error={Boolean(formState?.errors?.noKtp)}
                   fullWidth
                   label="NO KTP"
                   variant="outlined"
-                  type="email"
+                  type="text"
                   InputProps={{
                     sx: { borderRadius: 1 },
                   }}
-                  {...register("no_ktp", {
+                  {...register("noKtp", {
                     required: "No. KTP harus diisi",
                   })}
                 />
-                {formState?.errors?.no_ktp && (
+                {formState?.errors?.noKtp && (
                   <FormHelperText sx={{ color: "error.main" }}>
-                    {String(formState?.errors?.no_ktp?.message)}
+                    {String(formState?.errors?.noKtp?.message)}
                   </FormHelperText>
                 )}
               </Box>
 
               <Box sx={{ mb: 3 }}>
                 <TextField
-                  error={Boolean(formState?.errors?.nik_karyawan)}
+                  error={Boolean(formState?.errors?.nikEmployee)}
                   fullWidth
                   label="NIK Karyawan"
                   variant="outlined"
-                  type="email"
+                  type="text"
                   InputProps={{
                     sx: { borderRadius: 1 },
                   }}
-                  {...register("nik_karyawan", {
+                  {...register("nikEmployee", {
                     required: "NIK Karyawan harus diisi",
                   })}
                 />
-                {formState?.errors?.nik_karyawan && (
+                {formState?.errors?.nikEmployee && (
                   <FormHelperText sx={{ color: "error.main" }}>
-                    {String(formState?.errors?.nik_karyawan?.message)}
+                    {String(formState?.errors?.nikEmployee?.message)}
                   </FormHelperText>
                 )}
               </Box>
 
               <Box sx={{ mb: 3 }}>
                 <TextField
-                  error={Boolean(formState?.errors?.full_name)}
+                  error={Boolean(formState?.errors?.fullName)}
                   fullWidth
                   label="Nama Lengkap"
                   variant="outlined"
-                  type="email"
+                  type="text"
                   InputProps={{
                     sx: { borderRadius: 1 },
                   }}
-                  {...register("full_name", {
+                  {...register("fullName", {
                     required: "Nama Lengkap harus diisi",
                   })}
                 />
-                {formState?.errors?.full_name && (
+                {formState?.errors?.fullName && (
                   <FormHelperText sx={{ color: "error.main" }}>
-                    {String(formState?.errors?.full_name?.message)}
+                    {String(formState?.errors?.fullName?.message)}
                   </FormHelperText>
                 )}
               </Box>
@@ -143,26 +151,26 @@ export function CompleteProfileView() {
                     onChange={handleChangeDate}
                     slotProps={{
                       textField: {
-                        error: dateValue === null,
+                        // error: dateValue === null,
                       },
                     }}
                   />
                 </LocalizationProvider>
-                {dateValue === null && (
+                {/* {dateValue === null &&  (
                   <FormHelperText sx={{ color: "error.main" }}>
                     Tanggal lahir harus diisi
                   </FormHelperText>
-                )}
+                )} */}
               </Box>
               <Box sx={{ mb: 3 }}>
                 <TextField
                   fullWidth
                   placeholder="Nomor HP"
                   variant="outlined"
-                  {...register("no_hp", {
+                  {...register("phoneNumber", {
                     required: "NO HP harus diisi",
                   })}
-                  error={Boolean(formState?.errors?.no_hp)}
+                  error={Boolean(formState?.errors?.phoneNumber)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -186,9 +194,9 @@ export function CompleteProfileView() {
                     ),
                   }}
                 />
-                {formState?.errors?.no_hp && (
+                {formState?.errors?.phoneNumber && (
                   <FormHelperText sx={{ color: "error.main" }}>
-                    {String(formState?.errors?.no_hp?.message)}
+                    {String(formState?.errors?.phoneNumber?.message)}
                   </FormHelperText>
                 )}
               </Box>
@@ -201,10 +209,6 @@ export function CompleteProfileView() {
                 loading={isSubmitting}
                 loadingIndicator={
                   <CircularProgress sx={{ color: "#FFF" }} size={20} />
-                }
-                disabled={
-                  Boolean(formState?.errors?.email) ||
-                  watch("email")?.length === 0
                 }
                 sx={{
                   borderRadius: 3,
