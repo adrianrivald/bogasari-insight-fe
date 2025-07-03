@@ -56,21 +56,7 @@ export function SignInView() {
   };
   return (
     <Box>
-      {/* Illustration image */}
-      <Box
-        component="img"
-        src="/images/signup-illustration.png"
-        sx={{
-          width: {
-            // xs: "35%",
-            xs: "100%",
-          },
-          margin: "auto",
-          display: "flex",
-        }}
-      />
-
-      {/* Signup content */}
+      {/* Signin content */}
 
       {/* Heading */}
       <Box>
@@ -274,6 +260,7 @@ export function SignInView() {
               sx={{
                 color: "#1976d2",
                 textDecoration: "none",
+                fontWeight: "bold",
               }}
             >
               Tadda
