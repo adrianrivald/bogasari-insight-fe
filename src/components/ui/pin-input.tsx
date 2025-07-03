@@ -1,12 +1,19 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { Box, TextField } from "@mui/material";
 
 interface PinInputProps {
-  handleSubmit: (code: string) => void;
+  values: string[];
+  setValues: Dispatch<SetStateAction<string[]>>;
+  handleSubmit?: (code: string) => void;
 }
 
-const PinInput = ({ handleSubmit }: PinInputProps) => {
-  const [values, setValues] = useState(Array(6).fill(""));
+const PinInput = ({ values, setValues }: PinInputProps) => {
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   const handleChange = (index: number, value: string) => {
@@ -49,12 +56,12 @@ const PinInput = ({ handleSubmit }: PinInputProps) => {
   };
 
   // Submit automatically when all 6 digits are filled
-  useEffect(() => {
-    const code = values.join("");
-    if (code.length === 6 && !values.includes("")) {
-      handleSubmit(code);
-    }
-  }, [values]);
+  // useEffect(() => {
+  //   const code = values.join("");
+  //   if (code.length === 6 && !values.includes("")) {
+  //     handleSubmit(code);
+  //   }
+  // }, [values]);
 
   return (
     <Box display="flex" gap={2}>

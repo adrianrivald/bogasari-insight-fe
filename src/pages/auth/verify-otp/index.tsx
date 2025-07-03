@@ -10,7 +10,7 @@ export default function VerifyOtp() {
         <title> {`Complete Profile - Bogasari Insight`}</title>
       </Helmet>
 
-      <VerifyOtpView />
+      {/* <VerifyOtpView /> */}
     </>
   );
 }
