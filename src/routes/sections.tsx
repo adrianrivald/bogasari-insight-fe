@@ -73,6 +73,10 @@ export function Router() {
         { path: "/", element: <DashboardHomePage />, index: true },
 
         {
+          path: "/success-registration",
+          element: <SuccessRegistrationPage />,
+        },
+        {
           path: "/complete-profile",
           element: <CompleteProfilePage />,
         },
@@ -92,10 +96,6 @@ export function Router() {
     {
       path: "/check-email",
       element: <CheckEmailPage />,
-    },
-    {
-      path: "/success-registration",
-      element: <SuccessRegistrationPage />,
     },
     {
       path: "/forgot-password",

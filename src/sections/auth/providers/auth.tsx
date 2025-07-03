@@ -88,6 +88,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
       sessionService.setSession(token, expires, rest);
       setAccessToken(token);
       setUserInfo(JSON.stringify(rest));
+      navigate("/success-registration");
     }
     return res;
   }

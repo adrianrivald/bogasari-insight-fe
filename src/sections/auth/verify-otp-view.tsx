@@ -57,10 +57,6 @@ export function VerifyOtpView({
     }
   }, [values]);
 
-  if (isSubmitted && !isForgotPassword) {
-    return <SuccessRegistrationView />;
-  }
-
   if (isSubmitted && isForgotPassword) {
     return <CheckEmailForgotPasswordView email={email} />;
   }
