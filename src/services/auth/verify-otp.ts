@@ -1,5 +1,6 @@
 import { CredentialResponse } from "../../sections/auth/providers/auth";
 import { http } from "../../utils/http";
+import { LoginResponse } from "./login";
 
 export interface VerifyOTPCredentialDTO {
     email: string;
@@ -8,7 +9,7 @@ export interface VerifyOTPCredentialDTO {
 
   
   export async function verifyOtpUser(formData: VerifyOTPCredentialDTO) {
-    return http<CredentialResponse>('/v1/auth/verify-otp', {
+    return http<LoginResponse>('/v1/auth/verify-otp', {
       data: {
         email: formData.email,
         otp: formData.otp,

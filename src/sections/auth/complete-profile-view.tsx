@@ -1,6 +1,12 @@
 import {
   Box,
+  Button,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormHelperText,
   InputAdornment,
   MenuItem,
@@ -8,13 +14,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Form } from "../../components/form/form";
 import { LoadingButton } from "@mui/lab";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import { useCompleteProfile } from "../../services/user";
+import { useNavigate } from "react-router-dom";
 
 const countries = [
   { code: "+62", label: "🇮🇩", name: "Indonesia" },
@@ -24,8 +31,10 @@ const countries = [
 ];
 
 export function CompleteProfileView() {
-  const { mutate: completeProfile } = useCompleteProfile();
+  const navigate = useNavigate();
+  const { mutate: completeProfile, isError } = useCompleteProfile();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dataIsNotValid, setDataIsNotValid] = useState(false);
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [countryCode, setCountryCode] = useState("+62");
 
@@ -41,12 +50,19 @@ export function CompleteProfileView() {
         phoneNumber: formData.phoneNumber,
       });
       setIsSubmitting(false);
-    } catch (error) {
-      console.log("error");
+    } catch (error: any) {
+      console.log("here");
+      setDataIsNotValid(true);
     } finally {
       setIsSubmitting(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (isError) {
+      setDataIsNotValid(true);
+    }
+  }, [isError]);
 
   const handleChangeDate = (newValue: Dayjs | null) => {
     setDateValue(newValue);
@@ -222,6 +238,53 @@ export function CompleteProfileView() {
           )}
         </Form>
       </Box>
+
+      <Dialog
+        open={dataIsNotValid}
+        onClose={() => setDataIsNotValid(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth="xs"
+      >
+        <DialogTitle id="alert-dialog-title">Data Tidak Valid</DialogTitle>
+        <DialogContent>
+          <DialogContentText
+            id="alert-dialog-description"
+            sx={{ color: "#49454F" }}
+          >
+            Data yang Anda masukkan tidak valid. Mohon periksa kembali data
+            Anda. Jika masalah terus berlanjut, silakan hubungi administrator.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setDataIsNotValid(false)}
+            sx={{
+              color: "#65676B",
+              fontWeight: "normal",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <Box
+              onClick={() => navigate("/")}
+              component="img"
+              src="/images/icons/home.svg"
+              width={24}
+              height={24}
+            />{" "}
+            Beranda
+          </Button>
+          <Button
+            onClick={() => setDataIsNotValid(false)}
+            autoFocus
+            sx={{ color: "#4AA1F3", fontWeight: "normal" }}
+          >
+            Periksa Kembali
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

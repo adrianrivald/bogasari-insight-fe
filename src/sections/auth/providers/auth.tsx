@@ -24,7 +24,10 @@ interface AuthContextValue {
   resetPassword: (
     formField: CredentialsResetPasswordDTO
   ) => Promise<CredentialResponse>;
-  verifyOtp: (formField: VerifyOTPCredentialDTO) => Promise<CredentialResponse>;
+  verifyOtp: (
+    formField: VerifyOTPCredentialDTO,
+    isSignup?: boolean
+  ) => Promise<LoginResponse>;
   currentInternalCompany?: number | null;
   userInfo: sessionService.User;
 }
@@ -74,8 +77,18 @@ export function AuthProvider(props: React.PropsWithChildren) {
     return res;
   }
 
-  async function verifyOtp(formField: VerifyOTPCredentialDTO) {
+  async function verifyOtp(
+    formField: VerifyOTPCredentialDTO,
+    isSignup?: boolean
+  ) {
     const res = await verifyOtpUser(formField);
+    if (isSignup) {
+      const { token, expires, ...rest } = res;
+
+      sessionService.setSession(token, expires, rest);
+      setAccessToken(token);
+      setUserInfo(JSON.stringify(rest));
+    }
     return res;
   }
 

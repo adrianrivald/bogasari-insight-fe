@@ -26,10 +26,14 @@ export function VerifyOtpView({
     console.log(code, "code");
     setIsSubmitting(true);
     try {
-      await verifyOtp({
-        email: email,
-        otp: code,
-      });
+      const res = await verifyOtp(
+        {
+          email: email,
+          otp: code,
+        },
+        true
+      );
+      console.log(res, "rs");
       setIsSubmitting(false);
       setIsSubmitted(true);
       if (isForgotPassword) {

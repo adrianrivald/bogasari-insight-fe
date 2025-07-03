@@ -1,5 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 export function SuccessRegistrationView() {
+  const navigate = useNavigate();
+
+  const onClickToHome = () => {
+    navigate("/complete-profile");
+  };
   return (
     <Box display="flex" flex={1} flexDirection="column">
       {/* Check email image */}
@@ -46,6 +52,7 @@ export function SuccessRegistrationView() {
         </Typography>
       </Box>
       <Button
+        onClick={onClickToHome}
         fullWidth
         variant="contained"
         size="large"

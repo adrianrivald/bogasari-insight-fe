@@ -69,7 +69,14 @@ export function Router() {
           <Outlet />
         </Suspense>
       ),
-      children: [{ path: "/", element: <DashboardHomePage />, index: true }],
+      children: [
+        { path: "/", element: <DashboardHomePage />, index: true },
+
+        {
+          path: "/complete-profile",
+          element: <CompleteProfilePage />,
+        },
+      ],
     },
   ]);
 
@@ -97,10 +104,6 @@ export function Router() {
     {
       path: "/reset-password",
       element: <ResetPasswordPage />,
-    },
-    {
-      path: "/complete-profile",
-      element: <CompleteProfilePage />,
     },
     {
       path: "/verify-otp",
