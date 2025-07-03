@@ -16,6 +16,7 @@ import { LoadingButton } from "@mui/lab";
 import { useAuth } from "./providers/auth";
 import { CheckEmailForgotPasswordView } from "./check-email-forgot-password-view";
 import { Bounce, toast } from "react-toastify";
+import { VerifyOtpView } from "./verify-otp-view";
 
 export function ForgotPasswordView() {
   const { forgotPassword } = useAuth();
@@ -48,7 +49,7 @@ export function ForgotPasswordView() {
   }, []);
 
   if (isSubmitted) {
-    return <CheckEmailForgotPasswordView email={inputtedEmail} />;
+    return <VerifyOtpView isForgotPassword email={inputtedEmail} />;
   }
 
   return (

@@ -25,6 +25,7 @@ import { VerifyOtpView } from "./verify-otp-view";
 
 export function SignUpView() {
   const { register } = useAuth();
+  const [inputtedEmail, setInputtedEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -67,7 +68,7 @@ export function SignUpView() {
   };
 
   if (isSubmitted) {
-    return <VerifyOtpView />;
+    return <VerifyOtpView email={inputtedEmail} />;
   }
 
   return (
@@ -111,7 +112,7 @@ export function SignUpView() {
 
         {/* Form */}
         <Form width="100%" mt={4} onSubmit={handleSubmit}>
-          {({ register, formState, watch }) => (
+          {({ register, formState, watch, setValue }) => (
             <>
               <Box sx={{ mb: 3 }}>
                 <TextField
@@ -128,6 +129,11 @@ export function SignUpView() {
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                       message: "Invalid email address",
+                    },
+
+                    onChange: (e) => {
+                      setValue("email", e.target.value);
+                      setInputtedEmail(e.target.value);
                     },
                   })}
                 />

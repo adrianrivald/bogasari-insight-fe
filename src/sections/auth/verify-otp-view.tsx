@@ -4,9 +4,17 @@ import { useAuth } from "./providers/auth";
 import { Bounce, toast } from "react-toastify";
 import PinInput from "../../components/ui/pin-input";
 import { SuccessRegistrationView } from "./success-registration-view";
+import { useNavigate } from "react-router-dom";
 
-export function VerifyOtpView() {
+export function VerifyOtpView({
+  email,
+  isForgotPassword = false,
+}: {
+  email: string;
+  isForgotPassword?: boolean;
+}) {
   const { verifyOtp } = useAuth();
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -14,11 +22,14 @@ export function VerifyOtpView() {
     setIsSubmitting(true);
     try {
       const res = await verifyOtp({
-        email: "adrianrivaldy5@gmail.com", // TODO: fix this
+        email: email, // TODO: fix this
         otp: code,
       });
       setIsSubmitting(false);
       setIsSubmitted(true);
+      if (isForgotPassword) {
+        navigate("/reset-password");
+      }
     } catch (error: any) {
       const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
       toast.error(errorMessage, {
@@ -37,7 +48,7 @@ export function VerifyOtpView() {
     }
   }, []);
 
-  if (isSubmitted) {
+  if (isSubmitted && !isForgotPassword) {
     return <SuccessRegistrationView />;
   }
 
