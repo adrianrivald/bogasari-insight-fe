@@ -36,11 +36,10 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
     <Container
       maxWidth="xs"
       sx={{
-        minHeight: "100vh",
+        position: "relative",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
-        py: 4,
+        minHeight: "80vh", // 👈 full viewport height
       }}
     >
       <Stack
