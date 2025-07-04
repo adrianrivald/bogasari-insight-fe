@@ -7,35 +7,41 @@ interface BalanceCardProps {
 
 const BalanceCard = ({ balance, percentage }: BalanceCardProps) => {
   return (
-    <Box
-      sx={{
-        width: "100%",
-        // height: 160,
-        backgroundImage: `url('/images/balance.png')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        borderRadius: 3,
-        paddingY: 2,
-        paddingX: 4,
-        color: "#ffffff",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <Typography variant="subtitle2" sx={{ opacity: 0.9 }}>
-        Total Saldo Terkini
-      </Typography>
-      <Typography variant="h5" fontWeight="bold" sx={{ mt: 1 }}>
-        {balance}
-      </Typography>
-      <Typography
-        variant="body2"
-        sx={{ mt: 1, color: "#00e676", fontWeight: 600 }}
+    <Box position="relative">
+      <Box
+        component="img"
+        src="/images/balance.png"
+        sx={{
+          width: "100%",
+          borderRadius: 3,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "8%", // or '1rem', adjust as needed
+          transform: "translateY(-50%)", // only vertical centering
+          color: "#ffffff",
+        }}
       >
-        ▲ {percentage}
-        <span style={{ color: "white", fontWeight: 400 }}>bulan lalu</span>
-      </Typography>
+        <Typography variant="subtitle2" sx={{ opacity: 0.9 }}>
+          Total Saldo Terkini
+        </Typography>
+        <Typography variant="h5" fontWeight="bold" sx={{ mt: 1 }}>
+          {balance}
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{ mt: 1, color: "#00e676", fontWeight: 600 }}
+        >
+          ▲ {percentage}
+          <span style={{ color: "white", fontWeight: 400 }}> bulan lalu</span>
+        </Typography>
+      </Box>
     </Box>
   );
 };
