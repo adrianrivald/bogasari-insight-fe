@@ -7,6 +7,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   Tab,
   Tabs,
@@ -49,6 +53,7 @@ export function DanaPensiunView() {
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [isShowDatePopup, setIsShowDatePopup] = useState(false);
   const [dateFilter, setDateFilter] = useState<Dayjs | null>(null);
+  const [yearFilter, setYearFilter] = useState("2025");
 
   const [tabIndex, setTabIndex] = React.useState(0);
 
@@ -119,7 +124,7 @@ export function DanaPensiunView() {
 
   return (
     <AppLayout menuTitle="Dana Pensiun">
-      {dateFilter !== null ? (
+      {dateFilter === null ? (
         <Box
           display="flex"
           justifyContent="center"
@@ -202,6 +207,70 @@ export function DanaPensiunView() {
             </Box>
             <TabPanel value={0}>
               <Box>
+                <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
+                <Typography fontWeight="bold" fontSize={24}>
+                  Rp850.750.000
+                </Typography>
+                <Box mt={2}>
+                  <Chart
+                    options={options}
+                    series={series}
+                    type="area"
+                    height={300}
+                  />
+                </Box>
+                <Box mt={4}>
+                  <Typography fontWeight="bold">Riwayat Transaksi</Typography>
+                  <Stack mt={2} gap={2}>
+                    {transactionHistories?.map(
+                      ({ amount, periodRange, year }) => (
+                        <Card
+                          sx={{
+                            p: 2,
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Stack justifyContent="space-between" width="100%">
+                            <Typography fontWeight="bold">{year}</Typography>
+                            <Typography>{periodRange}</Typography>
+                          </Stack>
+                          <Typography
+                            sx={{ color: "#0FBD66" }}
+                            fontWeight="bold"
+                          >
+                            {amount}
+                          </Typography>
+                        </Card>
+                      )
+                    )}
+                  </Stack>
+                </Box>
+              </Box>
+            </TabPanel>
+            <TabPanel value={1}>
+              <Box>
+                {" "}
+                <FormControl fullWidth>
+                  <InputLabel
+                    shrink={false}
+                    id="select-label"
+                    style={{ display: "none" }}
+                  ></InputLabel>
+                  <Select
+                    labelId="select-label"
+                    value={yearFilter}
+                    onChange={(e) => setYearFilter(e.target.value)}
+                    displayEmpty
+                    sx={{ mb: 4 }}
+                  >
+                    <MenuItem value="2025">Tahun 2025</MenuItem>
+                    <MenuItem value="2024">Tahun 2024</MenuItem>
+                    <MenuItem value="2023">Tahun 2023</MenuItem>
+                    <MenuItem value="2022">Tahun 2022</MenuItem>
+                    <MenuItem value="2021">Tahun 2021</MenuItem>
+                  </Select>
+                </FormControl>
                 <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
                 <Typography fontWeight="bold" fontSize={24}>
                   Rp850.750.000
