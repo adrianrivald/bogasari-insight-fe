@@ -93,6 +93,7 @@ export function HeaderSection({
             src="/images/icons/back.svg"
             width={24}
             height={24}
+            sx={{ cursor: "pointer" }}
           />
           <Typography fontWeight="bold" fontSize={20}>
             {isOpen ? "Menu" : menuTitle}
@@ -106,6 +107,7 @@ export function HeaderSection({
           src="/images/icons/menu.svg"
           width={24}
           height={24}
+          sx={{ cursor: "pointer" }}
         />
       )}
     </AppBar>

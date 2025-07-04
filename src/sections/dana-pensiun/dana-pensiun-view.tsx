@@ -219,9 +219,32 @@ export function DanaPensiunView() {
                 value={tabIndex}
                 onChange={handleChange}
                 aria-label="dana pensiun tab"
+                TabIndicatorProps={{ style: { display: "none" } }} // hide default underline
               >
-                <Tab sx={{ width: "50%" }} label="Tahun" {...a11yProps(0)} />
-                <Tab sx={{ width: "50%" }} label="Bulan" {...a11yProps(1)} />
+                <Tab
+                  sx={{
+                    width: "50%",
+                    color: "gray",
+                    "&.Mui-selected": {
+                      color: "blue.500",
+                      borderBottom: "2px solid #4AA1F3",
+                    },
+                  }}
+                  label="Tahun"
+                  {...a11yProps(0)}
+                />
+                <Tab
+                  sx={{
+                    width: "50%",
+                    color: "gray",
+                    "&.Mui-selected": {
+                      color: "blue.500",
+                      borderBottom: "2px solid #4AA1F3",
+                    },
+                  }}
+                  label="Bulan"
+                  {...a11yProps(1)}
+                />
               </Tabs>
             </Box>
             <TabPanel value={0} sx={{ px: 0 }}>
