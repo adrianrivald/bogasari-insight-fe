@@ -17,6 +17,7 @@ import {
 import { useCallback, useState } from "react";
 import { useAuth } from "../sections/auth/providers/auth";
 import { Bounce, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +31,7 @@ export type AppLayoutProps = {
 };
 
 const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
+  const navigate = useNavigate();
   return (
     <Container
       maxWidth="xs"
@@ -48,6 +50,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
       >
         <Box display="flex" flexDirection="column" width="100%" gap={3}>
           <Box
+            onClick={() => navigate("/dana-pensiun")}
             sx={{
               width: "100%",
               bgcolor: "#EAF4FF",

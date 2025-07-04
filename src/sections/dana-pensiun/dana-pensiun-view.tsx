@@ -1,24 +1,60 @@
 import {
   Box,
   Button,
+  Card,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Stack,
+  Tab,
+  Tabs,
   Typography,
 } from "@mui/material";
 import { AppLayout } from "../../layouts/layout";
-import { useState } from "react";
+import React, { useState } from "react";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
+import Chart from "react-apexcharts";
+import { TabContext, TabPanel } from "@mui/lab";
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+const transactionHistories = [
+  {
+    year: "2025",
+    periodRange: "Jan - Jun",
+    amount: "Rp5.673.455",
+  },
+  {
+    year: "2024",
+    periodRange: "Aug - Jan",
+    amount: "Rp15.673.455",
+  },
+  {
+    year: "2024",
+    periodRange: "Mar - Aug",
+    amount: "Rp8.673.455",
+  },
+];
 
 export function DanaPensiunView() {
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [isShowDatePopup, setIsShowDatePopup] = useState(false);
   const [dateFilter, setDateFilter] = useState<Dayjs | null>(null);
+
+  const [tabIndex, setTabIndex] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue);
+  };
 
   const onClickFillDate = () => {
     setIsShowDatePopup((prev) => !prev);
@@ -33,9 +69,57 @@ export function DanaPensiunView() {
     setDateValue(newValue);
   };
 
+  // Chart States
+  const series = [
+    {
+      name: "Data",
+      data: [17, 24, 26, 28, 31, 40, 42, 44, 46], // Sample values
+    },
+  ];
+
+  const options: any = {
+    chart: {
+      type: "area",
+      toolbar: { show: false },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+      width: 3,
+    },
+    xaxis: {
+      categories: ["2019", "2020", "2021", "2022", "2023", "2024", "2025"],
+    },
+    yaxis: {
+      labels: {
+        formatter: function (val: string) {
+          return `${val}jt`;
+        },
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.6,
+        opacityTo: 0.05,
+        stops: [0, 100],
+      },
+    },
+    tooltip: {
+      y: {
+        formatter: function (val: string) {
+          return `${val}jt`;
+        },
+      },
+    },
+  };
+
   return (
     <AppLayout menuTitle="Dana Pensiun">
-      {dateFilter === null ? (
+      {dateFilter !== null ? (
         <Box
           display="flex"
           justifyContent="center"
@@ -104,7 +188,63 @@ export function DanaPensiunView() {
           </Button>
         </Box>
       ) : (
-        <Box>konten dana pensiun terfilter</Box>
+        <Box sx={{ width: "100%" }}>
+          <TabContext value={tabIndex}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                value={tabIndex}
+                onChange={handleChange}
+                aria-label="dana pensiun tab"
+              >
+                <Tab sx={{ width: "50%" }} label="Tahun" {...a11yProps(0)} />
+                <Tab sx={{ width: "50%" }} label="Bulan" {...a11yProps(1)} />
+              </Tabs>
+            </Box>
+            <TabPanel value={0}>
+              <Box>
+                <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
+                <Typography fontWeight="bold" fontSize={24}>
+                  Rp850.750.000
+                </Typography>
+                <Box mt={2}>
+                  <Chart
+                    options={options}
+                    series={series}
+                    type="area"
+                    height={300}
+                  />
+                </Box>
+                <Box mt={4}>
+                  <Typography fontWeight="bold">Riwayat Transaksi</Typography>
+                  <Stack mt={2} gap={2}>
+                    {transactionHistories?.map(
+                      ({ amount, periodRange, year }) => (
+                        <Card
+                          sx={{
+                            p: 2,
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Stack justifyContent="space-between" width="100%">
+                            <Typography fontWeight="bold">{year}</Typography>
+                            <Typography>{periodRange}</Typography>
+                          </Stack>
+                          <Typography
+                            sx={{ color: "#0FBD66" }}
+                            fontWeight="bold"
+                          >
+                            {amount}
+                          </Typography>
+                        </Card>
+                      )
+                    )}
+                  </Stack>
+                </Box>
+              </Box>
+            </TabPanel>
+          </TabContext>
+        </Box>
       )}
 
       <Dialog
