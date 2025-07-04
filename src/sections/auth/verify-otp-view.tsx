@@ -1,9 +1,8 @@
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useAuth } from "./providers/auth";
 import { Bounce, toast } from "react-toastify";
 import PinInput from "../../components/ui/pin-input";
-import { SuccessRegistrationView } from "./success-registration-view";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { CheckEmailForgotPasswordView } from "./check-email-forgot-password-view";
@@ -67,7 +66,7 @@ export function VerifyOtpView({
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        minHeight: "85vh", // 👈 full viewport height
+        minHeight: "85vh",
       }}
     >
       {" "}

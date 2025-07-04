@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import { withAuth } from "./sections/auth/hocs/auth.tsx";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "./theme/theme-provider.tsx";
@@ -12,8 +11,6 @@ import { AppLayout } from "./layouts/layout.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AppWithAuth = withAuth(App);
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
@@ -22,10 +19,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <ThemeProvider>
             <QueryClientProvider client={queryClient}>
               <AuthProvider>
-                <AppLayout>
-                  <App />
-                  <ToastContainer hideProgressBar closeOnClick draggable />
-                </AppLayout>
+                <App />
+                <ToastContainer hideProgressBar closeOnClick draggable />
               </AuthProvider>
             </QueryClientProvider>
           </ThemeProvider>

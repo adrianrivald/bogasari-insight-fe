@@ -5,13 +5,10 @@ import type { ContainerProps } from "@mui/material/Container";
 
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Container from "@mui/material/Container";
-import { useTheme } from "@mui/material/styles";
 
 import { layoutClasses } from "../classes";
-import { Link } from "react-router-dom";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
 import { Typography } from "@mui/material";
 import { useAuth } from "../../sections/auth/providers/auth";
 
@@ -32,6 +29,7 @@ export type HeaderSectionProps = AppBarProps & {
   };
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  menuTitle?: string;
 };
 
 export function HeaderSection({
@@ -41,8 +39,10 @@ export function HeaderSection({
   layoutQuery = "md",
   isOpen,
   setIsOpen,
+  menuTitle,
   ...other
 }: HeaderSectionProps) {
+  const navigate = useNavigate();
   const { isAuth } = useAuth();
   const onOpenMobileMenu = () => {
     setIsOpen((prev) => !prev);
@@ -70,7 +70,7 @@ export function HeaderSection({
       }}
       {...other}
     >
-      {!isOpen ? (
+      {!isOpen && !menuTitle ? (
         <Link
           to="/"
           style={{
@@ -82,14 +82,20 @@ export function HeaderSection({
       ) : (
         <Box display="flex" gap={2} alignItems="center">
           <Box
-            onClick={() => setIsOpen((prev) => !prev)}
+            onClick={() => {
+              if (isOpen) {
+                setIsOpen((prev) => !prev);
+                return;
+              }
+              navigate("/");
+            }}
             component="img"
             src="/images/icons/back.svg"
             width={24}
             height={24}
           />
           <Typography fontWeight="bold" fontSize={20}>
-            Menu
+            {isOpen ? "Menu" : menuTitle}
           </Typography>
         </Box>
       )}

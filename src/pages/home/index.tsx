@@ -1,13 +1,12 @@
-import { Box, Typography } from "@mui/material";
 import { Helmet } from "react-helmet-async";
-import { useAuth } from "../../sections/auth/providers/auth";
+import { HomeView } from "../../sections/home/home-view";
+import { AppLayout } from "../../layouts/layout";
 
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
-  const { userInfo } = useAuth();
   return (
-    <>
+    <AppLayout>
       <Helmet>
         <title> {`Dashboard - Bogasari Insight`}</title>
         <meta
@@ -20,11 +19,7 @@ export default function HomePage() {
         />
       </Helmet>
 
-      <Box display="flex" justifyContent="center">
-        <Typography fontWeight="bold" fontSize={24}>
-          Welcome, {userInfo.email}
-        </Typography>
-      </Box>
-    </>
+      <HomeView />
+    </AppLayout>
   );
 }

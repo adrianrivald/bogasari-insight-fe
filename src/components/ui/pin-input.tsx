@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import React, { useRef, Dispatch, SetStateAction } from "react";
 import { Box, TextField } from "@mui/material";
 
 interface PinInputProps {

@@ -1,17 +1,16 @@
 import { Helmet } from "react-helmet-async";
-import { CompleteProfileView } from "../../../sections/auth/complete-profile-view";
-import { AppLayout } from "../../../layouts/layout";
+import { DanaPensiunView } from "../../sections/dana-pensiun/dana-pensiun-view";
 
 // ----------------------------------------------------------------------
 
 export default function CompleteProfile() {
   return (
-    <AppLayout>
+    <>
       <Helmet>
         <title> {`Complete Profile - Bogasari Insight`}</title>
       </Helmet>
 
-      <CompleteProfileView />
-    </AppLayout>
+      <DanaPensiunView />
+    </>
   );
 }

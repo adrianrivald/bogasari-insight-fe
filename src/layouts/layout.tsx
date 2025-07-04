@@ -1,8 +1,5 @@
 import type { Theme, SxProps, Breakpoint } from "@mui/material/styles";
 
-import Link from "@mui/material/Link";
-import Alert from "@mui/material/Alert";
-
 import { HeaderSection } from "../layouts/core/header-section";
 import { LayoutSection } from "../layouts/core/layout-section";
 import {
@@ -29,6 +26,7 @@ export type AppLayoutProps = {
   header?: {
     sx?: SxProps<Theme>;
   };
+  menuTitle?: string;
 };
 
 const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
@@ -39,7 +37,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        minHeight: "80vh", // 👈 full viewport height
+        minHeight: "80vh",
       }}
     >
       <Stack
@@ -92,7 +90,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
   );
 };
 
-export function AppLayout({ children, header }: AppLayoutProps) {
+export function AppLayout({ children, header, menuTitle }: AppLayoutProps) {
   const { logout } = useAuth();
   const layoutQuery: Breakpoint = "md";
   const [isOpen, setIsOpen] = useState(false);
@@ -123,9 +121,6 @@ export function AppLayout({ children, header }: AppLayoutProps) {
 
   return (
     <LayoutSection
-      /** **************************************
-       * Header
-       *************************************** */
       headerSection={
         <HeaderSection
           isOpen={isOpen}
@@ -138,10 +133,9 @@ export function AppLayout({ children, header }: AppLayoutProps) {
             },
           }}
           sx={{
-            // position: { [layoutQuery]: "fixed" },
-
             ...header?.sx,
           }}
+          menuTitle={menuTitle}
         />
       }
     >

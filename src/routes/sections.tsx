@@ -1,10 +1,5 @@
 import { lazy, Suspense } from "react";
-import {
-  Outlet,
-  Navigate,
-  useRoutes,
-  type NonIndexRouteObject,
-} from "react-router-dom";
+import { Outlet, Navigate, useRoutes } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import LinearProgress, {
@@ -12,6 +7,7 @@ import LinearProgress, {
 } from "@mui/material/LinearProgress";
 import { varAlpha } from "../theme/styles";
 import { useAuth } from "../sections/auth/providers/auth";
+import { AppLayout } from "../layouts/layout";
 
 // ----------------------------------------------------------------------
 export const HomePage = lazy(() => import("../pages/home"));
@@ -33,6 +29,7 @@ export const ResetPasswordPage = lazy(
 export const CompleteProfilePage = lazy(
   () => import("../pages/auth/complete-profile")
 );
+export const DanaPensiunPage = lazy(() => import("../pages/dana-pensiun"));
 
 export const VerifyOtpPage = lazy(() => import("../pages/auth/verify-otp"));
 
@@ -80,38 +77,53 @@ export function Router() {
           path: "/complete-profile",
           element: <CompleteProfilePage />,
         },
+        {
+          path: "/dana-pensiun",
+          element: <DanaPensiunPage />,
+        },
       ],
     },
   ]);
 
   const unAuthenticatedRoutes = useRoutes([
     {
-      path: "/",
-      element: <SignInPage />,
-    },
-    {
-      path: "/sign-up",
-      element: <SignUpPage />,
-    },
-    {
-      path: "/check-email",
-      element: <CheckEmailPage />,
-    },
-    {
-      path: "/forgot-password",
-      element: <ForgotPasswordPage />,
-    },
-    {
-      path: "/reset-password",
-      element: <ResetPasswordPage />,
-    },
-    {
-      path: "/verify-otp",
-      element: <VerifyOtpPage />,
-    },
-    {
-      path: "*",
-      element: <Navigate to="/404" replace />,
+      element: (
+        <AppLayout>
+          <Suspense fallback={renderFallback}>
+            <Outlet />
+          </Suspense>
+        </AppLayout>
+      ),
+      children: [
+        {
+          path: "/",
+          element: <SignInPage />,
+        },
+        {
+          path: "/sign-up",
+          element: <SignUpPage />,
+        },
+        {
+          path: "/check-email",
+          element: <CheckEmailPage />,
+        },
+        {
+          path: "/forgot-password",
+          element: <ForgotPasswordPage />,
+        },
+        {
+          path: "/reset-password",
+          element: <ResetPasswordPage />,
+        },
+        {
+          path: "/verify-otp",
+          element: <VerifyOtpPage />,
+        },
+        {
+          path: "*",
+          element: <Navigate to="/404" replace />,
+        },
+      ],
     },
   ]);
 
