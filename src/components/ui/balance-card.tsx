@@ -10,12 +10,13 @@ const BalanceCard = ({ balance, percentage }: BalanceCardProps) => {
     <Box
       sx={{
         width: "100%",
-        height: 160,
+        // height: 160,
         backgroundImage: `url('/images/balance.png')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         borderRadius: 3,
-        padding: 2,
+        paddingY: 2,
+        paddingX: 4,
         color: "#ffffff",
         display: "flex",
         flexDirection: "column",

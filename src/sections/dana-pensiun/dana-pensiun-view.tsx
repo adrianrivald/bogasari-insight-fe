@@ -2,6 +2,8 @@ import {
   Box,
   Button,
   Card,
+  CardContent,
+  Collapse,
   Dialog,
   DialogActions,
   DialogContent,
@@ -54,10 +56,12 @@ export function DanaPensiunView() {
   const [isShowDatePopup, setIsShowDatePopup] = useState(false);
   const [dateFilter, setDateFilter] = useState<Dayjs | null>(null);
   const [yearFilter, setYearFilter] = useState("2025");
-
   const [tabIndex, setTabIndex] = React.useState(0);
+  const [expandedCards, setExpandedCards] = React.useState<
+    Record<number, boolean>
+  >({});
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
 
@@ -122,9 +126,24 @@ export function DanaPensiunView() {
     },
   };
 
+  const onExpand = (index: number) => {
+    if (!expandedCards[index]) {
+      setExpandedCards({
+        ...expandedCards,
+        [index]: true,
+      });
+    } else {
+      setExpandedCards({
+        ...expandedCards,
+        [index]: false,
+      });
+    }
+  };
+
+  console.log(expandedCards, "expandedCards");
   return (
     <AppLayout menuTitle="Dana Pensiun">
-      {dateFilter === null ? (
+      {dateFilter !== null ? (
         <Box
           display="flex"
           justifyContent="center"
@@ -205,7 +224,7 @@ export function DanaPensiunView() {
                 <Tab sx={{ width: "50%" }} label="Bulan" {...a11yProps(1)} />
               </Tabs>
             </Box>
-            <TabPanel value={0}>
+            <TabPanel value={0} sx={{ px: 0 }}>
               <Box>
                 <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
                 <Typography fontWeight="bold" fontSize={24}>
@@ -248,7 +267,7 @@ export function DanaPensiunView() {
                 </Box>
               </Box>
             </TabPanel>
-            <TabPanel value={1}>
+            <TabPanel value={1} sx={{ px: 0 }}>
               <Box>
                 {" "}
                 <FormControl fullWidth>
@@ -287,24 +306,95 @@ export function DanaPensiunView() {
                   <Typography fontWeight="bold">Riwayat Transaksi</Typography>
                   <Stack mt={2} gap={2}>
                     {transactionHistories?.map(
-                      ({ amount, periodRange, year }) => (
+                      ({ amount, periodRange, year }, index) => (
                         <Card
                           sx={{
                             p: 2,
-                            display: "flex",
-                            alignItems: "center",
+                            // display: "flex",
+                            // alignItems: "center",
                           }}
+                          onClick={() => onExpand(index)}
                         >
-                          <Stack justifyContent="space-between" width="100%">
-                            <Typography fontWeight="bold">{year}</Typography>
-                            <Typography>{periodRange}</Typography>
-                          </Stack>
-                          <Typography
-                            sx={{ color: "#0FBD66" }}
-                            fontWeight="bold"
+                          <Stack
+                            direction="row"
+                            justifyContent="space-between"
+                            width="100%"
                           >
-                            {amount}
-                          </Typography>
+                            <Stack justifyContent="space-between">
+                              <Typography fontWeight="bold">{year}</Typography>
+                              <Typography>{periodRange}</Typography>
+                            </Stack>
+                            <Stack gap={2} direction="row" alignItems="center">
+                              <Typography
+                                sx={{ color: "#0FBD66" }}
+                                fontWeight="bold"
+                              >
+                                {amount}
+                              </Typography>
+
+                              <Box
+                                component="img"
+                                src="/images/icons/chevron-down.svg"
+                                width={12}
+                                height={12}
+                                sx={{
+                                  transform: expandedCards[index]
+                                    ? "rotate(180deg)"
+                                    : "rotate(0deg)",
+                                  transitionProperty: "all",
+                                  transitionDuration: 10,
+                                }}
+                              />
+                            </Stack>
+                          </Stack>
+                          <Collapse
+                            in={expandedCards[index]}
+                            timeout="auto"
+                            unmountOnExit
+                          >
+                            <CardContent sx={{ p: 0 }}>
+                              <Box
+                                sx={{
+                                  width: "100%",
+                                  borderBottomWidth: 2,
+                                  borderBottomColor: "#D1D6E0",
+                                  borderBottomStyle: "dashed",
+                                  pb: 2,
+                                }}
+                              />
+                              <Stack mt={2} gap={2}>
+                                <Stack
+                                  direction="row"
+                                  justifyContent="space-between"
+                                >
+                                  <Typography>Kontribusi iuran 2,5%</Typography>
+                                  <Typography fontWeight="bold">
+                                    Rp250.000
+                                  </Typography>
+                                </Stack>
+                                <Stack
+                                  direction="row"
+                                  justifyContent="space-between"
+                                >
+                                  <Typography>
+                                    Kontribusi perusahaan 10%
+                                  </Typography>
+                                  <Typography fontWeight="bold">
+                                    Rp1.250.000
+                                  </Typography>
+                                </Stack>
+                                <Stack
+                                  direction="row"
+                                  justifyContent="space-between"
+                                >
+                                  <Typography>Hasil Pengembangan</Typography>
+                                  <Typography fontWeight="bold">
+                                    Rp550.000
+                                  </Typography>
+                                </Stack>
+                              </Stack>
+                            </CardContent>
+                          </Collapse>
                         </Card>
                       )
                     )}
