@@ -1,20 +1,16 @@
 import { Helmet } from "react-helmet-async";
-import { PencairanDanaPensiunView } from "../../sections/pencairan-dana-pensiun/pencairan-dana-pensiun-view";
-import { useEffect } from "react";
+import { SummaryPencairanDanaPensiunView } from "../../../sections/pencairan-dana-pensiun/summary/summary-pencairan-dana-pensiun-view";
 
 // ----------------------------------------------------------------------
 
 export default function CompleteProfile() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   return (
     <>
       <Helmet>
         <title> {`Complete Profile - Bogasari Insight`}</title>
       </Helmet>
 
-      <PencairanDanaPensiunView />
+      <SummaryPencairanDanaPensiunView />
     </>
   );
 }

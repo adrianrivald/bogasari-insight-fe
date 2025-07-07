@@ -34,6 +34,9 @@ export const DanaPensiunPage = lazy(() => import("../pages/dana-pensiun"));
 export const PencairanDanaPensiunPage = lazy(
   () => import("../pages/pencairan-dana-pensiun")
 );
+export const SummaryPencairanDanaPensiunPage = lazy(
+  () => import("../pages/pencairan-dana-pensiun/summary")
+);
 
 export const VerifyOtpPage = lazy(() => import("../pages/auth/verify-otp"));
 
@@ -88,6 +91,10 @@ export function Router() {
         {
           path: "/pencairan-dana-pensiun",
           element: <PencairanDanaPensiunPage />,
+        },
+        {
+          path: "/pencairan-dana-pensiun/summary",
+          element: <SummaryPencairanDanaPensiunPage />,
         },
         {
           path: "*",

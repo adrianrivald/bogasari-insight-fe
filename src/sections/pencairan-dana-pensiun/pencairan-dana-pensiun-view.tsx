@@ -18,6 +18,28 @@ import { Form } from "../../components/form/form";
 import { useCallback, useState } from "react";
 import { LoadingButton } from "@mui/lab";
 
+const reasons = [
+  {
+    id: "1",
+    label: "Meninggal",
+  },
+];
+
+const banks = [
+  {
+    id: "1",
+    label: "BCA",
+  },
+  {
+    id: "2",
+    label: "Mandiri",
+  },
+  {
+    id: "3",
+    label: "BRI",
+  },
+];
+
 export function PencairanDanaPensiunView() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [preview, setPreview] = useState("");
@@ -78,7 +100,7 @@ export function PencairanDanaPensiunView() {
   return (
     <AppLayout menuTitle="Pencairan Dana Pensiun">
       {/* Balance */}
-      <Box mt={4}>
+      <Box>
         <Box
           sx={{
             position: "relative",
@@ -138,10 +160,19 @@ export function PencairanDanaPensiunView() {
                               </Typography>
                             );
                           }
-                          return <Typography>{selected}</Typography>;
+                          return (
+                            <Typography>
+                              {
+                                reasons?.find((item) => item.id === selected)
+                                  ?.label
+                              }
+                            </Typography>
+                          );
                         }}
                       >
-                        <MenuItem value="1">Meninggal</MenuItem>
+                        {reasons?.map((item) => (
+                          <MenuItem value={item?.id}>{item?.label}</MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
                   </Stack>
@@ -181,12 +212,19 @@ export function PencairanDanaPensiunView() {
                               </Typography>
                             );
                           }
-                          return <Typography>{selected}</Typography>;
+                          return (
+                            <Typography>
+                              {
+                                banks?.find((item) => item.id === selected)
+                                  ?.label
+                              }
+                            </Typography>
+                          );
                         }}
                       >
-                        <MenuItem value="1">BCA</MenuItem>
-                        <MenuItem value="2">Mandiri</MenuItem>
-                        <MenuItem value="3">BRI</MenuItem>
+                        {banks?.map((item) => (
+                          <MenuItem value={item?.id}>{item?.label}</MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
                   </Stack>
@@ -259,6 +297,7 @@ export function PencairanDanaPensiunView() {
                               height: "30px",
                               cursor: "pointer",
                               margin: "auto 0",
+                              objectFit: "cover",
                             }}
                           />
                         )}
@@ -307,6 +346,7 @@ export function PencairanDanaPensiunView() {
                               height: "30px",
                               cursor: "pointer",
                               margin: "auto 0",
+                              objectFit: "cover",
                             }}
                           />
                         )}
