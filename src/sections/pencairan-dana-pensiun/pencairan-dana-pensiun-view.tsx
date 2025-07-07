@@ -3,6 +3,7 @@ import {
   Card,
   CircularProgress,
   FormControl,
+  Input,
   InputLabel,
   MenuItem,
   OutlinedInput,
@@ -19,6 +20,8 @@ import { LoadingButton } from "@mui/lab";
 
 export function PencairanDanaPensiunView() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState("");
 
   const handleSubmit = useCallback(async (formData: any) => {
     setIsSubmitting(true);
@@ -32,6 +35,31 @@ export function PencairanDanaPensiunView() {
     }
   }, []);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const size = e.target.files[0]?.size;
+
+      if (size > 5000000) {
+        const reason = `File is larger than ${Math.round(
+          5000000 / 1000000
+        )} mb`;
+        // toast.error(reason, {
+        //   position: 'top-right',
+        //   autoClose: 5000,
+        //   hideProgressBar: true,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: 'light',
+        //   transition: Bounce,
+        // });
+      } else if (e.target.files) {
+        setFile(e.target.files[0]);
+        setPreview(URL.createObjectURL(e.target.files[0]));
+      }
+    }
+  };
   return (
     <AppLayout menuTitle="Pencairan Dana Pensiun">
       {/* Balance */}
@@ -203,8 +231,22 @@ export function PencairanDanaPensiunView() {
                     p={2}
                     justifyContent="space-between"
                   >
-                    <Stack direction="row" gap={2}>
-                      <Box component="img" src="/images/icons/wallet.svg" />
+                    <Stack direction="row" gap={2} alignItems="center">
+                      <Box>
+                        {!preview ? (
+                          <Box component="img" src="/images/icons/wallet.svg" />
+                        ) : (
+                          <Box
+                            component="img"
+                            src={preview}
+                            sx={{
+                              width: "100%",
+                              cursor: "pointer",
+                              margin: "auto 0",
+                            }}
+                          />
+                        )}
+                      </Box>
                       <Stack gap={0}>
                         <Typography fontWeight="bold">Rekening Bank</Typography>
                         <Typography mt={0}>
@@ -212,7 +254,21 @@ export function PencairanDanaPensiunView() {
                         </Typography>
                       </Stack>
                     </Stack>
-                    <Box component="img" src="/images/icons/plus.svg" />
+                    <Input
+                      onChange={handleFileChange}
+                      type="file"
+                      sx={{ display: "none" }}
+                      hidden
+                      id="uploadPic"
+                    />
+
+                    <Typography
+                      component="label"
+                      htmlFor="uploadPic"
+                      sx={{ cursor: "pointer", margin: "auto 0" }}
+                    >
+                      <Box component="img" src="/images/icons/plus.svg" />
+                    </Typography>
                   </Stack>
                   <Stack
                     direction="row"
@@ -220,7 +276,7 @@ export function PencairanDanaPensiunView() {
                     p={2}
                     justifyContent="space-between"
                   >
-                    <Stack direction="row" gap={2}>
+                    <Stack direction="row" gap={2} alignItems="center">
                       <Box component="img" src="/images/icons/ktp.svg" />
                       <Stack gap={0}>
                         <Typography fontWeight="bold">KTP</Typography>
