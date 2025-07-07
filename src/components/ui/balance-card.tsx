@@ -30,7 +30,7 @@ const BalanceCard = ({ balance, percentage }: BalanceCardProps) => {
           position: "absolute",
           top: 0,
           right: 0,
-          width: "15%",
+          width: "20%",
         }}
       />
       <Box
@@ -46,7 +46,7 @@ const BalanceCard = ({ balance, percentage }: BalanceCardProps) => {
       <Typography variant="subtitle2" sx={{ opacity: 0.9 }}>
         Total Saldo Terkini
       </Typography>
-      <Typography variant="h5" fontWeight="bold" sx={{ mt: 1 }}>
+      <Typography variant="h5" fontSize={42} fontWeight="bold" sx={{ mt: 1 }}>
         {balance}
       </Typography>
       <Typography

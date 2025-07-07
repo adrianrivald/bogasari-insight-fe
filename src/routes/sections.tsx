@@ -81,6 +81,10 @@ export function Router() {
           path: "/dana-pensiun",
           element: <DanaPensiunPage />,
         },
+        {
+          path: "*",
+          element: <Navigate to="/404" replace />,
+        },
       ],
     },
   ]);

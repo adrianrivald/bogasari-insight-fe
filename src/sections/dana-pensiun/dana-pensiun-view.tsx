@@ -247,6 +247,7 @@ export function DanaPensiunView() {
                 />
               </Tabs>
             </Box>
+            {/* Tab Tahunan */}
             <TabPanel value={0} sx={{ px: 0 }}>
               <Box>
                 <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
@@ -260,6 +261,51 @@ export function DanaPensiunView() {
                     type="area"
                     height={300}
                   />
+                </Box>
+                <Box mt={4}>
+                  <Card
+                    sx={{
+                      p: 2,
+                    }}
+                  >
+                    <Typography fontWeight="bold">Info Bulanan</Typography>
+                    <Stack mt={2} gap={2}>
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        width="100%"
+                        borderBottom="1px solid #EFF1F5"
+                        pb={2}
+                      >
+                        <Typography sx={{ color: "grey.500" }}>
+                          Saldo Akhir 2024
+                        </Typography>
+                        <Typography fontWeight="bold">Rp840.000.000</Typography>
+                      </Stack>
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        width="100%"
+                        borderBottom="1px solid #EFF1F5"
+                        pb={2}
+                      >
+                        <Typography sx={{ color: "grey.500" }}>
+                          Saldo 2025 (jan-jun)
+                        </Typography>
+                        <Typography fontWeight="bold">Rp5.673.455</Typography>
+                      </Stack>
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        width="100%"
+                      >
+                        <Typography sx={{ color: "grey.500" }}>
+                          Total
+                        </Typography>
+                        <Typography fontWeight="bold">Rp845.673.455</Typography>
+                      </Stack>
+                    </Stack>
+                  </Card>
                 </Box>
                 <Box mt={4}>
                   <Typography fontWeight="bold">Riwayat Transaksi</Typography>
@@ -290,6 +336,8 @@ export function DanaPensiunView() {
                 </Box>
               </Box>
             </TabPanel>
+
+            {/* Tab Bulanan */}
             <TabPanel value={1} sx={{ px: 0 }}>
               <Box>
                 {" "}
