@@ -8,6 +8,7 @@ import LinearProgress, {
 import { varAlpha } from "../theme/styles";
 import { useAuth } from "../sections/auth/providers/auth";
 import { AppLayout } from "../layouts/layout";
+import { PencairanDanaPensiunView } from "../sections/pencairan-dana-pensiun/pencairan-dana-pensiun-view";
 
 // ----------------------------------------------------------------------
 export const HomePage = lazy(() => import("../pages/home"));
@@ -30,6 +31,9 @@ export const CompleteProfilePage = lazy(
   () => import("../pages/auth/complete-profile")
 );
 export const DanaPensiunPage = lazy(() => import("../pages/dana-pensiun"));
+export const PencairanDanaPensiunPage = lazy(
+  () => import("../pages/pencairan-dana-pensiun")
+);
 
 export const VerifyOtpPage = lazy(() => import("../pages/auth/verify-otp"));
 
@@ -80,6 +84,10 @@ export function Router() {
         {
           path: "/dana-pensiun",
           element: <DanaPensiunPage />,
+        },
+        {
+          path: "/pencairan-dana-pensiun",
+          element: <PencairanDanaPensiunPage />,
         },
         {
           path: "*",
