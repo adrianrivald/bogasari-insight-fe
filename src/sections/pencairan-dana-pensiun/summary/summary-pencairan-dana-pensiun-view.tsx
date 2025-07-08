@@ -1,45 +1,8 @@
-import {
-  Box,
-  Card,
-  CircularProgress,
-  FormControl,
-  Input,
-  InputLabel,
-  List,
-  ListItem,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 import { AppLayout } from "../../../layouts/layout";
-import { Form } from "../../../components/form/form";
 import { useCallback, useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { SuccessPencairanDanaView } from "./success-pencairan-dana";
-
-const reasons = [
-  {
-    id: "1",
-    label: "Meninggal",
-  },
-];
-
-const banks = [
-  {
-    id: "1",
-    label: "BCA",
-  },
-  {
-    id: "2",
-    label: "Mandiri",
-  },
-  {
-    id: "3",
-    label: "BRI",
-  },
-];
 
 export function SummaryPencairanDanaPensiunView() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -148,7 +111,7 @@ export function SummaryPencairanDanaPensiunView() {
                         cursor: "pointer",
                         margin: "auto 0",
                         objectFit: "cover",
-                        borderRadius: 4,
+                        borderRadius: 1,
                       }}
                     />
                   </Box>
@@ -182,7 +145,7 @@ export function SummaryPencairanDanaPensiunView() {
                         cursor: "pointer",
                         margin: "auto 0",
                         objectFit: "cover",
-                        borderRadius: 4,
+                        borderRadius: 1,
                       }}
                     />
                   </Box>

@@ -44,7 +44,7 @@ export function HomeView() {
       <Box
         mt={4}
         sx={{
-          p: {
+          px: {
             xs: 3,
             lg: 4,
           },
@@ -57,7 +57,7 @@ export function HomeView() {
       <Box
         mt={4}
         sx={{
-          p: {
+          px: {
             xs: 3,
             lg: 4,
           },
@@ -123,7 +123,7 @@ export function HomeView() {
       <Box
         mt={4}
         sx={{
-          p: {
+          px: {
             xs: 3,
             lg: 4,
           },

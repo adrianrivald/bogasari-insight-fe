@@ -5,6 +5,7 @@ import { LayoutSection } from "../layouts/core/layout-section";
 import {
   Box,
   Button,
+  Card,
   Container,
   Dialog,
   DialogActions,
@@ -18,6 +19,7 @@ import { useCallback, useState } from "react";
 import { useAuth } from "../sections/auth/providers/auth";
 import { Bounce, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Link from "@mui/material/Link";
 
 // ----------------------------------------------------------------------
 
@@ -35,61 +37,115 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
   const navigate = useNavigate();
   return (
     <Container
-      maxWidth="xs"
       sx={{
-        position: "relative",
         display: "flex",
         flexDirection: "column",
-        minHeight: "80vh",
+        py: 4,
       }}
     >
-      <Stack
-        spacing={3}
-        alignItems="center"
-        flex={1}
-        justifyContent="space-between"
+      <Box
+        position="relative"
+        sx={{
+          minHeight: "80vh",
+        }}
       >
-        <Box display="flex" flexDirection="column" width="100%" gap={3}>
-          <Box
-            onClick={() => navigate("/dana-pensiun")}
-            sx={{
-              width: "100%",
-              bgcolor: "#EAF4FF",
-              p: 4,
-              borderRadius: 2,
-              textAlign: "center",
-            }}
-          >
-            <Typography fontWeight="bold">Dapen</Typography>
-          </Box>
-
-          <Box
-            sx={{
-              width: "100%",
-              bgcolor: "#EAF4FF",
-              p: 4,
-              borderRadius: 2,
-              textAlign: "center",
-            }}
-          >
-            <Typography fontWeight="bold">Koprasi</Typography>
-          </Box>
-        </Box>
-
-        <Button
-          onClick={onLogout}
-          variant="outlined"
-          sx={{
-            width: "100%",
-            fontWeight: "bold",
-            bgcolor: "#fff",
-            borderRadius: 2,
-            mt: 2,
-          }}
+        <Stack
+          spacing={3}
+          alignItems="center"
+          flex={1}
+          justifyContent="space-between"
         >
-          Log Out
-        </Button>
-      </Stack>
+          <Box display="flex" flexDirection="column" width="100%" gap={3}>
+            <Link
+              href="/profile"
+              underline="none"
+              sx={{
+                "&:hover": {
+                  textDecoration: "none",
+                },
+              }}
+            >
+              <Card
+                sx={{
+                  p: 2,
+                  cursor: "pointer",
+                }}
+              >
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Stack direction="row" gap={2}>
+                    <Box
+                      component="img"
+                      src="/images/ava-dummy.png"
+                      width={50}
+                      height={50}
+                    />
+                    <Stack direction="column">
+                      <Typography>Selamat Pagi</Typography>
+                      <Typography
+                        fontWeight="bold"
+                        component="span"
+                        fontSize={20}
+                      >
+                        example@gmail.com
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                  <Box
+                    component="img"
+                    src="/images/icons/chevron-right.svg"
+                    width={20}
+                    height={20}
+                  />
+                </Stack>
+              </Card>
+            </Link>
+
+            <Card
+              sx={{
+                px: 2,
+                py: 4,
+                width: "100%",
+                cursor: "pointer",
+              }}
+            >
+              <Stack direction="row" gap={2} alignItems="center">
+                <Box
+                  component="img"
+                  src="/images/icons/money.svg"
+                  width={20}
+                  height={20}
+                />
+                <Typography>DPP</Typography>
+              </Stack>
+            </Card>
+          </Box>
+
+          <Card
+            sx={{
+              px: 2,
+              py: 4,
+              width: "100%",
+              position: "absolute",
+              bottom: 0,
+              cursor: "pointer",
+            }}
+          >
+            <Stack direction="row" gap={2} alignItems="center">
+              <Box
+                component="img"
+                src="/images/icons/logout.svg"
+                width={20}
+                height={20}
+              />
+              <Typography>Log Out</Typography>
+            </Stack>
+          </Card>
+        </Stack>
+      </Box>
     </Container>
   );
 };
@@ -149,6 +205,7 @@ export function AppLayout({
       }
     >
       <Container
+        disableGutters
         sx={{
           p: withPadding
             ? {

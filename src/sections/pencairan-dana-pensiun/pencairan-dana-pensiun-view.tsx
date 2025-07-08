@@ -11,8 +11,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useAuth } from "../auth/providers/auth";
-import BalanceCard from "../../components/ui/balance-card";
 import { AppLayout } from "../../layouts/layout";
 import { Form } from "../../components/form/form";
 import { useCallback, useState } from "react";
@@ -22,6 +20,10 @@ const reasons = [
   {
     id: "1",
     label: "Meninggal",
+  },
+  {
+    id: "2",
+    label: "Pensiun",
   },
 ];
 
@@ -298,6 +300,7 @@ export function PencairanDanaPensiunView() {
                               cursor: "pointer",
                               margin: "auto 0",
                               objectFit: "cover",
+                              borderRadius: 1,
                             }}
                           />
                         )}
@@ -347,6 +350,7 @@ export function PencairanDanaPensiunView() {
                               cursor: "pointer",
                               margin: "auto 0",
                               objectFit: "cover",
+                              borderRadius: 1,
                             }}
                           />
                         )}
