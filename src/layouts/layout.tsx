@@ -103,25 +103,34 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                 </Stack>
               </Card>
             </Link>
-
-            <Card
+            <Link
+              href="/dana-pensiun"
+              underline="none"
               sx={{
-                px: 2,
-                py: 4,
-                width: "100%",
-                cursor: "pointer",
+                "&:hover": {
+                  textDecoration: "none",
+                },
               }}
             >
-              <Stack direction="row" gap={2} alignItems="center">
-                <Box
-                  component="img"
-                  src="/images/icons/money.svg"
-                  width={20}
-                  height={20}
-                />
-                <Typography>DPP</Typography>
-              </Stack>
-            </Card>
+              <Card
+                sx={{
+                  px: 2,
+                  py: 4,
+                  width: "100%",
+                  cursor: "pointer",
+                }}
+              >
+                <Stack direction="row" gap={2} alignItems="center">
+                  <Box
+                    component="img"
+                    src="/images/icons/money.svg"
+                    width={20}
+                    height={20}
+                  />
+                  <Typography>DPP</Typography>
+                </Stack>
+              </Card>
+            </Link>
           </Box>
 
           <Card

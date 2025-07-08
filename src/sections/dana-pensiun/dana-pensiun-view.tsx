@@ -143,7 +143,7 @@ export function DanaPensiunView() {
   console.log(expandedCards, "expandedCards");
   return (
     <AppLayout menuTitle="Dana Pensiun">
-      {dateFilter !== null ? (
+      {dateFilter === null ? (
         <Box
           display="flex"
           justifyContent="center"
