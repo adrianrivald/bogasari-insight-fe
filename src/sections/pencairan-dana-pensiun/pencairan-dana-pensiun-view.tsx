@@ -412,7 +412,7 @@ export function PencairanDanaPensiunView() {
                     justifyContent="space-between"
                     width="100%"
                   >
-                    <Typography sx={{ color: "grey.500", fontWeigh: "bold" }}>
+                    <Typography sx={{ color: "grey.500", fontWeight: "bold" }}>
                       Total Diterima
                     </Typography>
                     <Typography fontWeight="bold" sx={{ color: "#19AF66" }}>

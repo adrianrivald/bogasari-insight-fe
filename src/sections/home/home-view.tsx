@@ -46,9 +46,10 @@ export function HomeView() {
       {/* Menus */}
       <Box mt={4}>
         <Typography sx={{ fontWeight: "bold" }}>Layanan Keuangan</Typography>
-        <Stack direction="row" gap={2} p={2}>
+        <Stack direction="row" gap={2} mt={2}>
           <Card
             sx={{
+              width: "50%",
               p: 2,
             }}
           >
@@ -67,6 +68,7 @@ export function HomeView() {
           </Card>
           <Card
             sx={{
+              width: "50%",
               p: 2,
             }}
           >

@@ -5,6 +5,8 @@ import {
   FormControl,
   Input,
   InputLabel,
+  List,
+  ListItem,
   MenuItem,
   OutlinedInput,
   Select,
@@ -100,134 +102,63 @@ export function SummaryPencairanDanaPensiunView() {
       {/* Balance */}
 
       <>
-        <Box mt={4}>
-          <Card
-            sx={{
-              p: 2,
-            }}
-          >
+        <Box>
+          <Box>
             <Typography fontWeight="bold">Informasi Pencairan</Typography>
             <Stack mt={2} gap={2}>
-              <Stack justifyContent="space-between" width="100%">
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                width="100%"
+                borderBottom="1px solid #EFF1F5"
+                pb={2}
+              >
                 <Typography sx={{ color: "grey.500" }}>
                   Alasan Pencairan
                 </Typography>
-
-                <FormControl fullWidth>
-                  <InputLabel
-                    shrink={false}
-                    id="select-label"
-                    style={{ display: "none" }}
-                  ></InputLabel>
-                  <Select
-                    labelId="select-label"
-                    displayEmpty
-                    sx={{ mt: 1 }}
-                    renderValue={(selected) => {
-                      console.log(selected, "selected");
-                      if (!selected) {
-                        return (
-                          <Typography fontSize={14} color="GrayText">
-                            Pilih alasan pencairan
-                          </Typography>
-                        );
-                      }
-                      return (
-                        <Typography>
-                          {reasons?.find((item) => item.id === selected)?.label}
-                        </Typography>
-                      );
-                    }}
-                  >
-                    {reasons?.map((item) => (
-                      <MenuItem value={item?.id}>{item?.label}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <Typography fontWeight="bold">Pensiun</Typography>
               </Stack>
             </Stack>
-          </Card>
-          <Card
-            sx={{
-              p: 2,
-              mt: 4,
-            }}
-          >
+          </Box>
+          <Box mt={4}>
             <Typography fontWeight="bold">Rekening Tujuan</Typography>
             <Stack mt={2} gap={2}>
-              <Stack justifyContent="space-between" width="100%">
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                width="100%"
+                borderBottom="1px solid #EFF1F5"
+                pb={2}
+              >
                 <Typography sx={{ color: "grey.500" }}>Nama Bank</Typography>
-
-                <FormControl fullWidth>
-                  <InputLabel
-                    shrink={false}
-                    id="select-label"
-                    style={{ display: "none" }}
-                  ></InputLabel>
-                  <Select
-                    labelId="select-label"
-                    displayEmpty
-                    sx={{ mt: 1 }}
-                    renderValue={(selected) => {
-                      console.log(selected, "selected");
-                      if (!selected) {
-                        return (
-                          <Typography fontSize={14} color="GrayText">
-                            Pilih Bank
-                          </Typography>
-                        );
-                      }
-                      return (
-                        <Typography>
-                          {banks?.find((item) => item.id === selected)?.label}
-                        </Typography>
-                      );
-                    }}
-                  >
-                    {banks?.map((item) => (
-                      <MenuItem value={item?.id}>{item?.label}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <Typography fontWeight="bold">BCA</Typography>
               </Stack>
-              <Stack justifyContent="space-between" width="100%">
-                <FormControl sx={{ width: "100%" }}>
-                  <Typography mb={1} component="label" htmlFor="no_rek">
-                    Nomor Rekening
-                  </Typography>
-
-                  <OutlinedInput
-                    id="no_rek"
-                    placeholder="Masukkan Nomor Rekning"
-                    sx={{ width: "100%" }}
-                    autoComplete="off"
-                  />
-                </FormControl>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                width="100%"
+                borderBottom="1px solid #EFF1F5"
+                pb={2}
+              >
+                <Typography sx={{ color: "grey.500" }}>No Rekening</Typography>
+                <Typography fontWeight="bold">009423748</Typography>
               </Stack>
-
-              <Stack justifyContent="space-between" width="100%">
-                <FormControl sx={{ width: "100%" }}>
-                  <Typography mb={1} component="label" htmlFor="nama_rekening">
-                    Nama Rekening
-                  </Typography>
-
-                  <OutlinedInput
-                    id="nama_rekening"
-                    placeholder="Masukkan Nama Rekning"
-                    sx={{ width: "100%" }}
-                    autoComplete="off"
-                  />
-                </FormControl>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                width="100%"
+                borderBottom="1px solid #EFF1F5"
+                pb={2}
+              >
+                <Typography sx={{ color: "grey.500" }}>
+                  Rekening Tujuan
+                </Typography>
+                <Typography fontWeight="bold">Budi Susanto</Typography>
               </Stack>
             </Stack>
-          </Card>
+          </Box>
 
-          <Card
-            sx={{
-              p: 2,
-              mt: 4,
-            }}
-          >
+          <Box mt={4}>
             <Typography fontWeight="bold">Unggah Dokumen</Typography>
             <Stack mt={2} gap={2}>
               <Stack
@@ -238,44 +169,31 @@ export function SummaryPencairanDanaPensiunView() {
               >
                 <Stack direction="row" gap={2} alignItems="center">
                   <Box>
-                    {!preview ? (
-                      <Box component="img" src="/images/icons/wallet.svg" />
-                    ) : (
-                      <Box
-                        component="img"
-                        src={preview}
-                        sx={{
-                          width: "45px",
-                          height: "30px",
-                          cursor: "pointer",
-                          margin: "auto 0",
-                          objectFit: "cover",
-                        }}
-                      />
-                    )}
+                    <Box
+                      component="img"
+                      src={preview}
+                      sx={{
+                        width: "45px",
+                        height: "30px",
+                        cursor: "pointer",
+                        margin: "auto 0",
+                        objectFit: "cover",
+                        borderRadius: 4,
+                      }}
+                    />
                   </Box>
                   <Stack gap={0}>
                     <Typography fontWeight="bold">Rekening Bank</Typography>
-                    {!preview && (
-                      <Typography mt={0}>Unggah foto buku tabungan</Typography>
-                    )}
                   </Stack>
                 </Stack>
-                <Input
-                  onChange={handleFileChange}
-                  type="file"
-                  sx={{ display: "none" }}
-                  hidden
-                  id="uploadPic"
-                />
 
-                <Typography
-                  component="label"
-                  htmlFor="uploadPic"
-                  sx={{ cursor: "pointer", margin: "auto 0" }}
-                >
-                  <Box component="img" src="/images/icons/plus.svg" />
-                </Typography>
+                <Box
+                  component="img"
+                  src="/images/icons/checkmark.svg"
+                  width={24}
+                  height={24}
+                  margin="auto 0"
+                />
               </Stack>
               <Stack
                 direction="row"
@@ -285,52 +203,36 @@ export function SummaryPencairanDanaPensiunView() {
               >
                 <Stack direction="row" gap={2} alignItems="center">
                   <Box>
-                    {!previewKTP ? (
-                      <Box component="img" src="/images/icons/wallet.svg" />
-                    ) : (
-                      <Box
-                        component="img"
-                        src={previewKTP}
-                        sx={{
-                          width: "45px",
-                          height: "30px",
-                          cursor: "pointer",
-                          margin: "auto 0",
-                          objectFit: "cover",
-                        }}
-                      />
-                    )}
+                    <Box
+                      component="img"
+                      src={preview}
+                      sx={{
+                        width: "45px",
+                        height: "30px",
+                        cursor: "pointer",
+                        margin: "auto 0",
+                        objectFit: "cover",
+                        borderRadius: 4,
+                      }}
+                    />
                   </Box>
                   <Stack gap={0}>
                     <Typography fontWeight="bold">KTP</Typography>
-                    {!previewKTP && <Typography mt={0}>Unggah KTP</Typography>}
                   </Stack>
                 </Stack>
-                <Input
-                  onChange={handleFileKTPChange}
-                  type="file"
-                  sx={{ display: "none" }}
-                  hidden
-                  id="uploadPicKTP"
-                />
 
-                <Typography
-                  component="label"
-                  htmlFor="uploadPicKTP"
-                  sx={{ cursor: "pointer", margin: "auto 0" }}
-                >
-                  <Box component="img" src="/images/icons/plus.svg" />
-                </Typography>
+                <Box
+                  component="img"
+                  src="/images/icons/checkmark.svg"
+                  width={24}
+                  height={24}
+                  margin="auto 0"
+                />
               </Stack>
             </Stack>
-          </Card>
+          </Box>
 
-          <Card
-            sx={{
-              p: 2,
-              mt: 4,
-            }}
-          >
+          <Box mt={4}>
             <Typography fontWeight="bold">Rincian Dana</Typography>
             <Stack mt={2} gap={2}>
               <Stack
@@ -360,7 +262,7 @@ export function SummaryPencairanDanaPensiunView() {
                 justifyContent="space-between"
                 width="100%"
               >
-                <Typography sx={{ color: "grey.500", fontWeigh: "bold" }}>
+                <Typography sx={{ color: "grey.500", fontWeight: "bold" }}>
                   Total Diterima
                 </Typography>
                 <Typography fontWeight="bold" sx={{ color: "#19AF66" }}>
@@ -368,7 +270,45 @@ export function SummaryPencairanDanaPensiunView() {
                 </Typography>
               </Stack>
             </Stack>
-          </Card>
+          </Box>
+
+          <Box mt={4} p={4} bgcolor="#EFF1F5" borderRadius={2}>
+            <Stack direction="row" gap={1} alignItems="center">
+              <Box
+                component="img"
+                src="/images/icons/info.svg"
+                width={20}
+                height={20}
+              />
+              <Typography fontWeight={600}>Penting untuk Diketahui</Typography>
+            </Stack>
+            <ul
+              style={{
+                listStyleType: "disc",
+                paddingLeft: "1.5em",
+                marginTop: 12,
+                display: "flex",
+                flexDirection: "column",
+                gap: 8,
+              }}
+            >
+              <li style={{ color: "black" }}>
+                <Typography variant="body1">
+                  Pencairan tidak dapat dibatalkan
+                </Typography>
+              </li>
+              <li style={{ color: "black" }}>
+                <Typography variant="body1">
+                  Proses pencairan membutuhkan waktu 3-5 hari kerja
+                </Typography>
+              </li>
+              <li style={{ color: "black" }}>
+                <Typography variant="body1">
+                  Pastikan data rekening sudah benar
+                </Typography>
+              </li>
+            </ul>
+          </Box>
         </Box>
 
         <LoadingButton
@@ -387,7 +327,7 @@ export function SummaryPencairanDanaPensiunView() {
             backgroundColor: "blue.500",
           }}
         >
-          Ajukan Dokumen
+          Kirim Dokumen
         </LoadingButton>
       </>
     </AppLayout>
