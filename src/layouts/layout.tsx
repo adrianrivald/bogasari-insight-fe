@@ -28,6 +28,7 @@ export type AppLayoutProps = {
     sx?: SxProps<Theme>;
   };
   menuTitle?: string;
+  withPadding?: boolean;
 };
 
 const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
@@ -93,7 +94,12 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
   );
 };
 
-export function AppLayout({ children, header, menuTitle }: AppLayoutProps) {
+export function AppLayout({
+  children,
+  header,
+  menuTitle,
+  withPadding = true,
+}: AppLayoutProps) {
   const { logout } = useAuth();
   const layoutQuery: Breakpoint = "md";
   const [isOpen, setIsOpen] = useState(false);
@@ -144,10 +150,12 @@ export function AppLayout({ children, header, menuTitle }: AppLayoutProps) {
     >
       <Container
         sx={{
-          p: {
-            xs: 3,
-            lg: 4,
-          },
+          p: withPadding
+            ? {
+                xs: 3,
+                lg: 4,
+              }
+            : 0,
         }}
       >
         {isOpen ? (
