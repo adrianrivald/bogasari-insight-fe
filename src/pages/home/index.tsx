@@ -6,7 +6,7 @@ import { AppLayout } from "../../layouts/layout";
 
 export default function HomePage() {
   return (
-    <AppLayout>
+    <>
       <Helmet>
         <title> {`Dashboard - Bogasari Insight`}</title>
         <meta
@@ -20,6 +20,6 @@ export default function HomePage() {
       </Helmet>
 
       <HomeView />
-    </AppLayout>
+    </>
   );
 }

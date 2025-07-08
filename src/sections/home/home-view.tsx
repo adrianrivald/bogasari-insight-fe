@@ -2,6 +2,7 @@ import { Box, Card, Stack, Typography } from "@mui/material";
 import { useAuth } from "../auth/providers/auth";
 import BalanceCard from "../../components/ui/balance-card";
 import { useNavigate } from "react-router-dom";
+import { AppLayout } from "../../layouts/layout";
 
 export function HomeView() {
   const { userInfo } = useAuth();
@@ -11,15 +12,16 @@ export function HomeView() {
     navigate("/pencairan-dana-pensiun");
   };
   return (
-    <>
+    <AppLayout withPadding={false}>
       <Box
         display="flex"
         justifyContent="start"
-        sx={
-          {
-            // backgroundColor: "blue.50",
-          }
-        }
+        sx={{
+          p: {
+            xs: 3,
+            lg: 4,
+          },
+        }}
       >
         {/* User info */}
         <Stack direction="row" gap={2}>
@@ -39,12 +41,28 @@ export function HomeView() {
       </Box>
 
       {/* Balance */}
-      <Box mt={4}>
+      <Box
+        mt={4}
+        sx={{
+          p: {
+            xs: 3,
+            lg: 4,
+          },
+        }}
+      >
         <BalanceCard balance="Rp850.750.000" percentage="2,5%" />
       </Box>
 
       {/* Menus */}
-      <Box mt={4}>
+      <Box
+        mt={4}
+        sx={{
+          p: {
+            xs: 3,
+            lg: 4,
+          },
+        }}
+      >
         <Typography sx={{ fontWeight: "bold" }}>Layanan Keuangan</Typography>
         <Stack direction="row" gap={2} mt={2}>
           <Card
@@ -102,7 +120,16 @@ export function HomeView() {
       </Box>
 
       {/* Penarikan Dana */}
-      <Box mt={4} onClick={onClickPenarikanDana}>
+      <Box
+        mt={4}
+        sx={{
+          p: {
+            xs: 3,
+            lg: 4,
+          },
+        }}
+        onClick={onClickPenarikanDana}
+      >
         <Typography sx={{ fontWeight: "bold" }}>Penarikan Dana</Typography>
         <Card
           sx={{
@@ -133,6 +160,6 @@ export function HomeView() {
           />
         </Card>
       </Box>
-    </>
+    </AppLayout>
   );
 }

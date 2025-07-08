@@ -28,11 +28,10 @@ export function DetailPencairanDanaView() {
 
   return (
     <AppLayout withPadding={false} menuTitle="Pencairan Dana Pensiun">
-      {/* Balance */}
-
       <>
         <Box>
           <Stack
+            position="relative"
             direction="row"
             justifyContent="space-between"
             alignItems="center"
@@ -43,8 +42,27 @@ export function DetailPencairanDanaView() {
                 lg: 4,
               },
               py: 4,
+              overflow: "hidden",
             }}
           >
+            <Box
+              component="img"
+              src="/images/bg-pending-2.svg"
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+              }}
+            />
+            <Box
+              component="img"
+              src="/images/bg-pending-1.svg"
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+              }}
+            />
             <Typography fontWeight="bold">Status Pengajuan</Typography>
             <Typography color="#996B00" fontWeight={600}>
               Dalam Proses
