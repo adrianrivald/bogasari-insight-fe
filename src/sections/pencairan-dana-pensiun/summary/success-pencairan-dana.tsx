@@ -65,7 +65,7 @@ export function SuccessPencairanDanaView() {
         </Button>
       </Link>
 
-      <Link href="/">
+      <Link href="/pencairan-dana-pensiun/detail">
         <Button
           fullWidth
           variant="outlined"
