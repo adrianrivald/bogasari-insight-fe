@@ -121,7 +121,7 @@ export function HomeView() {
 
       {/* Penarikan Dana */}
       <Box
-        mt={4}
+        my={4}
         sx={{
           px: {
             xs: 3,
