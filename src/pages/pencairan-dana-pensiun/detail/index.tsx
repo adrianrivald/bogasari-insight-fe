@@ -1,16 +1,16 @@
 import { Helmet } from "react-helmet-async";
-import { SummaryPencairanDanaPensiunView } from "../../../sections/pencairan-dana-pensiun/summary/summary-pencairan-dana-pensiun-view";
+import { DetailPencairanDanaView } from "../../../sections/pencairan-dana-pensiun/detail/detail-pencairan-dana-pensiun-view";
 
 // ----------------------------------------------------------------------
 
-export default function SummaryPencairanDanaPensiun() {
+export default function DetailPencairanDana() {
   return (
     <>
       <Helmet>
         <title> {`Complete Profile - Bogasari Insight`}</title>
       </Helmet>
 
-      <SummaryPencairanDanaPensiunView />
+      <DetailPencairanDanaView />
     </>
   );
 }

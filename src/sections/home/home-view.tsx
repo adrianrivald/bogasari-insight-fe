@@ -81,7 +81,7 @@ export function HomeView() {
               />
               <Box
                 bgcolor="#FFCB52"
-                borderRadius="100%"
+                borderRadius="20px"
                 px={2}
                 display="flex"
                 alignItems="center"

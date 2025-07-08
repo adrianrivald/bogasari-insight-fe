@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 // ----------------------------------------------------------------------
 
-export default function CompleteProfile() {
+export default function PencairanDanaPensiun() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

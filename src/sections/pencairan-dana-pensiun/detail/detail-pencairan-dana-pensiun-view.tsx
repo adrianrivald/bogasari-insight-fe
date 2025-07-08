@@ -1,71 +1,12 @@
-import {
-  Box,
-  Card,
-  CircularProgress,
-  FormControl,
-  Input,
-  InputLabel,
-  List,
-  ListItem,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 import { AppLayout } from "../../../layouts/layout";
-import { Form } from "../../../components/form/form";
 import { useCallback, useState } from "react";
 import { LoadingButton } from "@mui/lab";
-import { SuccessPencairanDanaView } from "./success-pencairan-dana";
 
-const reasons = [
-  {
-    id: "1",
-    label: "Meninggal",
-  },
-];
-
-const banks = [
-  {
-    id: "1",
-    label: "BCA",
-  },
-  {
-    id: "2",
-    label: "Mandiri",
-  },
-  {
-    id: "3",
-    label: "BRI",
-  },
-];
-
-export function SummaryPencairanDanaPensiunView() {
+export function DetailPencairanDanaView() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [preview, setPreview] = useState("");
   const [previewKTP, setPreviewKTP] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
-  const handleSubmit = useCallback(async () => {
-    setIsSubmitting(true);
-    try {
-      // await ...
-      setIsSubmitting(false);
-      setIsSuccess(true);
-    } catch (error: any) {
-      console.log("here");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, []);
-
-  if (isSuccess) {
-    return (
-      <AppLayout>
-        <SuccessPencairanDanaView />
-      </AppLayout>
-    );
-  }
 
   return (
     <AppLayout menuTitle="Pencairan Dana Pensiun">
@@ -73,8 +14,8 @@ export function SummaryPencairanDanaPensiunView() {
 
       <>
         <Box>
-          <Box>
-            <Typography fontWeight="bold">Informasi Pencairan</Typography>
+          <Box mt={4}>
+            <Typography fontWeight="bold">Detail Pengajuan</Typography>
             <Stack mt={2} gap={2}>
               <Stack
                 direction="row"
@@ -84,12 +25,37 @@ export function SummaryPencairanDanaPensiunView() {
                 pb={2}
               >
                 <Typography sx={{ color: "grey.500" }}>
-                  Alasan Pencairan
+                  Nomor Pengajuan
+                </Typography>
+                <Typography fontWeight="bold">PP-2024-001234</Typography>
+              </Stack>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                width="100%"
+                borderBottom="1px solid #EFF1F5"
+                pb={2}
+              >
+                <Typography sx={{ color: "grey.500" }}>
+                  Tanggal Pengajuan
+                </Typography>
+                <Typography fontWeight="bold">15 Jan 2024</Typography>
+              </Stack>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                width="100%"
+                borderBottom="1px solid #EFF1F5"
+                pb={2}
+              >
+                <Typography sx={{ color: "grey.500" }}>
+                  Jenis Pencairan
                 </Typography>
                 <Typography fontWeight="bold">Pensiun</Typography>
               </Stack>
             </Stack>
           </Box>
+
           <Box mt={4}>
             <Typography fontWeight="bold">Rekening Tujuan</Typography>
             <Stack mt={2} gap={2}>
@@ -124,80 +90,6 @@ export function SummaryPencairanDanaPensiunView() {
                   Rekening Tujuan
                 </Typography>
                 <Typography fontWeight="bold">Budi Susanto</Typography>
-              </Stack>
-            </Stack>
-          </Box>
-
-          <Box mt={4}>
-            <Typography fontWeight="bold">Unggah Dokumen</Typography>
-            <Stack mt={2} gap={2}>
-              <Stack
-                direction="row"
-                border="1px solid #EFF1F5"
-                p={2}
-                justifyContent="space-between"
-              >
-                <Stack direction="row" gap={2} alignItems="center">
-                  <Box>
-                    <Box
-                      component="img"
-                      src={preview}
-                      sx={{
-                        width: "45px",
-                        height: "30px",
-                        cursor: "pointer",
-                        margin: "auto 0",
-                        objectFit: "cover",
-                        borderRadius: 4,
-                      }}
-                    />
-                  </Box>
-                  <Stack gap={0}>
-                    <Typography fontWeight="bold">Rekening Bank</Typography>
-                  </Stack>
-                </Stack>
-
-                <Box
-                  component="img"
-                  src="/images/icons/checkmark.svg"
-                  width={24}
-                  height={24}
-                  margin="auto 0"
-                />
-              </Stack>
-              <Stack
-                direction="row"
-                border="1px solid #EFF1F5"
-                p={2}
-                justifyContent="space-between"
-              >
-                <Stack direction="row" gap={2} alignItems="center">
-                  <Box>
-                    <Box
-                      component="img"
-                      src={preview}
-                      sx={{
-                        width: "45px",
-                        height: "30px",
-                        cursor: "pointer",
-                        margin: "auto 0",
-                        objectFit: "cover",
-                        borderRadius: 4,
-                      }}
-                    />
-                  </Box>
-                  <Stack gap={0}>
-                    <Typography fontWeight="bold">KTP</Typography>
-                  </Stack>
-                </Stack>
-
-                <Box
-                  component="img"
-                  src="/images/icons/checkmark.svg"
-                  width={24}
-                  height={24}
-                  margin="auto 0"
-                />
               </Stack>
             </Stack>
           </Box>
@@ -280,26 +172,6 @@ export function SummaryPencairanDanaPensiunView() {
             </ul>
           </Box>
         </Box>
-
-        <LoadingButton
-          fullWidth
-          variant="contained"
-          size="large"
-          type="submit"
-          loading={isSubmitting}
-          loadingIndicator={
-            <CircularProgress sx={{ color: "#FFF" }} size={20} />
-          }
-          onClick={handleSubmit}
-          sx={{
-            mt: 4,
-            borderRadius: 3,
-            py: 1.5,
-            backgroundColor: "blue.500",
-          }}
-        >
-          Kirim Dokumen
-        </LoadingButton>
       </>
     </AppLayout>
   );

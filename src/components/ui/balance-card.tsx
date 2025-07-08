@@ -14,7 +14,7 @@ const BalanceCard = ({ balance, percentage }: BalanceCardProps) => {
         // height: 160,
         bgcolor: "#0C3A92",
         borderRadius: 3,
-        paddingY: 8,
+        paddingY: 4,
         paddingX: 4,
         color: "#ffffff",
         display: "flex",
