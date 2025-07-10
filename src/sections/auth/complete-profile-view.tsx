@@ -44,7 +44,7 @@ export function CompleteProfileView() {
     try {
       await completeProfile({
         fullName: formData.fullName,
-        birthDate: dayjs(dateValue).format("YYYY-MM-DD"),
+        birthDate: dayjs(dateValue).format("DD-MM-YYYY"),
         nikEmployee: formData.nikEmployee,
         noKtp: formData.noKtp,
         phoneNumber: formData.phoneNumber,
@@ -186,6 +186,9 @@ export function CompleteProfileView() {
                   {...register("phoneNumber", {
                     required: "NO HP harus diisi",
                   })}
+                  onChange={(e) => {
+                    setValue("phoneNumber", e.target.value);
+                  }}
                   error={Boolean(formState?.errors?.phoneNumber)}
                   InputProps={{
                     startAdornment: (

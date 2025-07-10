@@ -19,10 +19,10 @@ import {
   Typography,
 } from "@mui/material";
 import { AppLayout } from "../../layouts/layout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import Chart from "react-apexcharts";
 import { TabContext, TabPanel } from "@mui/lab";
 import { useInfoMonthly } from "../../services/dana-pensiun/use-info-monthly";
@@ -31,6 +31,8 @@ import { useHistoryYearly } from "../../services/dana-pensiun/use-history-yearly
 import { useAmountSummary } from "../../services/dana-pensiun/use-amount-summary";
 import { useChartYearly } from "../../services/dana-pensiun/use-chart-yearly";
 import { useChartSixMonth } from "../../services/dana-pensiun/use-chart-six-month";
+import { useCreateJoinDate } from "../../services/dana-pensiun/use-create-join-date";
+import { Bounce, toast } from "react-toastify";
 
 function a11yProps(index: number) {
   return {
@@ -72,7 +74,7 @@ export function DanaPensiunView() {
   const { data: amountSummary } = useAmountSummary();
   const { data: chartYearly } = useChartYearly();
   const { data: chartSixMonth } = useChartSixMonth(yearFilter);
-
+  const { mutateAsync: postJoinDate, isSuccess } = useCreateJoinDate();
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
@@ -81,9 +83,29 @@ export function DanaPensiunView() {
     setIsShowDatePopup((prev) => !prev);
   };
 
-  const onFilterDate = () => {
-    setIsShowDatePopup(false);
-    setDateFilter(dateValue);
+  const onFilterDate = async () => {
+    try {
+      const res = await postJoinDate({
+        joinDate: dayjs(dateValue).format("YYYY-MM-DD"),
+      });
+      if (res.success) {
+        setIsShowDatePopup(false);
+        setDateFilter(dateValue);
+      }
+    } catch (error: any) {
+      const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
 
   const handleChangeDate = (newValue: Dayjs | null) => {
@@ -203,7 +225,7 @@ export function DanaPensiunView() {
   console.log(expandedCards, "expandedCards");
   return (
     <AppLayout menuTitle="Dana Pensiun">
-      {dateFilter !== null ? (
+      {dateFilter === null ? (
         <Box
           display="flex"
           justifyContent="center"
