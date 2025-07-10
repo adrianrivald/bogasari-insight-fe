@@ -25,6 +25,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
 import Chart from "react-apexcharts";
 import { TabContext, TabPanel } from "@mui/lab";
+import { useInfoMonthly } from "../../services/dana-pensiun/use-info-monthly";
+import { formatRupiah } from "../../utils/format-rupiah";
+import { useHistoryYearly } from "../../services/dana-pensiun/use-history-yearly";
+import { useAmountSummary } from "../../services/dana-pensiun/use-amount-summary";
+import { useChartYearly } from "../../services/dana-pensiun/use-chart-yearly";
+import { useChartSixMonth } from "../../services/dana-pensiun/use-chart-six-month";
 
 function a11yProps(index: number) {
   return {
@@ -52,6 +58,7 @@ const transactionHistories = [
 ];
 
 export function DanaPensiunView() {
+  // const { data: historyYearly } = useHistoryYearly();
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [isShowDatePopup, setIsShowDatePopup] = useState(false);
   const [dateFilter, setDateFilter] = useState<Dayjs | null>(null);
@@ -60,6 +67,11 @@ export function DanaPensiunView() {
   const [expandedCards, setExpandedCards] = React.useState<
     Record<number, boolean>
   >({});
+
+  const { data: infoMonthly } = useInfoMonthly();
+  const { data: amountSummary } = useAmountSummary();
+  const { data: chartYearly } = useChartYearly();
+  const { data: chartSixMonth } = useChartSixMonth(yearFilter);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
@@ -82,7 +94,7 @@ export function DanaPensiunView() {
   const series = [
     {
       name: "Data",
-      data: [17, 24, 26, 28, 31, 40, 42, 44, 46], // Sample values
+      data: chartYearly?.data?.map((item) => item.total) as any,
     },
   ];
 
@@ -99,7 +111,55 @@ export function DanaPensiunView() {
       width: 3,
     },
     xaxis: {
-      categories: ["2019", "2020", "2021", "2022", "2023", "2024", "2025"],
+      categories: chartYearly?.data?.map((item) => item.month),
+    },
+    yaxis: {
+      labels: {
+        formatter: function (val: string) {
+          return `${val}jt`;
+        },
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.6,
+        opacityTo: 0.05,
+        stops: [0, 100],
+      },
+    },
+    tooltip: {
+      y: {
+        formatter: function (val: string) {
+          return `${val}jt`;
+        },
+      },
+    },
+  };
+
+  // Chart States
+  const seriesMonthly = [
+    {
+      name: "Data",
+      data: chartSixMonth?.data?.map((item) => item.total) as any,
+    },
+  ];
+
+  const optionsMonthly: any = {
+    chart: {
+      type: "area",
+      toolbar: { show: false },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+      width: 3,
+    },
+    xaxis: {
+      categories: chartSixMonth?.data?.map((item) => item.month),
     },
     yaxis: {
       labels: {
@@ -143,7 +203,7 @@ export function DanaPensiunView() {
   console.log(expandedCards, "expandedCards");
   return (
     <AppLayout menuTitle="Dana Pensiun">
-      {dateFilter === null ? (
+      {dateFilter !== null ? (
         <Box
           display="flex"
           justifyContent="center"
@@ -252,7 +312,7 @@ export function DanaPensiunView() {
               <Box>
                 <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
                 <Typography fontWeight="bold" fontSize={24}>
-                  Rp850.750.000
+                  {formatRupiah(amountSummary?.totalSaldo ?? 0)}
                 </Typography>
                 <Box mt={2}>
                   <Chart
@@ -278,9 +338,11 @@ export function DanaPensiunView() {
                         pb={2}
                       >
                         <Typography sx={{ color: "grey.500" }}>
-                          Saldo Akhir 2024
+                          Saldo Akhir {infoMonthly?.previousYear}
                         </Typography>
-                        <Typography fontWeight="bold">Rp840.000.000</Typography>
+                        <Typography fontWeight="bold">
+                          {formatRupiah(infoMonthly?.previousYearAmount ?? 0)}
+                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
@@ -290,9 +352,11 @@ export function DanaPensiunView() {
                         pb={2}
                       >
                         <Typography sx={{ color: "grey.500" }}>
-                          Saldo 2025 (jan-jun)
+                          Saldo {infoMonthly?.currentYear}
                         </Typography>
-                        <Typography fontWeight="bold">Rp5.673.455</Typography>
+                        <Typography fontWeight="bold">
+                          {formatRupiah(infoMonthly?.currentYearAmount ?? 0)}
+                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
@@ -302,7 +366,9 @@ export function DanaPensiunView() {
                         <Typography sx={{ color: "grey.500" }}>
                           Total
                         </Typography>
-                        <Typography fontWeight="bold">Rp845.673.455</Typography>
+                        <Typography fontWeight="bold">
+                          {formatRupiah(infoMonthly?.total ?? 0)}
+                        </Typography>
                       </Stack>
                     </Stack>
                   </Card>
@@ -367,8 +433,8 @@ export function DanaPensiunView() {
                 </Typography>
                 <Box mt={2}>
                   <Chart
-                    options={options}
-                    series={series}
+                    options={optionsMonthly}
+                    series={seriesMonthly}
                     type="area"
                     height={300}
                   />

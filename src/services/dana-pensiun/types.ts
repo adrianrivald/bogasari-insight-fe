@@ -1,14 +1,17 @@
-export interface Plan {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    duration: string;
-    discount: number;
-    created_at: string;
-    created_by: string;
-    updated_at: string;
-    updated_by: string;
-    deleted_at: string;
-    deleted_by: string
+export interface InfoMonthly {
+    currentYear: number;
+    currentYearAmount: number;
+    previousYear: number;
+    previousYearAmount: number;
+    total: number;
+}
+export interface AmountSummary {
+    growthPercentage: number
+    totalSaldo: number
+    user: any
+}
+export interface ChartData {
+    data: any[]
+    empNo: string // TODO: Replace with Enum
+    total: number
 }

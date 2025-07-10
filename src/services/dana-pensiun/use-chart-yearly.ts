@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { http } from "../../utils/http";
+import { ChartData } from "./types";
 
 
 async function fetchChartYearly() {
-  const { data } = await http<{ data: any }>(`/v1/pension/chart/yearly`);
+  const data = await http<ChartData>(`/v1/pension/chart/yearly`);
 
   return data;
 }
