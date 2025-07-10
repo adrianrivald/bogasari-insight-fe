@@ -11,6 +11,11 @@ export function HomeView() {
   const onClickPenarikanDana = () => {
     navigate("/pencairan-dana-pensiun");
   };
+
+  const onClickDapen = () => {
+    navigate("/dana-pensiun");
+  };
+
   return (
     <AppLayout withPadding={false}>
       <Box
@@ -69,7 +74,9 @@ export function HomeView() {
             sx={{
               width: "50%",
               p: 2,
+              cursor: "pointer",
             }}
+            onClick={onClickDapen}
           >
             <Stack direction="row" justifyContent="space-between">
               <Box

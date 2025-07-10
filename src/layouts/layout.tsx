@@ -216,12 +216,13 @@ export function AppLayout({
       <Container
         disableGutters
         sx={{
-          p: withPadding
-            ? {
-                xs: 3,
-                lg: 4,
-              }
-            : 0,
+          p:
+            withPadding && !isOpen
+              ? {
+                  xs: 3,
+                  lg: 4,
+                }
+              : 0,
         }}
       >
         {isOpen ? (
