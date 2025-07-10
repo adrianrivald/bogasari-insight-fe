@@ -1,15 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { http } from "../../utils/http";
+import { HistoryYearly } from "./types";
 
 
 async function fetchHistoryYearly() {
-  const { data } = await http<{ data: any }>(`/v1/pension/history/yearly`);
+  const { data } = await http<{ data: HistoryYearly[] }>(`/v1/pension/history/yearly`);
 
   return data;
 }
 
-export function useHistoryYearly( options: any = {}) {
-  const data = useQuery(['history-yearly'], () => fetchHistoryYearly(), {
+export function useHistoryYearly( dateFilter: string, options: any = {}) {
+  const data = useQuery(['history-yearly', dateFilter], () => fetchHistoryYearly(), {
+    enabled: dateFilter !== "",
     ...options,
   });
 

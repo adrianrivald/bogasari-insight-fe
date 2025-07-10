@@ -15,3 +15,9 @@ export interface ChartData {
     empNo: string // TODO: Replace with Enum
     total: number
 }
+
+export interface HistoryYearly {
+    period: string;
+    total: number;
+    year: number
+}

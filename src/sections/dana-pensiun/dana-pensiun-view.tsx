@@ -60,20 +60,20 @@ const transactionHistories = [
 ];
 
 export function DanaPensiunView() {
-  // const { data: historyYearly } = useHistoryYearly();
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [isShowDatePopup, setIsShowDatePopup] = useState(false);
-  const [dateFilter, setDateFilter] = useState<Dayjs | null>(null);
+  const [dateFilter, setDateFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("2025");
   const [tabIndex, setTabIndex] = React.useState(0);
   const [expandedCards, setExpandedCards] = React.useState<
     Record<number, boolean>
   >({});
 
-  const { data: infoMonthly } = useInfoMonthly();
-  const { data: amountSummary } = useAmountSummary();
-  const { data: chartYearly } = useChartYearly();
-  const { data: chartSixMonth } = useChartSixMonth(yearFilter);
+  const { data: historyYearly } = useHistoryYearly(dateFilter);
+  const { data: infoMonthly } = useInfoMonthly(dateFilter);
+  const { data: amountSummary } = useAmountSummary(dateFilter);
+  const { data: chartYearly } = useChartYearly(dateFilter);
+  const { data: chartSixMonth } = useChartSixMonth(yearFilter, dateFilter);
   const { mutateAsync: postJoinDate, isSuccess } = useCreateJoinDate();
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
@@ -90,7 +90,7 @@ export function DanaPensiunView() {
       });
       if (res.success) {
         setIsShowDatePopup(false);
-        setDateFilter(dateValue);
+        setDateFilter(dayjs(dateValue).format("YYYY-MM-DD"));
       }
     } catch (error: any) {
       const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
@@ -133,12 +133,12 @@ export function DanaPensiunView() {
       width: 3,
     },
     xaxis: {
-      categories: chartYearly?.data?.map((item) => item.month),
+      categories: chartYearly?.data?.map((item) => item.year),
     },
     yaxis: {
       labels: {
         formatter: function (val: string) {
-          return `${val}jt`;
+          return `${formatRupiah(Number(val))}`;
         },
       },
     },
@@ -154,7 +154,7 @@ export function DanaPensiunView() {
     tooltip: {
       y: {
         formatter: function (val: string) {
-          return `${val}jt`;
+          return `${formatRupiah(Number(val))}`;
         },
       },
     },
@@ -186,7 +186,7 @@ export function DanaPensiunView() {
     yaxis: {
       labels: {
         formatter: function (val: string) {
-          return `${val}jt`;
+          return `${formatRupiah(Number(val))}`;
         },
       },
     },
@@ -202,7 +202,7 @@ export function DanaPensiunView() {
     tooltip: {
       y: {
         formatter: function (val: string) {
-          return `${val}jt`;
+          return `${formatRupiah(Number(val))}`;
         },
       },
     },
@@ -222,10 +222,9 @@ export function DanaPensiunView() {
     }
   };
 
-  console.log(expandedCards, "expandedCards");
   return (
     <AppLayout menuTitle="Dana Pensiun">
-      {dateFilter === null ? (
+      {dateFilter === "" ? (
         <Box
           display="flex"
           justifyContent="center"
@@ -398,28 +397,23 @@ export function DanaPensiunView() {
                 <Box mt={4}>
                   <Typography fontWeight="bold">Riwayat Transaksi</Typography>
                   <Stack mt={2} gap={2}>
-                    {transactionHistories?.map(
-                      ({ amount, periodRange, year }) => (
-                        <Card
-                          sx={{
-                            p: 2,
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Stack justifyContent="space-between" width="100%">
-                            <Typography fontWeight="bold">{year}</Typography>
-                            <Typography>{periodRange}</Typography>
-                          </Stack>
-                          <Typography
-                            sx={{ color: "#0FBD66" }}
-                            fontWeight="bold"
-                          >
-                            {amount}
-                          </Typography>
-                        </Card>
-                      )
-                    )}
+                    {historyYearly?.map(({ total, period, year }) => (
+                      <Card
+                        sx={{
+                          p: 2,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Stack justifyContent="space-between" width="100%">
+                          <Typography fontWeight="bold">{year}</Typography>
+                          <Typography>{period}</Typography>
+                        </Stack>
+                        <Typography sx={{ color: "#0FBD66" }} fontWeight="bold">
+                          {formatRupiah(total)}
+                        </Typography>
+                      </Card>
+                    ))}
                   </Stack>
                 </Box>
               </Box>

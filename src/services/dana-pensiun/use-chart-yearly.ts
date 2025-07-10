@@ -9,8 +9,9 @@ async function fetchChartYearly() {
   return data;
 }
 
-export function useChartYearly( options: any = {}) {
-  const data = useQuery(['chart-yearly'], () => fetchChartYearly(), {
+export function useChartYearly( dateFilter: string, options: any = {}) {
+  const data = useQuery(['chart-yearly', dateFilter], () => fetchChartYearly(), {
+    enabled: dateFilter !== "",
     ...options,
   });
 
