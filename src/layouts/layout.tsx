@@ -142,6 +142,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
               bottom: 0,
               cursor: "pointer",
             }}
+            onClick={onLogout}
           >
             <Stack direction="row" gap={2} alignItems="center">
               <Box
