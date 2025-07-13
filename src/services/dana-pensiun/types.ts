@@ -21,3 +21,17 @@ export interface HistoryYearly {
     total: number;
     year: number
 }
+
+export interface TransactionHistory {
+    empNo: string;
+    data: {
+        month: string;
+        date: string;
+        total: number;
+        details: {
+            code: string;
+            description: string;
+            amount: number
+        }[]
+    }[]
+}

@@ -19,7 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import { AppLayout } from "../../layouts/layout";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
@@ -33,6 +33,7 @@ import { useChartYearly } from "../../services/dana-pensiun/use-chart-yearly";
 import { useChartSixMonth } from "../../services/dana-pensiun/use-chart-six-month";
 import { useCreateJoinDate } from "../../services/dana-pensiun/use-create-join-date";
 import { Bounce, toast } from "react-toastify";
+import { useTransactionHistory } from "../../services/dana-pensiun/use-transaction-history";
 
 function a11yProps(index: number) {
   return {
@@ -40,24 +41,6 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
-const transactionHistories = [
-  {
-    year: "2025",
-    periodRange: "Jan - Jun",
-    amount: "Rp5.673.455",
-  },
-  {
-    year: "2024",
-    periodRange: "Aug - Jan",
-    amount: "Rp15.673.455",
-  },
-  {
-    year: "2024",
-    periodRange: "Mar - Aug",
-    amount: "Rp8.673.455",
-  },
-];
 
 export function DanaPensiunView() {
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
@@ -69,12 +52,13 @@ export function DanaPensiunView() {
     Record<number, boolean>
   >({});
 
+  const { data: transactionHistory } = useTransactionHistory(dateFilter);
   const { data: historyYearly } = useHistoryYearly(dateFilter);
   const { data: infoMonthly } = useInfoMonthly(dateFilter);
   const { data: amountSummary } = useAmountSummary(dateFilter);
   const { data: chartYearly } = useChartYearly(dateFilter);
   const { data: chartSixMonth } = useChartSixMonth(yearFilter, dateFilter);
-  const { mutateAsync: postJoinDate, isSuccess } = useCreateJoinDate();
+  const { mutateAsync: postJoinDate } = useCreateJoinDate();
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
@@ -84,12 +68,12 @@ export function DanaPensiunView() {
   };
 
   const onFilterDate = async () => {
+    setIsShowDatePopup(false);
     try {
       const res = await postJoinDate({
         joinDate: dayjs(dateValue).format("YYYY-MM-DD"),
       });
       if (res.success) {
-        setIsShowDatePopup(false);
         setDateFilter(dayjs(dateValue).format("YYYY-MM-DD"));
       }
     } catch (error: any) {
@@ -458,8 +442,8 @@ export function DanaPensiunView() {
                 <Box mt={4}>
                   <Typography fontWeight="bold">Riwayat Transaksi</Typography>
                   <Stack mt={2} gap={2}>
-                    {transactionHistories?.map(
-                      ({ amount, periodRange, year }, index) => (
+                    {transactionHistory?.data?.map(
+                      ({ month, date, details, total }, index) => (
                         <Card
                           sx={{
                             p: 2,
@@ -474,15 +458,17 @@ export function DanaPensiunView() {
                             width="100%"
                           >
                             <Stack justifyContent="space-between">
-                              <Typography fontWeight="bold">{year}</Typography>
-                              <Typography>{periodRange}</Typography>
+                              <Typography fontWeight="bold">
+                                {dayjs(date).format("YYYY")}
+                              </Typography>
+                              <Typography>{month}</Typography>
                             </Stack>
                             <Stack gap={2} direction="row" alignItems="center">
                               <Typography
                                 sx={{ color: "#0FBD66" }}
                                 fontWeight="bold"
                               >
-                                {amount}
+                                {formatRupiah(total)}
                               </Typography>
 
                               <Box
@@ -516,35 +502,19 @@ export function DanaPensiunView() {
                                 }}
                               />
                               <Stack mt={2} gap={2}>
-                                <Stack
-                                  direction="row"
-                                  justifyContent="space-between"
-                                >
-                                  <Typography>Kontribusi iuran 2,5%</Typography>
-                                  <Typography fontWeight="bold">
-                                    Rp250.000
-                                  </Typography>
-                                </Stack>
-                                <Stack
-                                  direction="row"
-                                  justifyContent="space-between"
-                                >
-                                  <Typography>
-                                    Kontribusi perusahaan 10%
-                                  </Typography>
-                                  <Typography fontWeight="bold">
-                                    Rp1.250.000
-                                  </Typography>
-                                </Stack>
-                                <Stack
-                                  direction="row"
-                                  justifyContent="space-between"
-                                >
-                                  <Typography>Hasil Pengembangan</Typography>
-                                  <Typography fontWeight="bold">
-                                    Rp550.000
-                                  </Typography>
-                                </Stack>
+                                {details?.map((detail) => (
+                                  <Stack
+                                    direction="row"
+                                    justifyContent="space-between"
+                                  >
+                                    <Typography>
+                                      {detail?.description}
+                                    </Typography>
+                                    <Typography fontWeight="bold">
+                                      {formatRupiah(detail?.amount)}
+                                    </Typography>
+                                  </Stack>
+                                ))}
                               </Stack>
                             </CardContent>
                           </Collapse>
