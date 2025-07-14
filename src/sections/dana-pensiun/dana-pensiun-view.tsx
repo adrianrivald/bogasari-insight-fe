@@ -19,7 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import { AppLayout } from "../../layouts/layout";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
@@ -34,6 +34,7 @@ import { useChartSixMonth } from "../../services/dana-pensiun/use-chart-six-mont
 import { useCreateJoinDate } from "../../services/dana-pensiun/use-create-join-date";
 import { Bounce, toast } from "react-toastify";
 import { useTransactionHistory } from "../../services/dana-pensiun/use-transaction-history";
+import { renderFallback } from "../../routes/sections";
 
 function a11yProps(index: number) {
   return {
@@ -45,6 +46,7 @@ function a11yProps(index: number) {
 export function DanaPensiunView() {
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [isShowDatePopup, setIsShowDatePopup] = useState(false);
+  const [isFiltering, setIsFiltering] = useState(false);
   const [dateFilter, setDateFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("2025");
   const [tabIndex, setTabIndex] = React.useState(0);
@@ -68,6 +70,7 @@ export function DanaPensiunView() {
   };
 
   const onFilterDate = async () => {
+    setIsFiltering(true);
     setIsShowDatePopup(false);
     try {
       const res = await postJoinDate({
@@ -75,6 +78,7 @@ export function DanaPensiunView() {
       });
       if (res.success) {
         setDateFilter(dayjs(dateValue).format("YYYY-MM-DD"));
+        setIsFiltering(false);
       }
     } catch (error: any) {
       const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
@@ -89,6 +93,7 @@ export function DanaPensiunView() {
         theme: "light",
         transition: Bounce,
       });
+      setIsFiltering(false);
     }
   };
 
@@ -205,6 +210,10 @@ export function DanaPensiunView() {
       });
     }
   };
+
+  if (isFiltering) {
+    return <AppLayout menuTitle="Dana Pensiun">{renderFallback}</AppLayout>;
+  }
 
   return (
     <AppLayout menuTitle="Dana Pensiun">
