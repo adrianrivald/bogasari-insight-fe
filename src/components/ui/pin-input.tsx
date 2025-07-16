@@ -5,9 +5,10 @@ interface PinInputProps {
   values: string[];
   setValues: Dispatch<SetStateAction<string[]>>;
   handleSubmit?: (code: string) => void;
+  isError?: boolean;
 }
 
-const PinInput = ({ values, setValues }: PinInputProps) => {
+const PinInput = ({ values, setValues, isError }: PinInputProps) => {
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   const handleChange = (index: number, value: string) => {
@@ -67,15 +68,20 @@ const PinInput = ({ values, setValues }: PinInputProps) => {
           onChange={(e) => handleChange(i, e.target.value)}
           onPaste={handlePaste}
           onKeyDown={(e) => handleKeyDown(e, i)}
+          error={isError} // <-- triggers red border
           inputProps={{
             maxLength: 1,
             style: {
               textAlign: "center",
               fontSize: "1.5rem",
-              // width: "50px",
-              // height: "50px",
+            },
+          }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
               borderRadius: "10px",
-              border: "1px solid #90caf9",
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: isError ? "red" : "#90caf9",
             },
           }}
         />

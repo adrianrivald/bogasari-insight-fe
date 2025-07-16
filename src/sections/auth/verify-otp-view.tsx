@@ -1,4 +1,9 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  FormHelperText,
+  Typography,
+} from "@mui/material";
 import { useCallback, useState } from "react";
 import { useAuth } from "./providers/auth";
 import { Bounce, toast } from "react-toastify";
@@ -18,6 +23,7 @@ export function VerifyOtpView({
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isOtpError, setIsOtpError] = useState(false);
   const [values, setValues] = useState(Array(6).fill(""));
 
   const onVerifyAuthCode = useCallback(async () => {
@@ -51,6 +57,7 @@ export function VerifyOtpView({
         theme: "light",
         transition: Bounce,
       });
+      setIsOtpError(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -93,7 +100,13 @@ export function VerifyOtpView({
         </Typography>
       </Box>
       <Box mt={8}>
-        <PinInput values={values} setValues={setValues} />
+        <PinInput isError={isOtpError} values={values} setValues={setValues} />
+
+        {isOtpError && (
+          <FormHelperText sx={{ color: "error.main", mt: 2 }}>
+            Kode verifikasi salah. Pastikan Anda memasukkan kode dengan benar.{" "}
+          </FormHelperText>
+        )}
       </Box>
       <Box
         display="flex"
