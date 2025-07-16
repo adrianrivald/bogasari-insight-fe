@@ -152,6 +152,18 @@ export function SignUpView() {
                   }}
                   {...register("password", {
                     required: "Password harus diisi",
+                    minLength: {
+                      value: 6,
+                      message: "Password harus terdiri dari minimal 6 karakter",
+                    },
+                    validate: (val: string) => {
+                      const hasLetter = /[A-Za-z]/.test(val);
+                      const hasNumber = /[0-9]/.test(val);
+                      if (!hasLetter || !hasNumber) {
+                        return "Password harus kombinasi angka dan huruf";
+                      }
+                      return true;
+                    },
                   })}
                 />
                 {formState?.errors?.password && (
@@ -190,10 +202,20 @@ export function SignUpView() {
                       value: true,
                       message: "Konfirmasi Password wajib diisi",
                     },
+                    minLength: {
+                      value: 6,
+                      message: "Password harus terdiri dari minimal 6 karakter",
+                    },
                     validate: (val: string) => {
                       if (watch("password") !== val) {
                         return "Password tidak cocok";
                       }
+                      const hasLetter = /[A-Za-z]/.test(val);
+                      const hasNumber = /[0-9]/.test(val);
+                      if (!hasLetter || !hasNumber) {
+                        return "Password harus kombinasi angka dan huruf";
+                      }
+                      return true;
                     },
                   })}
                 />
