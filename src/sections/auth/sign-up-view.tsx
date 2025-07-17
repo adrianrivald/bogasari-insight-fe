@@ -30,6 +30,8 @@ export function SignUpView() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isEmailAlreadyRegistered, setIsEmailAlreadyRegistered] =
+    useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword(!showConfirmPassword);
@@ -41,11 +43,17 @@ export function SignUpView() {
         email: formData?.email,
         password: formData?.password,
       });
-      console.log(res, "res");
       setIsSubmitting(false);
       setIsSubmitted(true);
     } catch (error: any) {
       const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
+      const isEmailAlreadyRegisteredMessage = errorMessage.includes(
+        "User already exists with this email"
+      );
+      console.log(isEmailAlreadyRegisteredMessage, "errorMessage");
+      if (isEmailAlreadyRegisteredMessage) {
+        setIsEmailAlreadyRegistered(true);
+      }
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 5000,
@@ -102,7 +110,10 @@ export function SignUpView() {
             <>
               <Box sx={{ mb: 3 }}>
                 <TextField
-                  error={Boolean(formState?.errors?.email)}
+                  error={
+                    Boolean(formState?.errors?.email) ||
+                    isEmailAlreadyRegistered
+                  }
                   fullWidth
                   label="Email"
                   variant="outlined"
@@ -120,12 +131,18 @@ export function SignUpView() {
                     onChange: (e) => {
                       setValue("email", e.target.value);
                       setInputtedEmail(e.target.value);
+                      setIsEmailAlreadyRegistered(false);
                     },
                   })}
                 />
                 {formState?.errors?.email && (
                   <FormHelperText sx={{ color: "error.main" }}>
                     {String(formState?.errors?.email?.message)}
+                  </FormHelperText>
+                )}
+                {isEmailAlreadyRegistered && (
+                  <FormHelperText sx={{ color: "error.main" }}>
+                    Email ini sudah terdaftar{" "}
                   </FormHelperText>
                 )}
               </Box>
