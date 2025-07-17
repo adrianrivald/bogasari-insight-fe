@@ -25,6 +25,7 @@ export function SignInView() {
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isEmailPasswordNotMatch, setIsEmailPasswordNotMatch] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const handleSubmit = useCallback(async (formData: any) => {
@@ -34,6 +35,12 @@ export function SignInView() {
       setIsSubmitting(false);
     } catch (error: any) {
       const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
+      const isEmailPasswordNotMatchMessage = errorMessage.includes(
+        "Invalid credentials"
+      );
+      if (isEmailPasswordNotMatchMessage) {
+        setIsEmailPasswordNotMatch(true);
+      }
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 5000,
@@ -81,7 +88,7 @@ export function SignInView() {
 
         {/* Form */}
         <Form width="100%" mt={4} onSubmit={handleSubmit}>
-          {({ register, formState }) => (
+          {({ register, formState, setValue }) => (
             <>
               <Box sx={{ mb: 3 }}>
                 <TextField
@@ -110,7 +117,10 @@ export function SignInView() {
 
               <Box sx={{ mb: 3 }}>
                 <TextField
-                  error={Boolean(formState?.errors?.password)}
+                  error={
+                    Boolean(formState?.errors?.password) ||
+                    isEmailPasswordNotMatch
+                  }
                   fullWidth
                   label="Password"
                   variant="outlined"
@@ -130,11 +140,32 @@ export function SignInView() {
                   }}
                   {...register("password", {
                     required: "Password harus diisi",
+                    minLength: {
+                      value: 6,
+                      message: "Password harus terdiri dari minimal 6 karakter",
+                    },
+                    validate: (val: string) => {
+                      const hasLetter = /[A-Za-z]/.test(val);
+                      const hasNumber = /[0-9]/.test(val);
+                      if (!hasLetter || !hasNumber) {
+                        return "Password harus kombinasi angka dan huruf";
+                      }
+                      return true;
+                    },
+                    onChange: (e) => {
+                      setValue("password", e.target.value);
+                      setIsEmailPasswordNotMatch(false);
+                    },
                   })}
                 />
                 {formState?.errors?.password && (
                   <FormHelperText sx={{ color: "error.main" }}>
                     {String(formState?.errors?.password?.message)}
+                  </FormHelperText>
+                )}
+                {isEmailPasswordNotMatch && (
+                  <FormHelperText sx={{ color: "error.main" }}>
+                    Email dan password tidak cocok{" "}
                   </FormHelperText>
                 )}
               </Box>
