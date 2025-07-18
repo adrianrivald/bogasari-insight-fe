@@ -44,6 +44,8 @@ export const VerifyOtpPage = lazy(() => import("../pages/auth/verify-otp"));
 
 export const DashboardHomePage = lazy(() => import("../pages/home/index"));
 
+export const AuthCallbackPage = lazy(() => import("../pages/auth/callback"));
+
 // ----------------------------------------------------------------------
 
 export const renderFallback = (
@@ -103,6 +105,10 @@ export function Router() {
           element: <DetailPencairanDanaPage />,
         },
         {
+          path: "/sign-up",
+          element: <SignUpPage />,
+        },
+        {
           path: "*",
           element: <Navigate to="/404" replace />,
         },
@@ -143,6 +149,10 @@ export function Router() {
         {
           path: "/verify-otp",
           element: <VerifyOtpPage />,
+        },
+        {
+          path: "/auth/callback",
+          element: <AuthCallbackPage />,
         },
         {
           path: "*",
