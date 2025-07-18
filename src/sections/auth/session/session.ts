@@ -1,13 +1,13 @@
 import { API_URL } from "../../../constants";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
-const STORAGE_KEY = 'session';
-const USER_KEY = 'user_info';
+const STORAGE_KEY = "session";
+const USER_KEY = "user_info";
 
 export interface User {
-   email: string;
-   id: number;
-   role: string;
+  email: string;
+  id: number;
+  role: string;
 }
 
 export function getSession() {
@@ -18,12 +18,11 @@ export function getUser() {
   return window.localStorage.getItem(USER_KEY);
 }
 
-export function setSession(newSession: string, expires: string, user: User) {
+export function setSession(newSession: string, expires?: string, user?: User) {
   Cookies.set(STORAGE_KEY, newSession, {
-    expires: new Date(expires)
+    expires: new Date(expires ?? ""),
   });
   window.localStorage.setItem(USER_KEY, JSON.stringify(user));
-
 }
 
 export function flushStorage() {
