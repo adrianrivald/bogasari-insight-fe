@@ -11,6 +11,7 @@ import PinInput from "../../components/ui/pin-input";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { CheckEmailForgotPasswordView } from "./check-email-forgot-password-view";
+import { ResetPasswordView } from "./reset-password-view";
 
 export function VerifyOtpView({
   email,
@@ -24,47 +25,52 @@ export function VerifyOtpView({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isOtpError, setIsOtpError] = useState(false);
+  const [isOtpEntered, setIsOtpEntered] = useState(false);
   const [values, setValues] = useState(Array(6).fill(""));
 
   const onVerifyAuthCode = useCallback(async () => {
     const code = values.join("");
-    console.log(code, "code");
     setIsSubmitting(true);
-    try {
-      const res = await verifyOtp(
-        {
-          email: email,
-          otp: code,
-        },
-        true
-      );
-      console.log(res, "rs");
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      if (isForgotPassword) {
-        navigate("/reset-password");
+    if (!isForgotPassword) {
+      try {
+        await verifyOtp(
+          {
+            email: email,
+            otp: code,
+          },
+          true
+        );
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+      } catch (error: any) {
+        const errorMessage =
+          error.message ?? "Terjadi error, silakan coba lagi";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        setIsOtpError(true);
+      } finally {
+        setIsSubmitting(false);
       }
-    } catch (error: any) {
-      const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-      setIsOtpError(true);
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      setIsOtpEntered(true);
     }
   }, [values]);
 
   if (isSubmitted && isForgotPassword) {
     return <CheckEmailForgotPasswordView email={email} />;
+  }
+
+  if (isOtpEntered) {
+    return <ResetPasswordView enteredOtp={values.join("")} />;
   }
 
   return (

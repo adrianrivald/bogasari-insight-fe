@@ -18,7 +18,7 @@ import { CheckEmailForgotPasswordView } from "./check-email-forgot-password-view
 import { ResetPasswordSuccessView } from "./reset-password-success-view";
 import { Bounce, toast } from "react-toastify";
 
-export function ResetPasswordView() {
+export function ResetPasswordView({ enteredOtp }: { enteredOtp?: string }) {
   const { resetPassword } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -34,7 +34,7 @@ export function ResetPasswordView() {
       await resetPassword({
         email: formData?.email,
         newPassword: formData?.password,
-        otp: "123", // TODO: fix this
+        otp: enteredOtp ?? "",
       });
       setIsSubmitting(false);
       setIsSubmitted(true);
