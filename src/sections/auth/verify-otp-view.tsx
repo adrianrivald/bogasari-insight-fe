@@ -2,6 +2,8 @@ import {
   Box,
   CircularProgress,
   FormHelperText,
+  LinearProgress,
+  linearProgressClasses,
   Typography,
 } from "@mui/material";
 import { useCallback, useState } from "react";
@@ -12,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { CheckEmailForgotPasswordView } from "./check-email-forgot-password-view";
 import { ResetPasswordView } from "./reset-password-view";
+import { varAlpha } from "../../theme/styles";
 
 export function VerifyOtpView({
   email,
@@ -27,11 +30,13 @@ export function VerifyOtpView({
   const [isOtpError, setIsOtpError] = useState(false);
   const [isOtpEntered, setIsOtpEntered] = useState(false);
   const [values, setValues] = useState(Array(6).fill(""));
+  const [isLoading, setIsLoading] = useState(false);
 
   const onVerifyAuthCode = useCallback(async () => {
     const code = values.join("");
     setIsSubmitting(true);
     if (!isForgotPassword) {
+      setIsLoading(true);
       try {
         await verifyOtp(
           {
@@ -59,6 +64,7 @@ export function VerifyOtpView({
         setIsOtpError(true);
       } finally {
         setIsSubmitting(false);
+        setIsLoading(false);
       }
     } else {
       setIsOtpEntered(true);
@@ -71,6 +77,27 @@ export function VerifyOtpView({
 
   if (isOtpEntered) {
     return <ResetPasswordView enteredOtp={values.join("")} />;
+  }
+
+  if (isLoading) {
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flex="1 1 auto"
+      >
+        <LinearProgress
+          sx={{
+            width: 1,
+            maxWidth: 320,
+            bgcolor: (theme) =>
+              varAlpha(theme.vars.palette.text.primaryChannel, 0.16),
+            [`& .${linearProgressClasses.bar}`]: { bgcolor: "text.primary" },
+          }}
+        />
+      </Box>
+    );
   }
 
   return (
