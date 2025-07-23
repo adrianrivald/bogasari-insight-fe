@@ -48,8 +48,8 @@ interface CredentialsDTO {
 
 interface CredentialsResetPasswordDTO {
   email: string;
-  otp: string;
-  newPassword: string;
+  token: string;
+  password: string;
 }
 
 export function AuthProvider(props: React.PropsWithChildren) {

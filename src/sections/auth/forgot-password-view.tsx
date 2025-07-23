@@ -49,7 +49,7 @@ export function ForgotPasswordView() {
   }, []);
 
   if (isSubmitted) {
-    return <VerifyOtpView isForgotPassword email={inputtedEmail} />;
+    return <CheckEmailForgotPasswordView email={inputtedEmail} />;
   }
 
   return (

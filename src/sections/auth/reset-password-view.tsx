@@ -17,13 +17,18 @@ import { useAuth } from "./providers/auth";
 import { CheckEmailForgotPasswordView } from "./check-email-forgot-password-view";
 import { ResetPasswordSuccessView } from "./reset-password-success-view";
 import { Bounce, toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
-export function ResetPasswordView({ enteredOtp }: { enteredOtp?: string }) {
+export function ResetPasswordView() {
   const { resetPassword } = useAuth();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const token = params.get("token");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword(!showConfirmPassword);
@@ -33,8 +38,8 @@ export function ResetPasswordView({ enteredOtp }: { enteredOtp?: string }) {
     try {
       await resetPassword({
         email: formData?.email,
-        newPassword: formData?.password,
-        otp: enteredOtp ?? "",
+        password: formData?.password,
+        token: token ?? "",
       });
       setIsSubmitting(false);
       setIsSubmitted(true);

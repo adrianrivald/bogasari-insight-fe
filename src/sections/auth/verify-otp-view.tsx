@@ -75,10 +75,6 @@ export function VerifyOtpView({
     return <CheckEmailForgotPasswordView email={email} />;
   }
 
-  if (isOtpEntered) {
-    return <ResetPasswordView enteredOtp={values.join("")} />;
-  }
-
   if (isLoading) {
     return (
       <Box
