@@ -35,12 +35,14 @@ export function ResetPasswordView() {
 
   const handleSubmit = useCallback(async (formData: any) => {
     setIsSubmitting(true);
+    const email = localStorage.getItem("enteredEmail");
     try {
       await resetPassword({
-        email: formData?.email,
+        email: String(email),
         password: formData?.password,
         token: token ?? "",
       });
+      localStorage.removeItem("enteredEmail");
       setIsSubmitting(false);
       setIsSubmitted(true);
     } catch (error: any) {
@@ -58,6 +60,7 @@ export function ResetPasswordView() {
       });
     } finally {
       setIsSubmitting(false);
+      localStorage.removeItem("enteredEmail");
     }
   }, []);
 
@@ -92,33 +95,8 @@ export function ResetPasswordView() {
 
         {/* Form */}
         <Form width="100%" mt={4} onSubmit={handleSubmit}>
-          {({ register, formState, watch, setValue }) => (
+          {({ register, formState, watch }) => (
             <>
-              <Box sx={{ mb: 3 }}>
-                <TextField
-                  error={Boolean(formState?.errors?.email)}
-                  fullWidth
-                  label="Email"
-                  variant="outlined"
-                  type="email"
-                  InputProps={{
-                    sx: { borderRadius: 1 },
-                  }}
-                  {...register("email", {
-                    required: "Email harus diisi",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  })}
-                />
-                {formState?.errors?.email && (
-                  <FormHelperText sx={{ color: "error.main" }}>
-                    {String(formState?.errors?.email?.message)}
-                  </FormHelperText>
-                )}
-              </Box>
-
               <Box sx={{ mb: 3 }}>
                 <TextField
                   error={Boolean(formState?.errors?.password)}

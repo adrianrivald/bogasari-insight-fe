@@ -28,6 +28,7 @@ export function ForgotPasswordView() {
     setIsSubmitting(true);
     try {
       await forgotPassword({ email: formData?.email });
+      localStorage.setItem("enteredEmail", formData?.email);
       setIsSubmitting(false);
       setIsSubmitted(true);
     } catch (error: any) {
