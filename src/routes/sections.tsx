@@ -155,6 +155,10 @@ export function Router() {
           element: <AuthCallbackPage />,
         },
         {
+          path: "/success-registration",
+          element: <SuccessRegistrationPage />,
+        },
+        {
           path: "*",
           element: <Navigate to="/404" replace />,
         },
