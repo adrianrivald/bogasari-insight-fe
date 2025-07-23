@@ -9,11 +9,11 @@ import { useNavigate } from "react-router-dom";
 export default function SignUp() {
   const { isAuth } = useAuth();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (isAuth) {
-      navigate("/");
-    }
-  }, [isAuth]);
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     navigate("/");
+  //   }
+  // }, [isAuth]);
 
   return (
     <>

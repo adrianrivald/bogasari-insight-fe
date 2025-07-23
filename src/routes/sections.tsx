@@ -106,7 +106,11 @@ export function Router() {
         },
         {
           path: "/sign-up",
-          element: <SignUpPage />,
+          element: (
+            <AppLayout>
+              <SignUpPage />
+            </AppLayout>
+          ),
         },
         {
           path: "*",
