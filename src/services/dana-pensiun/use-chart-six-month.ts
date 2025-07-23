@@ -9,9 +9,9 @@ async function fetchChartSixMonth(year: string) {
   return data;
 }
 
-export function useChartSixMonth(year: string, dateFilter: string, options: any = {}) {
-  const data = useQuery(['chart-six-month', year, dateFilter], () => fetchChartSixMonth(year), {
-    enabled: dateFilter !== "",
+export function useChartSixMonth(year: string, options: any = {}) {
+  const data = useQuery(['chart-six-month', year], () => fetchChartSixMonth(year), {
+    enabled: true,
     ...options,
   });
 

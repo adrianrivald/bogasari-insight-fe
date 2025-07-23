@@ -9,9 +9,9 @@ async function fetchAmountSummary() {
   return data;
 }
 
-export function useAmountSummary( dateFilter: string, options: any = {}) {
-  const data = useQuery(['ammount-summary', dateFilter], () => fetchAmountSummary(), {
-    enabled: dateFilter !== "",
+export function useAmountSummary( options: any = {}) {
+  const data = useQuery(['ammount-summary'], () => fetchAmountSummary(), {
+    enabled: true,
     ...options,
   });
 

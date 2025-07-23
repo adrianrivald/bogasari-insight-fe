@@ -9,9 +9,9 @@ async function fetchInfoMonthly() {
   return data;
 }
 
-export function useInfoMonthly( dateFilter: string, options: any = {}) {
+export function useInfoMonthly(  options: any = {}) {
   const data = useQuery(['info-monthly'], () => fetchInfoMonthly(), {
-    enabled: dateFilter !== "",
+    enabled: true,
     ...options,
   });
 

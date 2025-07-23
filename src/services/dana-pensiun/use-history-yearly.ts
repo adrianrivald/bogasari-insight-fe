@@ -9,9 +9,9 @@ async function fetchHistoryYearly() {
   return data;
 }
 
-export function useHistoryYearly( dateFilter: string, options: any = {}) {
-  const data = useQuery(['history-yearly', dateFilter], () => fetchHistoryYearly(), {
-    enabled: dateFilter !== "",
+export function useHistoryYearly(  options: any = {}) {
+  const data = useQuery(['history-yearly'], () => fetchHistoryYearly(), {
+    enabled: true,
     ...options,
   });
 

@@ -9,9 +9,9 @@ async function fetchTransactionHistory() {
   return data;
 }
 
-export function useTransactionHistory( dateFilter: string, options: any = {}) {
-  const data = useQuery(['transaction-history', dateFilter], () => fetchTransactionHistory(), {
-    enabled: dateFilter !== "",
+export function useTransactionHistory( options: any = {}) {
+  const data = useQuery(['transaction-history'], () => fetchTransactionHistory(), {
+    enabled: true,
     ...options,
   });
 

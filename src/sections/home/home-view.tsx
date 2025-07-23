@@ -3,10 +3,13 @@ import { useAuth } from "../auth/providers/auth";
 import BalanceCard from "../../components/ui/balance-card";
 import { useNavigate } from "react-router-dom";
 import { AppLayout } from "../../layouts/layout";
+import { useAmountSummary } from "../../services/dana-pensiun/use-amount-summary";
+import { formatRupiah } from "../../utils/format-rupiah";
 
 export function HomeView() {
   const { userInfo } = useAuth();
   const navigate = useNavigate();
+  const { data: amountSummary } = useAmountSummary();
 
   const onClickPenarikanDana = () => {
     navigate("/pencairan-dana-pensiun");
@@ -55,7 +58,10 @@ export function HomeView() {
           },
         }}
       >
-        <BalanceCard balance="Rp850.750.000" percentage="2,5%" />
+        <BalanceCard
+          balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
+          percentage="2,5%"
+        />
       </Box>
 
       {/* Menus */}

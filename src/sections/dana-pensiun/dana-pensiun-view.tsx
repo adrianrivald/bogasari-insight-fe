@@ -54,12 +54,12 @@ export function DanaPensiunView() {
     Record<number, boolean>
   >({});
 
-  const { data: transactionHistory } = useTransactionHistory(dateFilter);
-  const { data: historyYearly } = useHistoryYearly(dateFilter);
-  const { data: infoMonthly } = useInfoMonthly(dateFilter);
-  const { data: amountSummary } = useAmountSummary(dateFilter);
-  const { data: chartYearly } = useChartYearly(dateFilter);
-  const { data: chartSixMonth } = useChartSixMonth(yearFilter, dateFilter);
+  const { data: transactionHistory } = useTransactionHistory();
+  const { data: historyYearly } = useHistoryYearly();
+  const { data: infoMonthly } = useInfoMonthly();
+  const { data: amountSummary } = useAmountSummary();
+  const { data: chartYearly } = useChartYearly();
+  const { data: chartSixMonth } = useChartSixMonth(yearFilter);
   const { mutateAsync: postJoinDate } = useCreateJoinDate();
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
@@ -217,327 +217,252 @@ export function DanaPensiunView() {
 
   return (
     <AppLayout menuTitle="Dana Pensiun">
-      {dateFilter === "" ? (
-        <Box
-          display="flex"
-          justifyContent="center"
-          flexDirection="column"
-          alignItems="center"
-        >
-          {/* User info */}
-          <Stack direction="column" gap={2} mt={4}>
-            <Box component="img" src="/images/dana-pensiun-empty.png" />
-          </Stack>
-
-          {/* Content */}
-          <Box
-            display="flex"
-            justifyContent="center"
-            flexDirection="column"
-            alignItems="center"
-          >
-            <Typography
-              variant="h1"
-              sx={{
-                fontSize: { xs: 30 },
-                fontWeight: { xs: "bold" },
-                textAlign: "center",
-              }}
+      <Box sx={{ width: "100%" }}>
+        <TabContext value={tabIndex}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs
+              value={tabIndex}
+              onChange={handleChange}
+              aria-label="dana pensiun tab"
+              TabIndicatorProps={{ style: { display: "none" } }} // hide default underline
             >
-              Belum bisa melihat dana pensiunmu
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                fontSize: { xs: 14 },
-                mt: { xs: 2 },
-                textAlign: "center",
-              }}
-            >
-              Lengkapi dulu tanggal bergabung agar estimasi dana bisa
-              ditampilkan
-            </Typography>
+              <Tab
+                sx={{
+                  width: "50%",
+                  color: "gray",
+                  "&.Mui-selected": {
+                    color: "blue.500",
+                    borderBottom: "2px solid #4AA1F3",
+                  },
+                }}
+                label="Tahun"
+                {...a11yProps(0)}
+              />
+              <Tab
+                sx={{
+                  width: "50%",
+                  color: "gray",
+                  "&.Mui-selected": {
+                    color: "blue.500",
+                    borderBottom: "2px solid #4AA1F3",
+                  },
+                }}
+                label="Bulan"
+                {...a11yProps(1)}
+              />
+            </Tabs>
           </Box>
-          <Button
-            onClick={onClickFillDate}
-            fullWidth
-            variant="contained"
-            size="large"
-            type="submit"
-            sx={{
-              margin: "auto",
-              marginTop: 24,
-              borderRadius: 3,
-              py: 1.5,
-              backgroundColor: "blue.500",
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-              fontWeight: "normal",
-            }}
-          >
-            <Box
-              component="img"
-              src="/images/icons/calendar.svg"
-              width={16}
-              height={16}
-            />
-            Isi Tanggal Bergabung
-          </Button>
-        </Box>
-      ) : (
-        <Box sx={{ width: "100%" }}>
-          <TabContext value={tabIndex}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <Tabs
-                value={tabIndex}
-                onChange={handleChange}
-                aria-label="dana pensiun tab"
-                TabIndicatorProps={{ style: { display: "none" } }} // hide default underline
-              >
-                <Tab
-                  sx={{
-                    width: "50%",
-                    color: "gray",
-                    "&.Mui-selected": {
-                      color: "blue.500",
-                      borderBottom: "2px solid #4AA1F3",
-                    },
-                  }}
-                  label="Tahun"
-                  {...a11yProps(0)}
+          {/* Tab Tahunan */}
+          <TabPanel value={0} sx={{ px: 0 }}>
+            <Box>
+              <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
+              <Typography fontWeight="bold" fontSize={24}>
+                {formatRupiah(amountSummary?.totalSaldo ?? 0)}
+              </Typography>
+              <Box mt={2}>
+                <Chart
+                  options={options}
+                  series={series}
+                  type="area"
+                  height={300}
                 />
-                <Tab
+              </Box>
+              <Box mt={4}>
+                <Card
                   sx={{
-                    width: "50%",
-                    color: "gray",
-                    "&.Mui-selected": {
-                      color: "blue.500",
-                      borderBottom: "2px solid #4AA1F3",
-                    },
+                    p: 2,
                   }}
-                  label="Bulan"
-                  {...a11yProps(1)}
-                />
-              </Tabs>
-            </Box>
-            {/* Tab Tahunan */}
-            <TabPanel value={0} sx={{ px: 0 }}>
-              <Box>
-                <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
-                <Typography fontWeight="bold" fontSize={24}>
-                  {formatRupiah(amountSummary?.totalSaldo ?? 0)}
-                </Typography>
-                <Box mt={2}>
-                  <Chart
-                    options={options}
-                    series={series}
-                    type="area"
-                    height={300}
-                  />
-                </Box>
-                <Box mt={4}>
-                  <Card
-                    sx={{
-                      p: 2,
-                    }}
-                  >
-                    <Typography fontWeight="bold">Info Bulanan</Typography>
-                    <Stack mt={2} gap={2}>
-                      <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        width="100%"
-                        borderBottom="1px solid #EFF1F5"
-                        pb={2}
-                      >
-                        <Typography sx={{ color: "grey.500" }}>
-                          Saldo Akhir {infoMonthly?.previousYear}
-                        </Typography>
-                        <Typography fontWeight="bold">
-                          {formatRupiah(infoMonthly?.previousYearAmount ?? 0)}
-                        </Typography>
-                      </Stack>
-                      <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        width="100%"
-                        borderBottom="1px solid #EFF1F5"
-                        pb={2}
-                      >
-                        <Typography sx={{ color: "grey.500" }}>
-                          Saldo {infoMonthly?.currentYear}
-                        </Typography>
-                        <Typography fontWeight="bold">
-                          {formatRupiah(infoMonthly?.currentYearAmount ?? 0)}
-                        </Typography>
-                      </Stack>
-                      <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        width="100%"
-                      >
-                        <Typography sx={{ color: "grey.500" }}>
-                          Total
-                        </Typography>
-                        <Typography fontWeight="bold">
-                          {formatRupiah(infoMonthly?.total ?? 0)}
-                        </Typography>
-                      </Stack>
-                    </Stack>
-                  </Card>
-                </Box>
-                <Box mt={4}>
-                  <Typography fontWeight="bold">Riwayat Transaksi</Typography>
+                >
+                  <Typography fontWeight="bold">Info Bulanan</Typography>
                   <Stack mt={2} gap={2}>
-                    {historyYearly?.map(({ total, period, year }) => (
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      width="100%"
+                      borderBottom="1px solid #EFF1F5"
+                      pb={2}
+                    >
+                      <Typography sx={{ color: "grey.500" }}>
+                        Saldo Akhir {infoMonthly?.previousYear}
+                      </Typography>
+                      <Typography fontWeight="bold">
+                        {formatRupiah(infoMonthly?.previousYearAmount ?? 0)}
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      width="100%"
+                      borderBottom="1px solid #EFF1F5"
+                      pb={2}
+                    >
+                      <Typography sx={{ color: "grey.500" }}>
+                        Saldo {infoMonthly?.currentYear}
+                      </Typography>
+                      <Typography fontWeight="bold">
+                        {formatRupiah(infoMonthly?.currentYearAmount ?? 0)}
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      width="100%"
+                    >
+                      <Typography sx={{ color: "grey.500" }}>Total</Typography>
+                      <Typography fontWeight="bold">
+                        {formatRupiah(infoMonthly?.total ?? 0)}
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                </Card>
+              </Box>
+              <Box mt={4}>
+                <Typography fontWeight="bold">Riwayat Transaksi</Typography>
+                <Stack mt={2} gap={2}>
+                  {historyYearly?.map(({ total, period, year }) => (
+                    <Card
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Stack justifyContent="space-between" width="100%">
+                        <Typography fontWeight="bold">{year}</Typography>
+                        <Typography>{period}</Typography>
+                      </Stack>
+                      <Typography sx={{ color: "#0FBD66" }} fontWeight="bold">
+                        {formatRupiah(total)}
+                      </Typography>
+                    </Card>
+                  ))}
+                </Stack>
+              </Box>
+            </Box>
+          </TabPanel>
+
+          {/* Tab Bulanan */}
+          <TabPanel value={1} sx={{ px: 0 }}>
+            <Box>
+              {" "}
+              <FormControl fullWidth>
+                <InputLabel
+                  shrink={false}
+                  id="select-label"
+                  style={{ display: "none" }}
+                ></InputLabel>
+                <Select
+                  labelId="select-label"
+                  value={yearFilter}
+                  onChange={(e) => setYearFilter(e.target.value)}
+                  displayEmpty
+                  sx={{ mb: 4 }}
+                >
+                  <MenuItem value="2025">Tahun 2025</MenuItem>
+                  <MenuItem value="2024">Tahun 2024</MenuItem>
+                  <MenuItem value="2023">Tahun 2023</MenuItem>
+                  <MenuItem value="2022">Tahun 2022</MenuItem>
+                  <MenuItem value="2021">Tahun 2021</MenuItem>
+                </Select>
+              </FormControl>
+              <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
+              <Typography fontWeight="bold" fontSize={24}>
+                {formatRupiah(chartSixMonth?.total ?? 0)}
+              </Typography>
+              <Box mt={2}>
+                <Chart
+                  options={optionsMonthly}
+                  series={seriesMonthly}
+                  type="area"
+                  height={300}
+                />
+              </Box>
+              <Box mt={4}>
+                <Typography fontWeight="bold">Riwayat Transaksi</Typography>
+                <Stack mt={2} gap={2}>
+                  {transactionHistory?.data?.map(
+                    ({ month, date, details, total }, index) => (
                       <Card
                         sx={{
                           p: 2,
-                          display: "flex",
-                          alignItems: "center",
+                          // display: "flex",
+                          // alignItems: "center",
                         }}
+                        onClick={() => onExpand(index)}
                       >
-                        <Stack justifyContent="space-between" width="100%">
-                          <Typography fontWeight="bold">{year}</Typography>
-                          <Typography>{period}</Typography>
-                        </Stack>
-                        <Typography sx={{ color: "#0FBD66" }} fontWeight="bold">
-                          {formatRupiah(total)}
-                        </Typography>
-                      </Card>
-                    ))}
-                  </Stack>
-                </Box>
-              </Box>
-            </TabPanel>
-
-            {/* Tab Bulanan */}
-            <TabPanel value={1} sx={{ px: 0 }}>
-              <Box>
-                {" "}
-                <FormControl fullWidth>
-                  <InputLabel
-                    shrink={false}
-                    id="select-label"
-                    style={{ display: "none" }}
-                  ></InputLabel>
-                  <Select
-                    labelId="select-label"
-                    value={yearFilter}
-                    onChange={(e) => setYearFilter(e.target.value)}
-                    displayEmpty
-                    sx={{ mb: 4 }}
-                  >
-                    <MenuItem value="2025">Tahun 2025</MenuItem>
-                    <MenuItem value="2024">Tahun 2024</MenuItem>
-                    <MenuItem value="2023">Tahun 2023</MenuItem>
-                    <MenuItem value="2022">Tahun 2022</MenuItem>
-                    <MenuItem value="2021">Tahun 2021</MenuItem>
-                  </Select>
-                </FormControl>
-                <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
-                <Typography fontWeight="bold" fontSize={24}>
-                  Rp850.750.000
-                </Typography>
-                <Box mt={2}>
-                  <Chart
-                    options={optionsMonthly}
-                    series={seriesMonthly}
-                    type="area"
-                    height={300}
-                  />
-                </Box>
-                <Box mt={4}>
-                  <Typography fontWeight="bold">Riwayat Transaksi</Typography>
-                  <Stack mt={2} gap={2}>
-                    {transactionHistory?.data?.map(
-                      ({ month, date, details, total }, index) => (
-                        <Card
-                          sx={{
-                            p: 2,
-                            // display: "flex",
-                            // alignItems: "center",
-                          }}
-                          onClick={() => onExpand(index)}
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          width="100%"
                         >
-                          <Stack
-                            direction="row"
-                            justifyContent="space-between"
-                            width="100%"
-                          >
-                            <Stack justifyContent="space-between">
-                              <Typography fontWeight="bold">
-                                {dayjs(date).format("YYYY")}
-                              </Typography>
-                              <Typography>{month}</Typography>
-                            </Stack>
-                            <Stack gap={2} direction="row" alignItems="center">
-                              <Typography
-                                sx={{ color: "#0FBD66" }}
-                                fontWeight="bold"
-                              >
-                                {formatRupiah(total)}
-                              </Typography>
-
-                              <Box
-                                component="img"
-                                src="/images/icons/chevron-down.svg"
-                                width={12}
-                                height={12}
-                                sx={{
-                                  transform: expandedCards[index]
-                                    ? "rotate(180deg)"
-                                    : "rotate(0deg)",
-                                  transitionProperty: "all",
-                                  transitionDuration: 10,
-                                }}
-                              />
-                            </Stack>
+                          <Stack justifyContent="space-between">
+                            <Typography fontWeight="bold">
+                              {dayjs(date).format("YYYY")}
+                            </Typography>
+                            <Typography>{month}</Typography>
                           </Stack>
-                          <Collapse
-                            in={expandedCards[index]}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <CardContent sx={{ p: 0 }}>
-                              <Box
-                                sx={{
-                                  width: "100%",
-                                  borderBottomWidth: 2,
-                                  borderBottomColor: "#D1D6E0",
-                                  borderBottomStyle: "dashed",
-                                  pb: 2,
-                                }}
-                              />
-                              <Stack mt={2} gap={2}>
-                                {details?.map((detail) => (
-                                  <Stack
-                                    direction="row"
-                                    justifyContent="space-between"
-                                  >
-                                    <Typography>
-                                      {detail?.description}
-                                    </Typography>
-                                    <Typography fontWeight="bold">
-                                      {formatRupiah(detail?.amount)}
-                                    </Typography>
-                                  </Stack>
-                                ))}
-                              </Stack>
-                            </CardContent>
-                          </Collapse>
-                        </Card>
-                      )
-                    )}
-                  </Stack>
-                </Box>
-              </Box>
-            </TabPanel>
-          </TabContext>
-        </Box>
-      )}
+                          <Stack gap={2} direction="row" alignItems="center">
+                            <Typography
+                              sx={{ color: "#0FBD66" }}
+                              fontWeight="bold"
+                            >
+                              {formatRupiah(total)}
+                            </Typography>
 
+                            <Box
+                              component="img"
+                              src="/images/icons/chevron-down.svg"
+                              width={12}
+                              height={12}
+                              sx={{
+                                transform: expandedCards[index]
+                                  ? "rotate(180deg)"
+                                  : "rotate(0deg)",
+                                transitionProperty: "all",
+                                transitionDuration: 10,
+                              }}
+                            />
+                          </Stack>
+                        </Stack>
+                        <Collapse
+                          in={expandedCards[index]}
+                          timeout="auto"
+                          unmountOnExit
+                        >
+                          <CardContent sx={{ p: 0 }}>
+                            <Box
+                              sx={{
+                                width: "100%",
+                                borderBottomWidth: 2,
+                                borderBottomColor: "#D1D6E0",
+                                borderBottomStyle: "dashed",
+                                pb: 2,
+                              }}
+                            />
+                            <Stack mt={2} gap={2}>
+                              {details?.map((detail) => (
+                                <Stack
+                                  direction="row"
+                                  justifyContent="space-between"
+                                >
+                                  <Typography>{detail?.description}</Typography>
+                                  <Typography fontWeight="bold">
+                                    {formatRupiah(detail?.amount)}
+                                  </Typography>
+                                </Stack>
+                              ))}
+                            </Stack>
+                          </CardContent>
+                        </Collapse>
+                      </Card>
+                    )
+                  )}
+                </Stack>
+              </Box>
+            </Box>
+          </TabPanel>
+        </TabContext>
+      </Box>
       <Dialog
         open={isShowDatePopup}
         onClose={() => setIsShowDatePopup(false)}
