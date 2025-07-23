@@ -104,18 +104,10 @@ export function Router() {
           path: "/pencairan-dana-pensiun/detail",
           element: <DetailPencairanDanaPage />,
         },
-        {
-          path: "/sign-up",
-          element: (
-            <AppLayout>
-              <SignUpPage />
-            </AppLayout>
-          ),
-        },
-        {
-          path: "*",
-          element: <Navigate to="/404" replace />,
-        },
+        // {
+        //   path: "*",
+        //   element: <Navigate to="/404" replace />,
+        // },
       ],
     },
   ]);
@@ -162,10 +154,10 @@ export function Router() {
           path: "/success-registration",
           element: <SuccessRegistrationPage />,
         },
-        {
-          path: "*",
-          element: <Navigate to="/404" replace />,
-        },
+        // {
+        //   path: "*",
+        //   element: <Navigate to="/404" replace />,
+        // },
       ],
     },
   ]);
