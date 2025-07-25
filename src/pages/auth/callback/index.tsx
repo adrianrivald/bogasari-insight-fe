@@ -1,26 +1,53 @@
-// pages/AuthCallback.jsx (React example)
+// pages/GoogleCallback.jsx
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import * as sessionService from "../../../sections/auth/session/session";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
-function AuthCallback() {
+function GoogleCallback() {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token"); // Assuming your backend returns a JWT
+    const code = searchParams.get("code");
+    const error = searchParams.get("error");
 
-    if (token) {
-      sessionService.setSession(token);
-      //  setAccessToken(token);
-      //  setUserInfo(JSON.stringify(rest));
-      navigate("/");
-    } else {
-      navigate("/login?error=missing_token");
+    if (error) {
+      console.error("Google login error:", error);
+      navigate("/login"); // or show error UI
+      return;
     }
-  }, []);
 
-  return <div>Processing login...</div>;
+    if (code) {
+      // Send the code to your backend
+      fetch(
+        `http://localhost:3000/v1/auth/google/callback?code=${encodeURIComponent(
+          code
+        )}`,
+        {
+          method: "GET",
+          credentials: "include", // optional: include cookies if needed
+        }
+      )
+        .then(async (response) => {
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Login failed");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Handle success
+          console.log("Login success:", data);
+          localStorage.setItem("token", data.token); // Example: save token
+          navigate("/dashboard"); // Redirect after login
+        })
+        .catch((err) => {
+          console.error("Login failed:", err);
+          navigate("/login");
+        });
+    }
+  }, [searchParams, navigate]);
+
+  return <div>Logging you in with Google...</div>;
 }
 
-export default AuthCallback;
+export default GoogleCallback;

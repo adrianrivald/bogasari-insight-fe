@@ -147,12 +147,12 @@ export function Router() {
           element: <VerifyOtpPage />,
         },
         {
-          path: "/auth/callback",
-          element: <AuthCallbackPage />,
-        },
-        {
           path: "/success-registration",
           element: <SuccessRegistrationPage />,
+        },
+        {
+          path: "/auth/callback",
+          element: <AuthCallbackPage />,
         },
         // {
         //   path: "*",
