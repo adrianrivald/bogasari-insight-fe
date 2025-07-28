@@ -2,7 +2,14 @@ import { Box, Button, Link, Typography } from "@mui/material";
 
 export function ResetPasswordSuccessView() {
   return (
-    <Box>
+    <Box
+      maxWidth={{
+        md: 600,
+      }}
+      marginX={{
+        md: "auto",
+      }}
+    >
       {/* Check email image */}
       <Box
         component="img"
@@ -29,8 +36,11 @@ export function ResetPasswordSuccessView() {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: 30 },
+            fontSize: { xs: 30, md: 48 },
             fontWeight: { xs: "bold" },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Password Terganti
@@ -38,7 +48,7 @@ export function ResetPasswordSuccessView() {
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: 14 },
+            fontSize: { xs: 14, md: 20 },
             mt: { xs: 1 },
             textAlign: "center",
           }}
@@ -55,7 +65,10 @@ export function ResetPasswordSuccessView() {
           type="submit"
           sx={{
             margin: "auto",
-            marginTop: 30,
+            marginTop: {
+              xs: 30,
+              md: 4,
+            },
             borderRadius: 3,
             py: 1.5,
             backgroundColor: "blue.500",

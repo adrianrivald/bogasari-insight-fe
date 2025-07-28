@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
 
 import { layoutClasses } from "../classes";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
 import { Typography } from "@mui/material";
 import { useAuth } from "../../sections/auth/providers/auth";
@@ -44,19 +44,30 @@ export function HeaderSection({
 }: HeaderSectionProps) {
   const navigate = useNavigate();
   const { isAuth } = useAuth();
+  const location = useLocation();
+  const exceptionRoutes =
+    location.pathname === "/success-registration" ||
+    location.pathname === "/complete-profile";
+  console.log(exceptionRoutes, "location");
   const onOpenMobileMenu = () => {
     setIsOpen((prev) => !prev);
   };
   return (
     <AppBar
-      position="sticky"
       color="transparent"
       className={layoutClasses.header}
       sx={{
+        position: {
+          xs: "sticky",
+          md: "relative",
+        },
         zIndex: "99",
         width: "100%",
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: {
+          xs: "space-between",
+          md: isAuth && !exceptionRoutes ? "space-between" : "center",
+        },
         padding: {
           xs: 3,
           lg: 4,
@@ -64,20 +75,30 @@ export function HeaderSection({
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "white",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Only bottom shadow
+        boxShadow: {
+          xs: "0 4px 6px rgba(0, 0, 0, 0.1)", // Only bottom shadow
+          md: "none",
+        },
 
         ...sx,
       }}
       {...other}
     >
       {!isOpen && !menuTitle ? (
-        <Link
-          to="/"
-          style={{
-            width: "40%",
-          }}
-        >
-          <Box component="img" src="/images/logo/logo.png" />
+        <Link to="/">
+          <Box
+            sx={{
+              width: {
+                xs: "100%",
+                md: "auto",
+              },
+              marginY: {
+                md: "44px",
+              },
+            }}
+            component="img"
+            src="/images/logo/logo.png"
+          />
         </Link>
       ) : (
         <Box display="flex" gap={2} alignItems="center">
@@ -100,7 +121,7 @@ export function HeaderSection({
           </Typography>
         </Box>
       )}
-      {isAuth && (
+      {isAuth && !exceptionRoutes && (
         <Box
           onClick={onOpenMobileMenu}
           component="img"

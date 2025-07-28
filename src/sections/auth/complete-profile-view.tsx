@@ -69,14 +69,24 @@ export function CompleteProfileView() {
   };
 
   return (
-    <Box>
+    <Box
+      maxWidth={{
+        md: 600,
+      }}
+      marginX={{
+        md: "auto",
+      }}
+    >
       {/* Heading */}
       <Box>
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: 30 },
+            fontSize: { xs: 30, md: 48 },
             fontWeight: { xs: "bold" },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Lengkapi Profil
@@ -84,8 +94,11 @@ export function CompleteProfileView() {
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: 14 },
+            fontSize: { xs: 14, md: 20 },
             mt: { xs: 1 },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Tinggal isi data sedikit lagi buat selesain pendaftaran kamu.

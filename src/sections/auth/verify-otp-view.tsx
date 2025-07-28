@@ -91,6 +91,12 @@ export function VerifyOtpView({
         flexDirection: "column",
         minHeight: "85vh",
       }}
+      maxWidth={{
+        md: 600,
+      }}
+      marginX={{
+        md: "auto",
+      }}
     >
       {" "}
       {/* Signup content */}
@@ -99,8 +105,11 @@ export function VerifyOtpView({
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: 30 },
+            fontSize: { xs: 30, md: 48 },
             fontWeight: { xs: "bold" },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Kode Verifikasi
@@ -108,8 +117,11 @@ export function VerifyOtpView({
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: 14 },
+            fontSize: { xs: 14, md: 20 },
             mt: { xs: 1 },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Kami telah mengirimkan kode verifikasi ke alamat email Anda.
@@ -128,7 +140,10 @@ export function VerifyOtpView({
         display="flex"
         justifyContent="center"
         sx={{
-          position: "absolute",
+          position: {
+            xs: "absolute",
+            md: "relative",
+          },
           bottom: 0,
           left: "50%",
           transform: "translateX(-50%)",
@@ -147,7 +162,10 @@ export function VerifyOtpView({
           type="submit"
           sx={{
             margin: "auto",
-            marginTop: 30,
+            marginTop: {
+              xs: 30,
+              md: 4,
+            },
             borderRadius: 3,
             py: 1.5,
             backgroundColor: "blue.500",

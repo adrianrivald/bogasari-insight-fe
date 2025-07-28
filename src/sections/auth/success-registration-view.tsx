@@ -7,7 +7,17 @@ export function SuccessRegistrationView() {
     navigate("/complete-profile");
   };
   return (
-    <Box display="flex" flex={1} flexDirection="column">
+    <Box
+      display="flex"
+      flex={1}
+      flexDirection="column"
+      maxWidth={{
+        md: 600,
+      }}
+      marginX={{
+        md: "auto",
+      }}
+    >
       {/* Check email image */}
       <Box
         component="img"
@@ -33,8 +43,11 @@ export function SuccessRegistrationView() {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: 30 },
+            fontSize: { xs: 30, md: 48 },
             fontWeight: { xs: "bold" },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Sukses Terdaftar
@@ -42,7 +55,7 @@ export function SuccessRegistrationView() {
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: 14 },
+            fontSize: { xs: 14, md: 20 },
             mt: { xs: 1 },
             textAlign: "center",
           }}
@@ -59,7 +72,10 @@ export function SuccessRegistrationView() {
         type="submit"
         sx={{
           margin: "auto",
-          marginTop: 30,
+          marginTop: {
+            xs: 30,
+            md: 4,
+          },
           borderRadius: 3,
           py: 1.5,
           backgroundColor: "blue.500",

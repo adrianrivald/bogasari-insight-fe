@@ -57,7 +57,14 @@ export function ResetPasswordView() {
   }
 
   return (
-    <Box>
+    <Box
+      maxWidth={{
+        md: 600,
+      }}
+      marginX={{
+        md: "auto",
+      }}
+    >
       {/* Signup content */}
 
       {/* Heading */}
@@ -65,8 +72,11 @@ export function ResetPasswordView() {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: 30 },
+            fontSize: { xs: 30, md: 48 },
             fontWeight: { xs: "bold" },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Atur Ulang Password
@@ -74,8 +84,11 @@ export function ResetPasswordView() {
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: 14 },
+            fontSize: { xs: 14, md: 20 },
             mt: { xs: 1 },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Masukkan password baru kamu ya, terus konfirmasi lagi buat pastinya.

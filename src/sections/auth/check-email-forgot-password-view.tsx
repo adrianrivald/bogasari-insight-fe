@@ -2,7 +2,14 @@ import { Box, Button, Link, Typography } from "@mui/material";
 
 export function CheckEmailForgotPasswordView({ email }: { email: string }) {
   return (
-    <Box>
+    <Box
+      maxWidth={{
+        md: 600,
+      }}
+      marginX={{
+        md: "auto",
+      }}
+    >
       {/* Check email image */}
       <Box
         component="img"
@@ -28,8 +35,11 @@ export function CheckEmailForgotPasswordView({ email }: { email: string }) {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: 30 },
+            fontSize: { xs: 30, md: 48 },
             fontWeight: { xs: "bold" },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Cek Email Kamu
@@ -37,7 +47,7 @@ export function CheckEmailForgotPasswordView({ email }: { email: string }) {
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: 14 },
+            fontSize: { xs: 14, md: 20 },
             mt: { xs: 1 },
             textAlign: "center",
           }}
@@ -46,7 +56,7 @@ export function CheckEmailForgotPasswordView({ email }: { email: string }) {
           <Typography
             component="span"
             sx={{
-              fontSize: { xs: 14 },
+              fontSize: { xs: 14, md: 20 },
               fontWeight: { xs: "bold" },
             }}
           >
@@ -64,7 +74,10 @@ export function CheckEmailForgotPasswordView({ email }: { email: string }) {
           type="submit"
           sx={{
             margin: "auto",
-            marginTop: 25,
+            marginTop: {
+              xs: 25,
+              md: 4,
+            },
             borderRadius: 3,
             py: 1.5,
             backgroundColor: "blue.500",

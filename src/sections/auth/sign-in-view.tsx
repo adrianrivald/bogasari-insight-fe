@@ -53,7 +53,14 @@ export function SignInView() {
     // Add your Google login logic here
   };
   return (
-    <Box>
+    <Box
+      maxWidth={{
+        md: 600,
+      }}
+      marginX={{
+        md: "auto",
+      }}
+    >
       {/* Signin content */}
 
       {/* Heading */}
@@ -61,8 +68,11 @@ export function SignInView() {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: 30 },
+            fontSize: { xs: 30, md: 48 },
             fontWeight: { xs: "bold" },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Masuk ke Akun
@@ -70,8 +80,11 @@ export function SignInView() {
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: 14 },
+            fontSize: { xs: 14, md: 20 },
             mt: { xs: 1 },
+            textAlign: {
+              md: "center",
+            },
           }}
         >
           Masukkan email dan password Anda untuk masuk
