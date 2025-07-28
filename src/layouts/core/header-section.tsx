@@ -77,7 +77,10 @@ export function HeaderSection({
         backgroundColor: "white",
         boxShadow: {
           xs: "0 4px 6px rgba(0, 0, 0, 0.1)", // Only bottom shadow
-          md: "none",
+          md:
+            isAuth && !exceptionRoutes
+              ? "0 4px 6px rgba(0, 0, 0, 0.1)"
+              : "none",
         },
 
         ...sx,
@@ -93,7 +96,7 @@ export function HeaderSection({
                 md: "auto",
               },
               marginY: {
-                md: "44px",
+                md: !isAuth ? "44px" : "",
               },
             }}
             component="img"

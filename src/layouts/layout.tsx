@@ -18,7 +18,7 @@ import {
 import { useCallback, useState } from "react";
 import { useAuth } from "../sections/auth/providers/auth";
 import { Bounce, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
 
 // ----------------------------------------------------------------------
@@ -166,7 +166,11 @@ export function AppLayout({
   menuTitle,
   withPadding = true,
 }: AppLayoutProps) {
-  const { logout } = useAuth();
+  const { isAuth, logout } = useAuth();
+  const location = useLocation();
+  const exceptionRoutes =
+    location.pathname === "/success-registration" ||
+    location.pathname === "/complete-profile";
   const layoutQuery: Breakpoint = "md";
   const [isOpen, setIsOpen] = useState(false);
   const [isLogoutPopupOpen, setIsLogoutPopupOpen] = useState(false);
@@ -196,6 +200,37 @@ export function AppLayout({
 
   return (
     <LayoutSection
+      sx={{
+        bgcolor: {
+          md: isAuth && !exceptionRoutes ? "#F5F6FA" : "",
+        },
+      }}
+      leftSideBarSection={
+        <Box
+          sx={{
+            display: {
+              xs: "none",
+              md: isAuth && !exceptionRoutes ? "block" : "none",
+            },
+          }}
+          p={4}
+          borderRadius="8px"
+          bgcolor="white"
+        ></Box>
+      }
+      rightSideBarSection={
+        <Box
+          sx={{
+            display: {
+              xs: "none",
+              md: isAuth && !exceptionRoutes ? "block" : "none",
+            },
+          }}
+          p={4}
+          borderRadius="8px"
+          bgcolor="white"
+        ></Box>
+      }
       headerSection={
         <HeaderSection
           isOpen={isOpen}
@@ -224,6 +259,7 @@ export function AppLayout({
                   lg: 4,
                 }
               : 0,
+          bgcolor: "white",
         }}
       >
         {isOpen ? (

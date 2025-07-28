@@ -5,6 +5,8 @@ import { useTheme } from "@mui/material/styles";
 import GlobalStyles from "@mui/material/GlobalStyles";
 
 import { layoutClasses } from "../classes";
+import { useAuth } from "../../sections/auth/providers/auth";
+import { useLocation } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +16,8 @@ export type LayoutSectionProps = {
   children?: React.ReactNode;
   footerSection?: React.ReactNode;
   headerSection?: React.ReactNode;
-  sidebarSection?: React.ReactNode;
+  leftSideBarSection?: React.ReactNode;
+  rightSideBarSection?: React.ReactNode;
 };
 
 export function LayoutSection({
@@ -23,10 +26,9 @@ export function LayoutSection({
   children,
   footerSection,
   headerSection,
-  sidebarSection,
+  leftSideBarSection,
+  rightSideBarSection,
 }: LayoutSectionProps) {
-  const theme = useTheme();
-
   return (
     <>
       {/* {inputGlobalStyles} */}
@@ -39,7 +41,6 @@ export function LayoutSection({
         margin="auto"
         width="100%"
       >
-        {sidebarSection}
         <Box
           display="flex"
           flex="1 1 auto"
@@ -47,7 +48,55 @@ export function LayoutSection({
           className={layoutClasses.hasSidebar}
         >
           {headerSection}
-          {children}
+          <Box
+            sx={{
+              display: {
+                xs: "block",
+                md: "flex",
+              },
+              p: {
+                xs: 0,
+                md: 4,
+              },
+              justifyContent: {
+                md: "space-between",
+              },
+              gap: {
+                md: 4,
+              },
+            }}
+          >
+            <Box
+              sx={{
+                width: {
+                  xs: "auto",
+                  md: "25%",
+                },
+              }}
+            >
+              {leftSideBarSection}
+            </Box>
+            <Box
+              sx={{
+                width: {
+                  xs: "auto",
+                  md: "50%",
+                },
+              }}
+            >
+              {children}
+            </Box>
+            <Box
+              sx={{
+                width: {
+                  xs: "auto",
+                  md: "25%",
+                },
+              }}
+            >
+              {rightSideBarSection}
+            </Box>{" "}
+          </Box>
           {footerSection}
         </Box>
       </Box>
