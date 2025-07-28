@@ -32,18 +32,6 @@ export function ForgotPasswordView() {
       setIsSubmitting(false);
       setIsSubmitted(true);
     } catch (error: any) {
-      const errorMessage = error.message ?? "Terjadi error, silakan coba lagi";
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
     } finally {
       setIsSubmitting(false);
     }

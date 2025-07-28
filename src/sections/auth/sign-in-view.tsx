@@ -41,17 +41,6 @@ export function SignInView() {
       if (isEmailPasswordNotMatchMessage) {
         setIsEmailPasswordNotMatch(true);
       }
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
     } finally {
       setIsSubmitting(false);
     }
