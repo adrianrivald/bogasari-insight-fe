@@ -20,6 +20,8 @@ import { useAuth } from "../sections/auth/providers/auth";
 import { Bounce, toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
+import LeftSideBarSection from "./core/left-sidebar-section";
+import RightSideBarSection from "./core/right-sidebar-section";
 
 // ----------------------------------------------------------------------
 
@@ -206,30 +208,17 @@ export function AppLayout({
         },
       }}
       leftSideBarSection={
-        <Box
-          sx={{
-            display: {
-              xs: "none",
-              md: isAuth && !exceptionRoutes ? "block" : "none",
-            },
-          }}
-          p={4}
-          borderRadius="8px"
-          bgcolor="white"
-        ></Box>
+        <LeftSideBarSection
+          isAuth={isAuth}
+          exceptionRoutes={exceptionRoutes}
+          handleLogout={() => setIsLogoutPopupOpen(true)}
+        />
       }
       rightSideBarSection={
-        <Box
-          sx={{
-            display: {
-              xs: "none",
-              md: isAuth && !exceptionRoutes ? "block" : "none",
-            },
-          }}
-          p={4}
-          borderRadius="8px"
-          bgcolor="white"
-        ></Box>
+        <RightSideBarSection
+          isAuth={isAuth}
+          exceptionRoutes={exceptionRoutes}
+        />
       }
       headerSection={
         <HeaderSection

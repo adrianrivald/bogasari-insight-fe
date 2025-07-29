@@ -8,6 +8,18 @@ export interface User {
   email: string;
   id: number;
   role: string;
+  birthDate?: string;
+  division?: string;
+  fullName?: string;
+  googleId?: string;
+  joinDate?: string;
+  level?: string;
+  location?: string;
+  nikEmployee?: string;
+  noKtp?: string;
+  phoneNumber?: string;
+  profilePic?: string;
+  status?: string;
 }
 
 export function getSession() {
