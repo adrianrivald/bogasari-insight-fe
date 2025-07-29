@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, Stack, Typography } from "@mui/material";
 import { useAuth } from "../../sections/auth/providers/auth";
 import dayjs from "dayjs";
 import React from "react";
@@ -18,16 +18,15 @@ const LeftSideBarSection = ({
   return (
     <React.Fragment>
       {/* Top Sidebar */}
-      <Box
+      <Card
         sx={{
           display: {
             xs: "none",
             md: isAuth && !exceptionRoutes ? "block" : "none",
           },
+          p: 2,
+          bgcolor: "white",
         }}
-        p={4}
-        borderRadius="8px"
-        bgcolor="white"
       >
         {/* Top Section */}
         <Box
@@ -129,20 +128,19 @@ const LeftSideBarSection = ({
             <Typography>0{userInfo.phoneNumber}</Typography>
           </Stack>
         </Box>
-      </Box>
+      </Card>
 
       {/* Middle Sidebar */}
-      <Box
+      <Card
         sx={{
           display: {
             xs: "none",
             md: isAuth && !exceptionRoutes ? "block" : "none",
           },
+          p: 2,
+          mt: 4,
+          bgcolor: "white",
         }}
-        mt={4}
-        p={4}
-        borderRadius="8px"
-        bgcolor="white"
       >
         <Stack gap={2}>
           <Button
@@ -204,21 +202,20 @@ const LeftSideBarSection = ({
             </Box>
           </Button>
         </Stack>
-      </Box>
+      </Card>
 
       {/* Bottom Sidebar */}
-      <Box
+      <Card
         sx={{
           display: {
             xs: "none",
             md: isAuth && !exceptionRoutes ? "block" : "none",
           },
+          mt: 4,
+          bgcolor: "white",
         }}
-        mt={4}
-        borderRadius="8px"
-        bgcolor="white"
       >
-        <Stack gap={2} p={4}>
+        <Stack gap={2} p={2}>
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row" gap={1}>
               <Box
@@ -280,7 +277,7 @@ const LeftSideBarSection = ({
             Keluar
           </Typography>
         </Stack>
-      </Box>
+      </Card>
     </React.Fragment>
   );
 };
