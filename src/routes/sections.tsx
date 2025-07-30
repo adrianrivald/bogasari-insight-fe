@@ -54,6 +54,9 @@ export const renderFallback = (
     alignItems="center"
     justifyContent="center"
     flex="1 1 auto"
+    sx={{
+      py: 24,
+    }}
   >
     <LinearProgress
       sx={{
@@ -73,9 +76,9 @@ export function Router() {
   const authenticatedRoutes = useRoutes([
     {
       element: (
-        <Suspense fallback={renderFallback}>
-          <Outlet />
-        </Suspense>
+        // <Suspense fallback={renderFallback}>
+        <Outlet />
+        // </Suspense>
       ),
       children: [
         { path: "/", element: <DashboardHomePage />, index: true },

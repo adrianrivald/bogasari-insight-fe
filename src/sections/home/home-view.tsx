@@ -6,8 +6,10 @@ import { AppLayout } from "../../layouts/layout";
 import { useAmountSummary } from "../../services/dana-pensiun/use-amount-summary";
 import { formatRupiah } from "../../utils/format-rupiah";
 import { TabContext, TabPanel } from "@mui/lab";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { DanaPensiun } from "../../components/module/dana-pensiun/dana-pensiun";
+import { renderFallback } from "../../routes/sections";
+import { PencairanDanaPensiun } from "../../components/module/dana-pensiun/pencairan-dana-pensiun";
 
 function a11yProps(index: number) {
   return {
@@ -328,7 +330,23 @@ export function HomeView() {
                 bgcolor: "white",
               }}
             >
-              <DanaPensiun />
+              <Suspense fallback={renderFallback}>
+                <DanaPensiun />
+              </Suspense>
+            </Card>
+          </TabPanel>
+
+          <TabPanel value={1} sx={{ px: 0 }}>
+            <Card
+              sx={{
+                py: 2,
+                px: 3,
+                bgcolor: "white",
+              }}
+            >
+              <Suspense fallback={renderFallback}>
+                <PencairanDanaPensiun />
+              </Suspense>
             </Card>
           </TabPanel>
         </TabContext>
