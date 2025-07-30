@@ -1,4 +1,4 @@
-import { Box, Button, Card, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Card, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { useAuth } from "../auth/providers/auth";
 import BalanceCard from "../../components/ui/balance-card";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import { useAmountSummary } from "../../services/dana-pensiun/use-amount-summary
 import { formatRupiah } from "../../utils/format-rupiah";
 import { TabContext, TabPanel } from "@mui/lab";
 import { useState } from "react";
+import { DanaPensiun } from "../../components/module/dana-pensiun/dana-pensiun";
 
 function a11yProps(index: number) {
   return {
@@ -322,79 +323,12 @@ export function HomeView() {
             <Card
               sx={{
                 mt: 3,
-                py: 8,
+                py: 2,
                 px: 3,
                 bgcolor: "white",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  maxWidth: {
-                    md: "75%",
-                    lg: "50%",
-                  },
-                  mx: "auto",
-                }}
-              >
-                {/* User info */}
-                <Stack direction="column" gap={2} mt={4}>
-                  <Box component="img" src="/images/dana-pensiun-empty.png" />
-                </Stack>
-
-                {/* Content */}
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  flexDirection="column"
-                  alignItems="center"
-                >
-                  <Typography
-                    variant="h1"
-                    sx={{
-                      fontSize: { xs: 30 },
-                      fontWeight: { xs: "bold" },
-                      textAlign: "center",
-                    }}
-                  >
-                    Belum bisa melihat dana pensiunmu
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontSize: { xs: 14 },
-                      mt: { xs: 2 },
-                      textAlign: "center",
-                    }}
-                  >
-                    Lengkapi dulu tanggal bergabung agar estimasi dana bisa
-                    ditampilkan
-                  </Typography>
-                </Box>
-                <Button
-                  // onClick={onClickFillDate}
-                  fullWidth
-                  variant="contained"
-                  size="large"
-                  type="submit"
-                  sx={{
-                    margin: "auto",
-                    mt: 2,
-                    borderRadius: 3,
-                    py: 1.5,
-                    backgroundColor: "blue.500",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    fontWeight: "normal",
-                  }}
-                >
-                  Isi Tanggal Bergabung
-                </Button>
-              </Box>
+              <DanaPensiun />
             </Card>
           </TabPanel>
         </TabContext>
