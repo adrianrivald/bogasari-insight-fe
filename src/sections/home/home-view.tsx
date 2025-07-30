@@ -1,10 +1,19 @@
-import { Box, Card, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { useAuth } from "../auth/providers/auth";
 import BalanceCard from "../../components/ui/balance-card";
 import { useNavigate } from "react-router-dom";
 import { AppLayout } from "../../layouts/layout";
 import { useAmountSummary } from "../../services/dana-pensiun/use-amount-summary";
 import { formatRupiah } from "../../utils/format-rupiah";
+import { TabContext, TabPanel } from "@mui/lab";
+import { useState } from "react";
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 export function HomeView() {
   const { userInfo } = useAuth();
@@ -19,160 +28,367 @@ export function HomeView() {
     navigate("/dana-pensiun");
   };
 
+  // Desktop Home states
+  const [tabIndex, setTabIndex] = useState(0);
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue);
+  };
+
   return (
     <AppLayout withPadding={false}>
+      {/* Mobile Home */}
       <Box
-        display="flex"
-        justifyContent="start"
         sx={{
-          p: {
-            xs: 3,
-            lg: 4,
+          display: {
+            xs: "block",
+            md: "none",
           },
         }}
       >
-        {/* User info */}
-        <Stack direction="row" gap={2}>
-          <Box
-            component="img"
-            src="/images/ava-dummy.png"
-            width={50}
-            height={50}
-          />
-          <Stack direction="column">
-            <Typography>Selamat Pagi</Typography>
-            <Typography fontWeight="bold" component="span" fontSize={20}>
-              {userInfo.email}
-            </Typography>
-          </Stack>
-        </Stack>
-      </Box>
-
-      {/* Balance */}
-      <Box
-        mt={4}
-        sx={{
-          px: {
-            xs: 3,
-            lg: 4,
-          },
-        }}
-      >
-        <BalanceCard
-          balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
-          percentage="2,5%"
-        />
-      </Box>
-
-      {/* Menus */}
-      <Box
-        mt={4}
-        sx={{
-          px: {
-            xs: 3,
-            lg: 4,
-          },
-        }}
-      >
-        <Typography sx={{ fontWeight: "bold" }}>Layanan Keuangan</Typography>
-        <Stack direction="row" gap={2} mt={2}>
-          <Card
-            sx={{
-              width: "50%",
-              p: 2,
-              cursor: "pointer",
-            }}
-            onClick={onClickDapen}
-          >
-            <Stack direction="row" justifyContent="space-between">
-              <Box
-                component="img"
-                src="/images/icons/dana-home.svg"
-                width={56}
-                height={56}
-              />
-            </Stack>
-            <Typography mt={2} fontWeight="bold">
-              Dana Pensiun
-            </Typography>
-            <Typography>Tabungan untuk masa pensiun</Typography>
-          </Card>
-          <Card
-            sx={{
-              width: "50%",
-              p: 2,
-            }}
-          >
-            <Stack direction="row" justifyContent="space-between">
-              <Box
-                component="img"
-                src="/images/icons/koperasi-home.svg"
-                width={56}
-                height={56}
-              />
-              <Box
-                bgcolor="#FFCB52"
-                borderRadius="20px"
-                px={2}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                height="30px"
-              >
-                <Typography sx={{ color: "white" }} fontSize="small">
-                  Soon
-                </Typography>
-              </Box>
-            </Stack>
-            <Typography mt={2} fontWeight="bold">
-              Koperasi
-            </Typography>
-            <Typography>Usaha milik dan untuk anggota</Typography>
-          </Card>
-        </Stack>
-      </Box>
-
-      {/* Penarikan Dana */}
-      <Box
-        my={4}
-        sx={{
-          px: {
-            xs: 3,
-            lg: 4,
-          },
-        }}
-        onClick={onClickPenarikanDana}
-      >
-        <Typography sx={{ fontWeight: "bold" }}>Penarikan Dana</Typography>
-        <Card
+        <Box
+          display="flex"
+          justifyContent="start"
           sx={{
-            p: 2,
-            mt: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            p: {
+              xs: 3,
+              lg: 4,
+            },
           }}
         >
-          <Stack direction="row" gap={2} alignItems="center">
+          {/* User info */}
+          <Stack direction="row" gap={2}>
             <Box
               component="img"
-              src="/images/icons/pencairan-dana-home.svg"
+              src="/images/ava-dummy.png"
               width={50}
               height={50}
             />
-            <Stack>
-              <Typography fontWeight="bold">Dana Pensiun</Typography>
-              <Typography>Siap Dicairkan</Typography>
+            <Stack direction="column">
+              <Typography>Selamat Pagi</Typography>
+              <Typography fontWeight="bold" component="span" fontSize={20}>
+                {userInfo.email}
+              </Typography>
             </Stack>
           </Stack>
-          <Box
-            component="img"
-            src="/images/icons/arrow-right.svg"
-            width={20}
-            height={20}
+        </Box>
+
+        {/* Balance */}
+        <Box
+          mt={4}
+          sx={{
+            px: {
+              xs: 3,
+              lg: 4,
+            },
+          }}
+        >
+          <BalanceCard
+            balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
+            percentage="2,5%"
           />
-        </Card>
+        </Box>
+
+        {/* Menus */}
+        <Box
+          mt={4}
+          sx={{
+            px: {
+              xs: 3,
+              lg: 4,
+            },
+          }}
+        >
+          <Typography sx={{ fontWeight: "bold" }}>Layanan Keuangan</Typography>
+          <Stack direction="row" gap={2} mt={2}>
+            <Card
+              sx={{
+                width: "50%",
+                p: 2,
+                cursor: "pointer",
+              }}
+              onClick={onClickDapen}
+            >
+              <Stack direction="row" justifyContent="space-between">
+                <Box
+                  component="img"
+                  src="/images/icons/dana-home.svg"
+                  width={56}
+                  height={56}
+                />
+              </Stack>
+              <Typography mt={2} fontWeight="bold">
+                Dana Pensiun
+              </Typography>
+              <Typography>Tabungan untuk masa pensiun</Typography>
+            </Card>
+            <Card
+              sx={{
+                width: "50%",
+                p: 2,
+              }}
+            >
+              <Stack direction="row" justifyContent="space-between">
+                <Box
+                  component="img"
+                  src="/images/icons/koperasi-home.svg"
+                  width={56}
+                  height={56}
+                />
+                <Box
+                  bgcolor="#FFCB52"
+                  borderRadius="20px"
+                  px={2}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  height="30px"
+                >
+                  <Typography sx={{ color: "white" }} fontSize="small">
+                    Soon
+                  </Typography>
+                </Box>
+              </Stack>
+              <Typography mt={2} fontWeight="bold">
+                Koperasi
+              </Typography>
+              <Typography>Usaha milik dan untuk anggota</Typography>
+            </Card>
+          </Stack>
+        </Box>
+
+        {/* Penarikan Dana */}
+        <Box
+          my={4}
+          sx={{
+            px: {
+              xs: 3,
+              lg: 4,
+            },
+          }}
+          onClick={onClickPenarikanDana}
+        >
+          <Typography sx={{ fontWeight: "bold" }}>Penarikan Dana</Typography>
+          <Card
+            sx={{
+              p: 2,
+              mt: 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Stack direction="row" gap={2} alignItems="center">
+              <Box
+                component="img"
+                src="/images/icons/pencairan-dana-home.svg"
+                width={50}
+                height={50}
+              />
+              <Stack>
+                <Typography fontWeight="bold">Dana Pensiun</Typography>
+                <Typography>Siap Dicairkan</Typography>
+              </Stack>
+            </Stack>
+            <Box
+              component="img"
+              src="/images/icons/arrow-right.svg"
+              width={20}
+              height={20}
+            />
+          </Card>
+        </Box>
       </Box>
+
+      {/* Desktop Home */}
+      <TabContext value={tabIndex}>
+        <Card
+          sx={{
+            pt: 2,
+            px: 3,
+            bgcolor: "white",
+          }}
+        >
+          <Typography fontWeight="bold" fontSize={24}>
+            Dana Pensiun Iuran Pasti (DPIP)
+          </Typography>
+          <Tabs
+            value={tabIndex}
+            onChange={handleChange}
+            aria-label="dana pensiun tab"
+            TabIndicatorProps={{ style: { display: "none" } }} // hide default underline
+            sx={{
+              mt: 4,
+            }}
+          >
+            <Tab
+              sx={{
+                px: 4,
+                color: "gray",
+                "&.Mui-selected": {
+                  color: "blue.500",
+                  borderBottom: "2px solid #4AA1F3",
+                },
+              }}
+              label="Personal Balance"
+              {...a11yProps(0)}
+            />
+            <Tab
+              sx={{
+                px: 4,
+                color: "gray",
+                "&.Mui-selected": {
+                  color: "blue.500",
+                  borderBottom: "2px solid #4AA1F3",
+                },
+              }}
+              label="Pencairan Dana"
+              {...a11yProps(1)}
+            />
+          </Tabs>
+        </Card>
+
+        <TabPanel value={0} sx={{ px: 0 }}>
+          <Card
+            sx={{
+              py: 2,
+              px: 3,
+              bgcolor: "white",
+            }}
+          >
+            <Stack direction="row">
+              <Stack gap={1} width="50%">
+                <Typography fontSize={12} fontWeight="bold">
+                  Nama
+                </Typography>
+                <Typography fontSize={12}>26 Juni 1982</Typography>
+              </Stack>
+              <Stack gap={1} width="50%">
+                <Typography fontSize={12} fontWeight="bold">
+                  OPU
+                </Typography>
+                <Typography fontSize={12}>Flour Jakarta</Typography>
+              </Stack>
+            </Stack>
+
+            <Stack direction="row" mt={4}>
+              <Stack gap={1} width="50%">
+                <Typography fontSize={12} fontWeight="bold">
+                  No Gaji
+                </Typography>
+                <Typography fontSize={12}>BFM00012312425</Typography>
+              </Stack>
+              <Stack gap={1} width="50%">
+                <Typography fontSize={12} fontWeight="bold">
+                  Tanggal Lahir
+                </Typography>
+                <Typography fontSize={12}>26 Juni 1995</Typography>
+              </Stack>
+            </Stack>
+
+            <Stack direction="row" mt={4}>
+              <Stack gap={1} width="50%">
+                <Typography fontSize={12} fontWeight="bold">
+                  Tanggal Masuk DPIP
+                </Typography>
+                <Typography fontSize={12}>-</Typography>
+              </Stack>
+              <Stack gap={1} width="50%">
+                <Typography fontSize={12} fontWeight="bold">
+                  Tanggal Masuk Kerja
+                </Typography>
+                <Typography fontSize={12}>26 Juni 2001</Typography>
+              </Stack>
+            </Stack>
+
+            <Stack direction="row" mt={4}>
+              <Stack gap={1} width="50%">
+                <Typography fontSize={12} fontWeight="bold">
+                  Periode
+                </Typography>
+                <Typography fontSize={12}>01 Januari 2025</Typography>
+              </Stack>
+            </Stack>
+          </Card>
+
+          <Card
+            sx={{
+              mt: 3,
+              py: 8,
+              px: 3,
+              bgcolor: "white",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+                maxWidth: {
+                  md: "75%",
+                  lg: "50%",
+                },
+                mx: "auto",
+              }}
+            >
+              {/* User info */}
+              <Stack direction="column" gap={2} mt={4}>
+                <Box component="img" src="/images/dana-pensiun-empty.png" />
+              </Stack>
+
+              {/* Content */}
+              <Box
+                display="flex"
+                justifyContent="center"
+                flexDirection="column"
+                alignItems="center"
+              >
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontSize: { xs: 30 },
+                    fontWeight: { xs: "bold" },
+                    textAlign: "center",
+                  }}
+                >
+                  Belum bisa melihat dana pensiunmu
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: { xs: 14 },
+                    mt: { xs: 2 },
+                    textAlign: "center",
+                  }}
+                >
+                  Lengkapi dulu tanggal bergabung agar estimasi dana bisa
+                  ditampilkan
+                </Typography>
+              </Box>
+              <Button
+                // onClick={onClickFillDate}
+                fullWidth
+                variant="contained"
+                size="large"
+                type="submit"
+                sx={{
+                  margin: "auto",
+                  mt: 2,
+                  borderRadius: 3,
+                  py: 1.5,
+                  backgroundColor: "blue.500",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  fontWeight: "normal",
+                }}
+              >
+                Isi Tanggal Bergabung
+              </Button>
+            </Box>
+          </Card>
+        </TabPanel>
+      </TabContext>
     </AppLayout>
   );
 }

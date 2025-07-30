@@ -202,11 +202,13 @@ export function AppLayout({
 
   return (
     <LayoutSection
-      sx={{
-        bgcolor: {
-          md: isAuth && !exceptionRoutes ? "#F5F6FA" : "",
-        },
-      }}
+      sx={
+        {
+          // bgcolor: {
+          //   md: isAuth && !exceptionRoutes ? "#F5F6FA" : "",
+          // },
+        }
+      }
       leftSideBarSection={
         <LeftSideBarSection
           isAuth={isAuth}

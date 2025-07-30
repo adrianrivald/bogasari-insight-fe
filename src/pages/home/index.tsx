@@ -4,6 +4,7 @@ import { AppLayout } from "../../layouts/layout";
 import { useAuth } from "../../sections/auth/providers/auth";
 import { useUserInfo } from "../../services/user";
 import { useEffect } from "react";
+import { Box } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
