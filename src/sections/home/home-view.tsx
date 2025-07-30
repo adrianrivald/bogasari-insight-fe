@@ -200,195 +200,205 @@ export function HomeView() {
       </Box>
 
       {/* Desktop Home */}
-      <TabContext value={tabIndex}>
-        <Card
-          sx={{
-            pt: 2,
-            px: 3,
-            bgcolor: "white",
-          }}
-        >
-          <Typography fontWeight="bold" fontSize={24}>
-            Dana Pensiun Iuran Pasti (DPIP)
-          </Typography>
-          <Tabs
-            value={tabIndex}
-            onChange={handleChange}
-            aria-label="dana pensiun tab"
-            TabIndicatorProps={{ style: { display: "none" } }} // hide default underline
-            sx={{
-              mt: 4,
-            }}
-          >
-            <Tab
-              sx={{
-                px: 4,
-                color: "gray",
-                "&.Mui-selected": {
-                  color: "blue.500",
-                  borderBottom: "2px solid #4AA1F3",
-                },
-              }}
-              label="Personal Balance"
-              {...a11yProps(0)}
-            />
-            <Tab
-              sx={{
-                px: 4,
-                color: "gray",
-                "&.Mui-selected": {
-                  color: "blue.500",
-                  borderBottom: "2px solid #4AA1F3",
-                },
-              }}
-              label="Pencairan Dana"
-              {...a11yProps(1)}
-            />
-          </Tabs>
-        </Card>
-
-        <TabPanel value={0} sx={{ px: 0 }}>
+      <Box
+        sx={{
+          px: 0,
+          display: {
+            xs: "none",
+            md: "block",
+          },
+        }}
+      >
+        <TabContext value={tabIndex}>
           <Card
             sx={{
-              py: 2,
+              pt: 2,
               px: 3,
               bgcolor: "white",
             }}
           >
-            <Stack direction="row">
-              <Stack gap={1} width="50%">
-                <Typography fontSize={12} fontWeight="bold">
-                  Nama
-                </Typography>
-                <Typography fontSize={12}>26 Juni 1982</Typography>
-              </Stack>
-              <Stack gap={1} width="50%">
-                <Typography fontSize={12} fontWeight="bold">
-                  OPU
-                </Typography>
-                <Typography fontSize={12}>Flour Jakarta</Typography>
-              </Stack>
-            </Stack>
-
-            <Stack direction="row" mt={4}>
-              <Stack gap={1} width="50%">
-                <Typography fontSize={12} fontWeight="bold">
-                  No Gaji
-                </Typography>
-                <Typography fontSize={12}>BFM00012312425</Typography>
-              </Stack>
-              <Stack gap={1} width="50%">
-                <Typography fontSize={12} fontWeight="bold">
-                  Tanggal Lahir
-                </Typography>
-                <Typography fontSize={12}>26 Juni 1995</Typography>
-              </Stack>
-            </Stack>
-
-            <Stack direction="row" mt={4}>
-              <Stack gap={1} width="50%">
-                <Typography fontSize={12} fontWeight="bold">
-                  Tanggal Masuk DPIP
-                </Typography>
-                <Typography fontSize={12}>-</Typography>
-              </Stack>
-              <Stack gap={1} width="50%">
-                <Typography fontSize={12} fontWeight="bold">
-                  Tanggal Masuk Kerja
-                </Typography>
-                <Typography fontSize={12}>26 Juni 2001</Typography>
-              </Stack>
-            </Stack>
-
-            <Stack direction="row" mt={4}>
-              <Stack gap={1} width="50%">
-                <Typography fontSize={12} fontWeight="bold">
-                  Periode
-                </Typography>
-                <Typography fontSize={12}>01 Januari 2025</Typography>
-              </Stack>
-            </Stack>
-          </Card>
-
-          <Card
-            sx={{
-              mt: 3,
-              py: 8,
-              px: 3,
-              bgcolor: "white",
-            }}
-          >
-            <Box
+            <Typography fontWeight="bold" fontSize={24}>
+              Dana Pensiun Iuran Pasti (DPIP)
+            </Typography>
+            <Tabs
+              value={tabIndex}
+              onChange={handleChange}
+              aria-label="dana pensiun tab"
+              TabIndicatorProps={{ style: { display: "none" } }} // hide default underline
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                alignItems: "center",
-                maxWidth: {
-                  md: "75%",
-                  lg: "50%",
-                },
-                mx: "auto",
+                mt: 4,
               }}
             >
-              {/* User info */}
-              <Stack direction="column" gap={2} mt={4}>
-                <Box component="img" src="/images/dana-pensiun-empty.png" />
+              <Tab
+                sx={{
+                  px: 4,
+                  color: "gray",
+                  "&.Mui-selected": {
+                    color: "blue.500",
+                    borderBottom: "2px solid #4AA1F3",
+                  },
+                }}
+                label="Personal Balance"
+                {...a11yProps(0)}
+              />
+              <Tab
+                sx={{
+                  px: 4,
+                  color: "gray",
+                  "&.Mui-selected": {
+                    color: "blue.500",
+                    borderBottom: "2px solid #4AA1F3",
+                  },
+                }}
+                label="Pencairan Dana"
+                {...a11yProps(1)}
+              />
+            </Tabs>
+          </Card>
+
+          <TabPanel value={0} sx={{ px: 0 }}>
+            <Card
+              sx={{
+                py: 2,
+                px: 3,
+                bgcolor: "white",
+              }}
+            >
+              <Stack direction="row">
+                <Stack gap={1} width="50%">
+                  <Typography fontSize={12} fontWeight="bold">
+                    Nama
+                  </Typography>
+                  <Typography fontSize={12}>26 Juni 1982</Typography>
+                </Stack>
+                <Stack gap={1} width="50%">
+                  <Typography fontSize={12} fontWeight="bold">
+                    OPU
+                  </Typography>
+                  <Typography fontSize={12}>Flour Jakarta</Typography>
+                </Stack>
               </Stack>
 
-              {/* Content */}
+              <Stack direction="row" mt={4}>
+                <Stack gap={1} width="50%">
+                  <Typography fontSize={12} fontWeight="bold">
+                    No Gaji
+                  </Typography>
+                  <Typography fontSize={12}>BFM00012312425</Typography>
+                </Stack>
+                <Stack gap={1} width="50%">
+                  <Typography fontSize={12} fontWeight="bold">
+                    Tanggal Lahir
+                  </Typography>
+                  <Typography fontSize={12}>26 Juni 1995</Typography>
+                </Stack>
+              </Stack>
+
+              <Stack direction="row" mt={4}>
+                <Stack gap={1} width="50%">
+                  <Typography fontSize={12} fontWeight="bold">
+                    Tanggal Masuk DPIP
+                  </Typography>
+                  <Typography fontSize={12}>-</Typography>
+                </Stack>
+                <Stack gap={1} width="50%">
+                  <Typography fontSize={12} fontWeight="bold">
+                    Tanggal Masuk Kerja
+                  </Typography>
+                  <Typography fontSize={12}>26 Juni 2001</Typography>
+                </Stack>
+              </Stack>
+
+              <Stack direction="row" mt={4}>
+                <Stack gap={1} width="50%">
+                  <Typography fontSize={12} fontWeight="bold">
+                    Periode
+                  </Typography>
+                  <Typography fontSize={12}>01 Januari 2025</Typography>
+                </Stack>
+              </Stack>
+            </Card>
+
+            <Card
+              sx={{
+                mt: 3,
+                py: 8,
+                px: 3,
+                bgcolor: "white",
+              }}
+            >
               <Box
-                display="flex"
-                justifyContent="center"
-                flexDirection="column"
-                alignItems="center"
-              >
-                <Typography
-                  variant="h1"
-                  sx={{
-                    fontSize: { xs: 30 },
-                    fontWeight: { xs: "bold" },
-                    textAlign: "center",
-                  }}
-                >
-                  Belum bisa melihat dana pensiunmu
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontSize: { xs: 14 },
-                    mt: { xs: 2 },
-                    textAlign: "center",
-                  }}
-                >
-                  Lengkapi dulu tanggal bergabung agar estimasi dana bisa
-                  ditampilkan
-                </Typography>
-              </Box>
-              <Button
-                // onClick={onClickFillDate}
-                fullWidth
-                variant="contained"
-                size="large"
-                type="submit"
                 sx={{
-                  margin: "auto",
-                  mt: 2,
-                  borderRadius: 3,
-                  py: 1.5,
-                  backgroundColor: "blue.500",
                   display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
                   alignItems: "center",
-                  gap: 2,
-                  fontWeight: "normal",
+                  maxWidth: {
+                    md: "75%",
+                    lg: "50%",
+                  },
+                  mx: "auto",
                 }}
               >
-                Isi Tanggal Bergabung
-              </Button>
-            </Box>
-          </Card>
-        </TabPanel>
-      </TabContext>
+                {/* User info */}
+                <Stack direction="column" gap={2} mt={4}>
+                  <Box component="img" src="/images/dana-pensiun-empty.png" />
+                </Stack>
+
+                {/* Content */}
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column"
+                  alignItems="center"
+                >
+                  <Typography
+                    variant="h1"
+                    sx={{
+                      fontSize: { xs: 30 },
+                      fontWeight: { xs: "bold" },
+                      textAlign: "center",
+                    }}
+                  >
+                    Belum bisa melihat dana pensiunmu
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontSize: { xs: 14 },
+                      mt: { xs: 2 },
+                      textAlign: "center",
+                    }}
+                  >
+                    Lengkapi dulu tanggal bergabung agar estimasi dana bisa
+                    ditampilkan
+                  </Typography>
+                </Box>
+                <Button
+                  // onClick={onClickFillDate}
+                  fullWidth
+                  variant="contained"
+                  size="large"
+                  type="submit"
+                  sx={{
+                    margin: "auto",
+                    mt: 2,
+                    borderRadius: 3,
+                    py: 1.5,
+                    backgroundColor: "blue.500",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    fontWeight: "normal",
+                  }}
+                >
+                  Isi Tanggal Bergabung
+                </Button>
+              </Box>
+            </Card>
+          </TabPanel>
+        </TabContext>
+      </Box>
     </AppLayout>
   );
 }

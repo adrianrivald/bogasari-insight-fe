@@ -16,17 +16,20 @@ const RightSideBarSection = ({
   const { data: amountSummary } = useAmountSummary();
 
   return (
-    <React.Fragment>
+    <Box
+      sx={{
+        display: {
+          xs: "none",
+          md: isAuth && !exceptionRoutes ? "block" : "none",
+        },
+      }}
+    >
       <BalanceCard
         balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
         percentage="2,5%"
       />
       <Card
         sx={{
-          display: {
-            xs: "none",
-            md: isAuth && !exceptionRoutes ? "block" : "none",
-          },
           p: 2,
           mt: 4,
           bgcolor: "white",
@@ -58,7 +61,7 @@ const RightSideBarSection = ({
           </Stack>
         </Box>
       </Card>
-    </React.Fragment>
+    </Box>
   );
 };
 
