@@ -76,9 +76,9 @@ export function Router() {
   const authenticatedRoutes = useRoutes([
     {
       element: (
-        // <Suspense fallback={renderFallback}>
-        <Outlet />
-        // </Suspense>
+        <Suspense fallback={renderFallback}>
+          <Outlet />
+        </Suspense>
       ),
       children: [
         { path: "/", element: <DashboardHomePage />, index: true },

@@ -85,10 +85,12 @@ export function HomeView() {
             },
           }}
         >
-          <BalanceCard
-            balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
-            percentage="2,5%"
-          />
+          <Suspense fallback={renderFallback}>
+            <BalanceCard
+              balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
+              percentage="2,5%"
+            />
+          </Suspense>
         </Box>
 
         {/* Menus */}

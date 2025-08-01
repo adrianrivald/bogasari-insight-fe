@@ -1,8 +1,9 @@
 import { Box, Card, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { Suspense } from "react";
 import BalanceCard from "../../components/ui/balance-card";
 import { useAmountSummary } from "../../services/dana-pensiun/use-amount-summary";
 import { formatRupiah } from "../../utils/format-rupiah";
+import { renderFallback } from "../../routes/sections";
 
 interface RightSideBarSectionProps {
   isAuth: boolean;
@@ -24,10 +25,12 @@ const RightSideBarSection = ({
         },
       }}
     >
-      <BalanceCard
-        balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
-        percentage="2,5%"
-      />
+      <Suspense fallback={renderFallback}>
+        <BalanceCard
+          balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
+          percentage="2,5%"
+        />
+      </Suspense>
       <Card
         sx={{
           p: 2,
