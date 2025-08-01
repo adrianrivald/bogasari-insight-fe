@@ -10,6 +10,7 @@ import { Suspense, useState } from "react";
 import { DanaPensiun } from "../../components/module/dana-pensiun/dana-pensiun";
 import { renderFallback } from "../../routes/sections";
 import { PencairanDanaPensiun } from "../../components/module/dana-pensiun/pencairan-dana-pensiun";
+import dayjs from "dayjs";
 
 function a11yProps(index: number) {
   return {
@@ -22,7 +23,7 @@ export function HomeView() {
   const { userInfo } = useAuth();
   const navigate = useNavigate();
   const { data: amountSummary } = useAmountSummary();
-
+  console.log(userInfo, "userInfo");
   const onClickPenarikanDana = () => {
     navigate("/pencairan-dana-pensiun");
   };
@@ -274,13 +275,14 @@ export function HomeView() {
                   <Typography fontSize={12} fontWeight="bold">
                     Nama
                   </Typography>
-                  <Typography fontSize={12}>26 Juni 1982</Typography>
+                  <Typography fontSize={12}>{userInfo.fullName}</Typography>
                 </Stack>
                 <Stack gap={1} width="50%">
                   <Typography fontSize={12} fontWeight="bold">
                     OPU
                   </Typography>
-                  <Typography fontSize={12}>Flour Jakarta</Typography>
+                  {/* TODO: Integrate this */}
+                  <Typography fontSize={12}>-</Typography>
                 </Stack>
               </Stack>
 
@@ -289,13 +291,15 @@ export function HomeView() {
                   <Typography fontSize={12} fontWeight="bold">
                     No Gaji
                   </Typography>
-                  <Typography fontSize={12}>BFM00012312425</Typography>
+                  <Typography fontSize={12}>{userInfo.nikEmployee}</Typography>
                 </Stack>
                 <Stack gap={1} width="50%">
                   <Typography fontSize={12} fontWeight="bold">
                     Tanggal Lahir
                   </Typography>
-                  <Typography fontSize={12}>26 Juni 1995</Typography>
+                  <Typography fontSize={12}>
+                    {dayjs(userInfo.birthDate).format("DD MMMM YYYY")}
+                  </Typography>
                 </Stack>
               </Stack>
 
@@ -310,7 +314,10 @@ export function HomeView() {
                   <Typography fontSize={12} fontWeight="bold">
                     Tanggal Masuk Kerja
                   </Typography>
-                  <Typography fontSize={12}>26 Juni 2001</Typography>
+                  <Typography fontSize={12}>
+                    {" "}
+                    {dayjs(userInfo.joinDate).format("DD MMMM YYYY")}
+                  </Typography>
                 </Stack>
               </Stack>
 
@@ -319,7 +326,7 @@ export function HomeView() {
                   <Typography fontSize={12} fontWeight="bold">
                     Periode
                   </Typography>
-                  <Typography fontSize={12}>01 Januari 2025</Typography>
+                  <Typography fontSize={12}>-</Typography>
                 </Stack>
               </Stack>
             </Card>
