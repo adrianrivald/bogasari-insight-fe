@@ -14,6 +14,7 @@ import {
 import { Form } from "../../../components/form/form";
 import { useCallback, useState } from "react";
 import { LoadingButton } from "@mui/lab";
+import { useNavigate } from "react-router-dom";
 
 const reasons = [
   {
@@ -45,11 +46,12 @@ export function PencairanDanaPensiun() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [preview, setPreview] = useState("");
   const [previewKTP, setPreviewKTP] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = useCallback(async (formData: any) => {
     setIsSubmitting(true);
     try {
       // await ...
+      navigate("/pencairan-dana-pensiun/summary");
       setIsSubmitting(false);
     } catch (error: any) {
       console.log("here");

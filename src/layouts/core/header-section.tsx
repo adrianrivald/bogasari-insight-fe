@@ -87,7 +87,15 @@ export function HeaderSection({
       }}
       {...other}
     >
-      {!isOpen && !menuTitle ? (
+      {/* {!isOpen && !menuTitle ? ( */}
+      <Box
+        sx={{
+          display: {
+            xs: !isOpen && !menuTitle ? "flex" : "none",
+            md: "flex",
+          },
+        }}
+      >
         <Link to="/">
           <Box
             sx={{
@@ -103,27 +111,36 @@ export function HeaderSection({
             src="/images/logo/logo.png"
           />
         </Link>
-      ) : (
-        <Box display="flex" gap={2} alignItems="center">
-          <Box
-            onClick={() => {
-              if (isOpen) {
-                setIsOpen((prev) => !prev);
-                return;
-              }
-              navigate("/");
-            }}
-            component="img"
-            src="/images/icons/back.svg"
-            width={24}
-            height={24}
-            sx={{ cursor: "pointer" }}
-          />
-          <Typography fontWeight="bold" fontSize={20}>
-            {isOpen ? "Menu" : menuTitle}
-          </Typography>
-        </Box>
-      )}
+      </Box>
+
+      <Box
+        gap={2}
+        alignItems="center"
+        sx={{
+          display: {
+            xs: isOpen || menuTitle ? "flex" : "none",
+            md: "none",
+          },
+        }}
+      >
+        <Box
+          onClick={() => {
+            if (isOpen) {
+              setIsOpen((prev) => !prev);
+              return;
+            }
+            navigate("/");
+          }}
+          component="img"
+          src="/images/icons/back.svg"
+          width={24}
+          height={24}
+          sx={{ cursor: "pointer" }}
+        />
+        <Typography fontWeight="bold" fontSize={20}>
+          {isOpen ? "Menu" : menuTitle}
+        </Typography>
+      </Box>
       {isAuth && !exceptionRoutes && (
         <Box
           onClick={onOpenMobileMenu}
@@ -131,7 +148,30 @@ export function HeaderSection({
           src="/images/icons/menu.svg"
           width={24}
           height={24}
-          sx={{ cursor: "pointer" }}
+          sx={{
+            cursor: "pointer",
+            display: {
+              xs: "block",
+              md: "none",
+            },
+          }}
+        />
+      )}
+
+      {isAuth && !exceptionRoutes && (
+        <Box
+          // onClick={onOpenMobileMenu}
+          component="img"
+          src="/images/icons/notifications.svg"
+          width={24}
+          height={24}
+          sx={{
+            cursor: "pointer",
+            display: {
+              xs: "none",
+              md: "block",
+            },
+          }}
         />
       )}
     </AppBar>

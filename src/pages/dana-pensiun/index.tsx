@@ -3,11 +3,11 @@ import { DanaPensiunView } from "../../sections/dana-pensiun/dana-pensiun-view";
 
 // ----------------------------------------------------------------------
 
-export default function CompleteProfile() {
+export default function DanaPensiun() {
   return (
     <>
       <Helmet>
-        <title> {`Complete Profile - Bogasari Insight`}</title>
+        <title> {`Dana Pensiun - Bogasari Insight`}</title>
       </Helmet>
 
       <DanaPensiunView />

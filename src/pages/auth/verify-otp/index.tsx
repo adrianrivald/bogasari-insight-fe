@@ -7,7 +7,7 @@ export default function VerifyOtp() {
   return (
     <>
       <Helmet>
-        <title> {`Complete Profile - Bogasari Insight`}</title>
+        <title> {`Verify OTP - Bogasari Insight`}</title>
       </Helmet>
 
       {/* <VerifyOtpView /> */}
