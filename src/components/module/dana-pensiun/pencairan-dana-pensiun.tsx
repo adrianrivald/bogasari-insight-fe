@@ -15,6 +15,8 @@ import { Form } from "../../../components/form/form";
 import { useCallback, useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
+import { SummaryPencairanDanaPensiunView } from "../../../sections/pencairan-dana-pensiun/summary/summary-pencairan-dana-pensiun-view";
+import { SummaryPencairanDanaPensiun } from "./pencairan-dana-pensiun-summary";
 
 const reasons = [
   {
@@ -44,6 +46,7 @@ const banks = [
 
 export function PencairanDanaPensiun() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isShowSummary, setIsShowSummary] = useState(false);
   const [preview, setPreview] = useState("");
   const [previewKTP, setPreviewKTP] = useState("");
   const navigate = useNavigate();
@@ -51,7 +54,8 @@ export function PencairanDanaPensiun() {
     setIsSubmitting(true);
     try {
       // await ...
-      navigate("/pencairan-dana-pensiun/summary");
+      // navigate("/pencairan-dana-pensiun/summary");
+      setIsShowSummary(true);
       setIsSubmitting(false);
     } catch (error: any) {
       console.log("here");
@@ -100,6 +104,11 @@ export function PencairanDanaPensiun() {
       }
     }
   };
+
+  if (isShowSummary) {
+    return <SummaryPencairanDanaPensiun />;
+  }
+
   return (
     <>
       {/* Balance */}
