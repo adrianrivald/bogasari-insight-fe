@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { http } from "../../utils/http";
 import { AmountSummary } from "./types";
+import { useAuth } from "../../sections/auth/providers/auth";
 
 
 async function fetchAmountSummary() {
@@ -10,8 +11,9 @@ async function fetchAmountSummary() {
 }
 
 export function useAmountSummary( options: any = {}) {
+  const {isAuth} = useAuth()
   const data = useQuery(['ammount-summary'], () => fetchAmountSummary(), {
-    enabled: true,
+    enabled: isAuth,
     ...options,
   });
 
