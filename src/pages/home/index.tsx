@@ -9,23 +9,6 @@ import { Box } from "@mui/material";
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
-  const { userInfo } = useAuth();
-  const { data, refetch } = useUserInfo(userInfo.id);
-
-  useEffect(() => {
-    const currentUserInfo = JSON.parse(
-      localStorage.getItem("user_info") ?? "{}"
-    );
-    localStorage.setItem(
-      "user_info",
-      JSON.stringify({
-        ...currentUserInfo,
-        ...data?.data,
-      })
-    );
-    console.log(data, "datauser");
-  }, [userInfo]);
-
   return (
     <>
       <Helmet>

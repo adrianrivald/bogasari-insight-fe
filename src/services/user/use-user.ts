@@ -15,7 +15,7 @@ export function useUserInfo(userId: number, options: any = {}) {
     ["user-info", userInfo.id],
     () => fetchUserInfo(userId),
     {
-      enabled: userInfo?.fullName === undefined,
+      enabled: userId !== undefined,
       ...options,
     }
   );

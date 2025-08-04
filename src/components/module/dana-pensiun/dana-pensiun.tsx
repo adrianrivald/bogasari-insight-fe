@@ -54,7 +54,8 @@ export function DanaPensiun() {
     Record<number, boolean>
   >({});
 
-  const { data: transactionHistory } = useTransactionHistory();
+  const { data: transactionHistory, error } = useTransactionHistory();
+  console.log(error, "error");
   const { data: historyYearly } = useHistoryYearly();
   const { data: infoMonthly } = useInfoMonthly();
   const { data: amountSummary } = useAmountSummary();

@@ -6,11 +6,12 @@ import { AppLayout } from "../../layouts/layout";
 import { useAmountSummary } from "../../services/dana-pensiun/use-amount-summary";
 import { formatRupiah } from "../../utils/format-rupiah";
 import { TabContext, TabPanel } from "@mui/lab";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { DanaPensiun } from "../../components/module/dana-pensiun/dana-pensiun";
 import { renderFallback } from "../../routes/sections";
 import { PencairanDanaPensiun } from "../../components/module/dana-pensiun/pencairan-dana-pensiun";
 import dayjs from "dayjs";
+import { useUserInfo } from "../../services/user";
 
 function a11yProps(index: number) {
   return {
@@ -20,10 +21,10 @@ function a11yProps(index: number) {
 }
 
 export function HomeView() {
-  const { userInfo } = useAuth();
+  const { userInfo: user } = useAuth();
+  const [userInfo, setUserInfo] = useState<any>({});
   const navigate = useNavigate();
   const { data: amountSummary } = useAmountSummary();
-  console.log(userInfo, "userInfo");
   const onClickPenarikanDana = () => {
     navigate("/pencairan-dana-pensiun");
   };
@@ -37,6 +38,28 @@ export function HomeView() {
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
+
+  const { data, isSuccess } = useUserInfo(user.id);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setUserInfo(data.data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const currentUserInfo = JSON.parse(
+      localStorage.getItem("user_info") ?? "{}"
+    );
+    localStorage.setItem(
+      "user_info",
+      JSON.stringify({
+        ...currentUserInfo,
+        ...data?.data,
+      })
+    );
+    console.log(data, "datauser");
+  }, [userInfo]);
 
   return (
     <AppLayout withPadding={false}>
