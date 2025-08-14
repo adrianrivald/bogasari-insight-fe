@@ -38,25 +38,32 @@ export function CompleteProfileView() {
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [countryCode, setCountryCode] = useState("+62");
 
-  const handleSubmit = useCallback(async (formData: any) => {
-    console.log("Form data:", formData);
-    setIsSubmitting(true);
-    try {
-      await completeProfile({
-        fullName: formData.fullName,
-        birthDate: dayjs(dateValue).format("DD-MM-YYYY"),
-        nikEmployee: formData.nikEmployee,
-        noKtp: formData.noKtp,
-        phoneNumber: formData.phoneNumber,
-      });
-      setIsSubmitting(false);
-    } catch (error: any) {
-      console.log("here");
-      setDataIsNotValid(true);
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, []);
+  const handleSubmit = useCallback(
+    async (formData: any) => {
+      if (!dateValue) {
+        setDataIsNotValid(true);
+        return;
+      }
+
+      const formattedDate = dayjs(dateValue).format("DD-MM-YYYY");
+      setIsSubmitting(true);
+      try {
+        await completeProfile({
+          fullName: formData.fullName,
+          birthDate: formattedDate,
+          nikEmployee: formData.nikEmployee,
+          noKtp: formData.noKtp,
+          phoneNumber: formData.phoneNumber,
+        });
+        setIsSubmitting(false);
+      } catch (error: any) {
+        setDataIsNotValid(true);
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [dateValue, completeProfile]
+  );
 
   useEffect(() => {
     if (isError) {
