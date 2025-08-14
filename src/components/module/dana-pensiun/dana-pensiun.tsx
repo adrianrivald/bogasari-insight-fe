@@ -454,6 +454,28 @@ export function DanaPensiun() {
           </TabPanel>
         </TabContext>
       </Box>
+
+      <Button
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 3,
+          border: "1px solid",
+          borderColor: "blue.500",
+          borderRadius: "50px",
+          width: "100%",
+          py: 2,
+          mt: 4,
+        }}
+      >
+        <Box
+          component="img"
+          src="/images/icons/download.svg"
+          width={24}
+          height={24}
+        />
+        <Typography color="blue.500">Unduh Saldo Manfaat</Typography>
+      </Button>
       <Dialog
         open={isShowDatePopup}
         onClose={() => setIsShowDatePopup(false)}
