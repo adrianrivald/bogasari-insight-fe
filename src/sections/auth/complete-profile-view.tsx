@@ -183,6 +183,7 @@ export function CompleteProfileView() {
                         // error: dateValue === null,
                       },
                     }}
+                    format="DD/MM/YYYY"
                   />
                 </LocalizationProvider>
                 {/* {dateValue === null &&  (
