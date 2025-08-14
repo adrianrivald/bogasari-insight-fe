@@ -32,7 +32,7 @@ const countries = [
 
 export function CompleteProfileView() {
   const navigate = useNavigate();
-  const { mutate: completeProfile, isError } = useCompleteProfile();
+  const { mutate: completeProfile, isError, isSuccess } = useCompleteProfile();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dataIsNotValid, setDataIsNotValid] = useState(false);
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
@@ -64,6 +64,12 @@ export function CompleteProfileView() {
     },
     [dateValue, completeProfile]
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/");
+    }
+  }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
