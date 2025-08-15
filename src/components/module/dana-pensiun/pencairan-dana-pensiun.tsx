@@ -17,6 +17,7 @@ import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 import { SummaryPencairanDanaPensiunView } from "../../../sections/pencairan-dana-pensiun/summary/summary-pencairan-dana-pensiun-view";
 import { SummaryPencairanDanaPensiun } from "./pencairan-dana-pensiun-summary";
+import HomeTab from "../../ui/home-tab";
 
 const reasons = [
   {
@@ -106,358 +107,408 @@ export function PencairanDanaPensiun() {
   };
 
   if (isShowSummary) {
-    return <SummaryPencairanDanaPensiun />;
+    return (
+      <>
+        <HomeTab />
+
+        <Box
+          sx={{
+            width: "100%",
+            mt: {
+              xs: 0,
+              lg: 3,
+            },
+            p: { xs: 0, lg: 2 }, // no padding on mobile, padding on desktop
+            boxShadow: { xs: "none", lg: 3 }, // no shadow on mobile, shadow on desktop
+            borderRadius: { xs: 0, lg: 2 }, // optional: rounded only on desktop
+            backgroundColor: "background.paper",
+          }}
+        >
+          <SummaryPencairanDanaPensiun />
+        </Box>
+      </>
+    );
   }
 
   return (
     <>
-      {/* Balance */}
-      <Box>
-        <Box
-          sx={{
-            position: "relative",
-            width: "100%",
-            bgcolor: "#17548D",
-            borderRadius: 3,
-            paddingY: 4,
-            paddingX: 4,
-            color: "#ffffff",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            overflow: "hidden",
-          }}
-        >
-          <Typography sx={{ opacity: 0.9 }}>Total Dana Pensiun</Typography>
-          <Typography fontSize={42} fontWeight="bold">
-            Rp850.750.000
-          </Typography>
-        </Box>{" "}
-      </Box>
+      <HomeTab />
 
-      <Form width="100%" mt={4} onSubmit={handleSubmit}>
-        {({ register, formState, watch, setValue }) => (
-          <>
-            <Box mt={4}>
-              <Card
-                sx={{
-                  p: 2,
-                }}
-              >
-                <Typography fontWeight="bold">Informasi Pencairan</Typography>
-                <Stack mt={2} gap={2}>
-                  <Stack justifyContent="space-between" width="100%">
-                    <Typography sx={{ color: "grey.500" }}>
-                      Alasan Pencairan
-                    </Typography>
+      <Box
+        sx={{
+          width: "100%",
+          mt: {
+            xs: 0,
+            lg: 3,
+          },
+          p: { xs: 0, lg: 2 }, // no padding on mobile, padding on desktop
+          boxShadow: { xs: "none", lg: 3 }, // no shadow on mobile, shadow on desktop
+          borderRadius: { xs: 0, lg: 2 }, // optional: rounded only on desktop
+          backgroundColor: "background.paper",
+        }}
+      >
+        {/* Balance */}
+        <Box>
+          <Box
+            sx={{
+              position: "relative",
+              width: "100%",
+              bgcolor: "#17548D",
+              borderRadius: 3,
+              paddingY: 4,
+              paddingX: 4,
+              color: "#ffffff",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              overflow: "hidden",
+            }}
+          >
+            <Typography sx={{ opacity: 0.9 }}>Total Dana Pensiun</Typography>
+            <Typography fontSize={42} fontWeight="bold">
+              Rp850.750.000
+            </Typography>
+          </Box>{" "}
+        </Box>
 
-                    <FormControl fullWidth>
-                      <InputLabel
-                        shrink={false}
-                        id="select-label"
-                        style={{ display: "none" }}
-                      ></InputLabel>
-                      <Select
-                        labelId="select-label"
-                        value={watch("reason")}
-                        onChange={(e) => setValue("reason", e.target.value)}
-                        displayEmpty
-                        sx={{ mt: 1 }}
-                        renderValue={(selected) => {
-                          console.log(selected, "selected");
-                          if (!selected) {
-                            return (
-                              <Typography fontSize={14} color="GrayText">
-                                Pilih alasan pencairan
-                              </Typography>
-                            );
-                          }
-                          return (
-                            <Typography>
-                              {
-                                reasons?.find((item) => item.id === selected)
-                                  ?.label
-                              }
-                            </Typography>
-                          );
-                        }}
-                      >
-                        {reasons?.map((item) => (
-                          <MenuItem value={item?.id}>{item?.label}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Stack>
-                </Stack>
-              </Card>
-              <Card
-                sx={{
-                  p: 2,
-                  mt: 4,
-                }}
-              >
-                <Typography fontWeight="bold">Rekening Tujuan</Typography>
-                <Stack mt={2} gap={2}>
-                  <Stack justifyContent="space-between" width="100%">
-                    <Typography sx={{ color: "grey.500" }}>
-                      Nama Bank
-                    </Typography>
-
-                    <FormControl fullWidth>
-                      <InputLabel
-                        shrink={false}
-                        id="select-label"
-                        style={{ display: "none" }}
-                      ></InputLabel>
-                      <Select
-                        labelId="select-label"
-                        value={watch("bank_name")}
-                        onChange={(e) => setValue("bank_name", e.target.value)}
-                        displayEmpty
-                        sx={{ mt: 1 }}
-                        renderValue={(selected) => {
-                          console.log(selected, "selected");
-                          if (!selected) {
-                            return (
-                              <Typography fontSize={14} color="GrayText">
-                                Pilih Bank
-                              </Typography>
-                            );
-                          }
-                          return (
-                            <Typography>
-                              {
-                                banks?.find((item) => item.id === selected)
-                                  ?.label
-                              }
-                            </Typography>
-                          );
-                        }}
-                      >
-                        {banks?.map((item) => (
-                          <MenuItem value={item?.id}>{item?.label}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Stack>
-                  <Stack justifyContent="space-between" width="100%">
-                    <FormControl sx={{ width: "100%" }}>
-                      <Typography mb={1} component="label" htmlFor="no_rek">
-                        Nomor Rekening
+        <Form width="100%" mt={4} onSubmit={handleSubmit}>
+          {({ register, formState, watch, setValue }) => (
+            <>
+              <Box mt={4}>
+                <Card
+                  sx={{
+                    p: 2,
+                  }}
+                >
+                  <Typography fontWeight="bold">Informasi Pencairan</Typography>
+                  <Stack mt={2} gap={2}>
+                    <Stack justifyContent="space-between" width="100%">
+                      <Typography sx={{ color: "grey.500" }}>
+                        Alasan Pencairan
                       </Typography>
 
-                      <OutlinedInput
-                        {...register("no_rekening", {
-                          required: "No. Rekening wajib diisi",
-                        })}
-                        id="no_rek"
-                        placeholder="Masukkan Nomor Rekning"
-                        sx={{ width: "100%" }}
-                        autoComplete="off"
-                      />
-                    </FormControl>
+                      <FormControl fullWidth>
+                        <InputLabel
+                          shrink={false}
+                          id="select-label"
+                          style={{ display: "none" }}
+                        ></InputLabel>
+                        <Select
+                          labelId="select-label"
+                          value={watch("reason")}
+                          onChange={(e) => setValue("reason", e.target.value)}
+                          displayEmpty
+                          sx={{ mt: 1 }}
+                          renderValue={(selected) => {
+                            console.log(selected, "selected");
+                            if (!selected) {
+                              return (
+                                <Typography fontSize={14} color="GrayText">
+                                  Pilih alasan pencairan
+                                </Typography>
+                              );
+                            }
+                            return (
+                              <Typography>
+                                {
+                                  reasons?.find((item) => item.id === selected)
+                                    ?.label
+                                }
+                              </Typography>
+                            );
+                          }}
+                        >
+                          {reasons?.map((item) => (
+                            <MenuItem value={item?.id}>{item?.label}</MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Stack>
                   </Stack>
-
-                  <Stack justifyContent="space-between" width="100%">
-                    <FormControl sx={{ width: "100%" }}>
-                      <Typography
-                        mb={1}
-                        component="label"
-                        htmlFor="nama_rekening"
-                      >
-                        Nama Rekening
+                </Card>
+                <Card
+                  sx={{
+                    p: 2,
+                    mt: 4,
+                  }}
+                >
+                  <Typography fontWeight="bold">Rekening Tujuan</Typography>
+                  <Stack mt={2} gap={2}>
+                    <Stack justifyContent="space-between" width="100%">
+                      <Typography sx={{ color: "grey.500" }}>
+                        Nama Bank
                       </Typography>
 
-                      <OutlinedInput
-                        {...register("nama_rekening", {
-                          required: "Nama Rekening wajib diisi",
-                        })}
-                        id="nama_rekening"
-                        placeholder="Masukkan Nama Rekning"
-                        sx={{ width: "100%" }}
-                        autoComplete="off"
-                      />
-                    </FormControl>
-                  </Stack>
-                </Stack>
-              </Card>
+                      <FormControl fullWidth>
+                        <InputLabel
+                          shrink={false}
+                          id="select-label"
+                          style={{ display: "none" }}
+                        ></InputLabel>
+                        <Select
+                          labelId="select-label"
+                          value={watch("bank_name")}
+                          onChange={(e) =>
+                            setValue("bank_name", e.target.value)
+                          }
+                          displayEmpty
+                          sx={{ mt: 1 }}
+                          renderValue={(selected) => {
+                            console.log(selected, "selected");
+                            if (!selected) {
+                              return (
+                                <Typography fontSize={14} color="GrayText">
+                                  Pilih Bank
+                                </Typography>
+                              );
+                            }
+                            return (
+                              <Typography>
+                                {
+                                  banks?.find((item) => item.id === selected)
+                                    ?.label
+                                }
+                              </Typography>
+                            );
+                          }}
+                        >
+                          {banks?.map((item) => (
+                            <MenuItem value={item?.id}>{item?.label}</MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Stack>
+                    <Stack justifyContent="space-between" width="100%">
+                      <FormControl sx={{ width: "100%" }}>
+                        <Typography mb={1} component="label" htmlFor="no_rek">
+                          Nomor Rekening
+                        </Typography>
 
-              <Card
-                sx={{
-                  p: 2,
-                  mt: 4,
-                }}
-              >
-                <Typography fontWeight="bold">Unggah Dokumen</Typography>
-                <Stack mt={2} gap={2}>
-                  <Stack
-                    direction="row"
-                    border="1px solid #EFF1F5"
-                    p={2}
-                    justifyContent="space-between"
-                  >
-                    <Stack direction="row" gap={2} alignItems="center">
-                      <Box>
-                        {!preview ? (
-                          <Box component="img" src="/images/icons/wallet.svg" />
-                        ) : (
-                          <Box
-                            component="img"
-                            src={preview}
-                            sx={{
-                              width: "45px",
-                              height: "30px",
-                              cursor: "pointer",
-                              margin: "auto 0",
-                              objectFit: "cover",
-                              borderRadius: 1,
-                            }}
-                          />
-                        )}
-                      </Box>
-                      <Stack gap={0}>
-                        <Typography fontWeight="bold">Rekening Bank</Typography>
-                        {!preview && (
-                          <Typography mt={0}>
-                            Unggah foto buku tabungan
+                        <OutlinedInput
+                          {...register("no_rekening", {
+                            required: "No. Rekening wajib diisi",
+                          })}
+                          id="no_rek"
+                          placeholder="Masukkan Nomor Rekning"
+                          sx={{ width: "100%" }}
+                          autoComplete="off"
+                        />
+                      </FormControl>
+                    </Stack>
+
+                    <Stack justifyContent="space-between" width="100%">
+                      <FormControl sx={{ width: "100%" }}>
+                        <Typography
+                          mb={1}
+                          component="label"
+                          htmlFor="nama_rekening"
+                        >
+                          Nama Rekening
+                        </Typography>
+
+                        <OutlinedInput
+                          {...register("nama_rekening", {
+                            required: "Nama Rekening wajib diisi",
+                          })}
+                          id="nama_rekening"
+                          placeholder="Masukkan Nama Rekning"
+                          sx={{ width: "100%" }}
+                          autoComplete="off"
+                        />
+                      </FormControl>
+                    </Stack>
+                  </Stack>
+                </Card>
+
+                <Card
+                  sx={{
+                    p: 2,
+                    mt: 4,
+                  }}
+                >
+                  <Typography fontWeight="bold">Unggah Dokumen</Typography>
+                  <Stack mt={2} gap={2}>
+                    <Stack
+                      direction="row"
+                      border="1px solid #EFF1F5"
+                      p={2}
+                      justifyContent="space-between"
+                    >
+                      <Stack direction="row" gap={2} alignItems="center">
+                        <Box>
+                          {!preview ? (
+                            <Box
+                              component="img"
+                              src="/images/icons/wallet.svg"
+                            />
+                          ) : (
+                            <Box
+                              component="img"
+                              src={preview}
+                              sx={{
+                                width: "45px",
+                                height: "30px",
+                                cursor: "pointer",
+                                margin: "auto 0",
+                                objectFit: "cover",
+                                borderRadius: 1,
+                              }}
+                            />
+                          )}
+                        </Box>
+                        <Stack gap={0}>
+                          <Typography fontWeight="bold">
+                            Rekening Bank
                           </Typography>
-                        )}
+                          {!preview && (
+                            <Typography mt={0}>
+                              Unggah foto buku tabungan
+                            </Typography>
+                          )}
+                        </Stack>
                       </Stack>
-                    </Stack>
-                    <Input
-                      onChange={handleFileChange}
-                      type="file"
-                      sx={{ display: "none" }}
-                      hidden
-                      id="uploadPic"
-                    />
+                      <Input
+                        onChange={handleFileChange}
+                        type="file"
+                        sx={{ display: "none" }}
+                        hidden
+                        id="uploadPic"
+                      />
 
-                    <Typography
-                      component="label"
-                      htmlFor="uploadPic"
-                      sx={{ cursor: "pointer", margin: "auto 0" }}
+                      <Typography
+                        component="label"
+                        htmlFor="uploadPic"
+                        sx={{ cursor: "pointer", margin: "auto 0" }}
+                      >
+                        <Box component="img" src="/images/icons/plus.svg" />
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      border="1px solid #EFF1F5"
+                      p={2}
+                      justifyContent="space-between"
                     >
-                      <Box component="img" src="/images/icons/plus.svg" />
-                    </Typography>
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    border="1px solid #EFF1F5"
-                    p={2}
-                    justifyContent="space-between"
-                  >
-                    <Stack direction="row" gap={2} alignItems="center">
-                      <Box>
-                        {!previewKTP ? (
-                          <Box component="img" src="/images/icons/wallet.svg" />
-                        ) : (
-                          <Box
-                            component="img"
-                            src={previewKTP}
-                            sx={{
-                              width: "45px",
-                              height: "30px",
-                              cursor: "pointer",
-                              margin: "auto 0",
-                              objectFit: "cover",
-                              borderRadius: 1,
-                            }}
-                          />
-                        )}
-                      </Box>
-                      <Stack gap={0}>
-                        <Typography fontWeight="bold">KTP</Typography>
-                        {!previewKTP && (
-                          <Typography mt={0}>Unggah KTP</Typography>
-                        )}
+                      <Stack direction="row" gap={2} alignItems="center">
+                        <Box>
+                          {!previewKTP ? (
+                            <Box
+                              component="img"
+                              src="/images/icons/wallet.svg"
+                            />
+                          ) : (
+                            <Box
+                              component="img"
+                              src={previewKTP}
+                              sx={{
+                                width: "45px",
+                                height: "30px",
+                                cursor: "pointer",
+                                margin: "auto 0",
+                                objectFit: "cover",
+                                borderRadius: 1,
+                              }}
+                            />
+                          )}
+                        </Box>
+                        <Stack gap={0}>
+                          <Typography fontWeight="bold">KTP</Typography>
+                          {!previewKTP && (
+                            <Typography mt={0}>Unggah KTP</Typography>
+                          )}
+                        </Stack>
                       </Stack>
+                      <Input
+                        onChange={handleFileKTPChange}
+                        type="file"
+                        sx={{ display: "none" }}
+                        hidden
+                        id="uploadPicKTP"
+                      />
+
+                      <Typography
+                        component="label"
+                        htmlFor="uploadPicKTP"
+                        sx={{ cursor: "pointer", margin: "auto 0" }}
+                      >
+                        <Box component="img" src="/images/icons/plus.svg" />
+                      </Typography>
                     </Stack>
-                    <Input
-                      onChange={handleFileKTPChange}
-                      type="file"
-                      sx={{ display: "none" }}
-                      hidden
-                      id="uploadPicKTP"
-                    />
-
-                    <Typography
-                      component="label"
-                      htmlFor="uploadPicKTP"
-                      sx={{ cursor: "pointer", margin: "auto 0" }}
-                    >
-                      <Box component="img" src="/images/icons/plus.svg" />
-                    </Typography>
                   </Stack>
-                </Stack>
-              </Card>
+                </Card>
 
-              <Card
+                <Card
+                  sx={{
+                    p: 2,
+                    mt: 4,
+                  }}
+                >
+                  <Typography fontWeight="bold">Rincian Dana</Typography>
+                  <Stack mt={2} gap={2}>
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      width="100%"
+                      borderBottom="1px solid #EFF1F5"
+                      pb={2}
+                    >
+                      <Typography sx={{ color: "grey.500" }}>
+                        Total Dana Pensiun
+                      </Typography>
+                      <Typography fontWeight="bold">Rp840.000.000</Typography>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      width="100%"
+                      borderBottom="1px solid #EFF1F5"
+                      pb={2}
+                    >
+                      <Typography sx={{ color: "grey.500" }}>
+                        Pajak 5%
+                      </Typography>
+                      <Typography fontWeight="bold">Rp5.673.455</Typography>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      width="100%"
+                    >
+                      <Typography
+                        sx={{ color: "grey.500", fontWeight: "bold" }}
+                      >
+                        Total Diterima
+                      </Typography>
+                      <Typography fontWeight="bold" sx={{ color: "#19AF66" }}>
+                        Rp845.673.455
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                </Card>
+              </Box>
+
+              <LoadingButton
+                fullWidth
+                variant="contained"
+                size="large"
+                type="submit"
+                loading={isSubmitting}
+                loadingIndicator={
+                  <CircularProgress sx={{ color: "#FFF" }} size={20} />
+                }
                 sx={{
-                  p: 2,
                   mt: 4,
+                  borderRadius: 3,
+                  py: 1.5,
+                  backgroundColor: "blue.500",
                 }}
               >
-                <Typography fontWeight="bold">Rincian Dana</Typography>
-                <Stack mt={2} gap={2}>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    width="100%"
-                    borderBottom="1px solid #EFF1F5"
-                    pb={2}
-                  >
-                    <Typography sx={{ color: "grey.500" }}>
-                      Total Dana Pensiun
-                    </Typography>
-                    <Typography fontWeight="bold">Rp840.000.000</Typography>
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    width="100%"
-                    borderBottom="1px solid #EFF1F5"
-                    pb={2}
-                  >
-                    <Typography sx={{ color: "grey.500" }}>Pajak 5%</Typography>
-                    <Typography fontWeight="bold">Rp5.673.455</Typography>
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    width="100%"
-                  >
-                    <Typography sx={{ color: "grey.500", fontWeight: "bold" }}>
-                      Total Diterima
-                    </Typography>
-                    <Typography fontWeight="bold" sx={{ color: "#19AF66" }}>
-                      Rp845.673.455
-                    </Typography>
-                  </Stack>
-                </Stack>
-              </Card>
-            </Box>
-
-            <LoadingButton
-              fullWidth
-              variant="contained"
-              size="large"
-              type="submit"
-              loading={isSubmitting}
-              loadingIndicator={
-                <CircularProgress sx={{ color: "#FFF" }} size={20} />
-              }
-              sx={{
-                mt: 4,
-                borderRadius: 3,
-                py: 1.5,
-                backgroundColor: "blue.500",
-              }}
-            >
-              Ajukan Dokumen
-            </LoadingButton>
-          </>
-        )}
-      </Form>
+                Ajukan Dokumen
+              </LoadingButton>
+            </>
+          )}
+        </Form>
+      </Box>
     </>
   );
 }

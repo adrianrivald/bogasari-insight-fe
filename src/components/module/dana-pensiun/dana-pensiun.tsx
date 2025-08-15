@@ -9,17 +9,19 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Drawer,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Stack,
   Tab,
   Tabs,
   Typography,
 } from "@mui/material";
 import { AppLayout } from "../../../layouts/layout";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
@@ -35,6 +37,9 @@ import { useCreateJoinDate } from "../../../services/dana-pensiun/use-create-joi
 import { Bounce, toast } from "react-toastify";
 import { useTransactionHistory } from "../../../services/dana-pensiun/use-transaction-history";
 import { renderFallback } from "../../../routes/sections";
+import { useAuth } from "../../../sections/auth/providers/auth";
+import { useUserInfo } from "../../../services/user";
+import HomeTab from "../../ui/home-tab";
 
 function a11yProps(index: number) {
   return {
@@ -44,6 +49,8 @@ function a11yProps(index: number) {
 }
 
 export function DanaPensiun() {
+  const { userInfo: user } = useAuth();
+  const [userInfo, setUserInfo] = useState<any>({});
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [isShowDatePopup, setIsShowDatePopup] = useState(false);
   const [isFiltering, setIsFiltering] = useState(false);
@@ -54,17 +61,32 @@ export function DanaPensiun() {
     Record<number, boolean>
   >({});
 
+  const [isDownloadPopupOpen, setIsDownloadPopupOpen] = useState(false);
   const { data: transactionHistory, error } = useTransactionHistory();
-  console.log(error, "error");
   const { data: historyYearly } = useHistoryYearly();
   const { data: infoMonthly } = useInfoMonthly();
   const { data: amountSummary } = useAmountSummary();
   const { data: chartYearly } = useChartYearly();
   const { data: chartSixMonth } = useChartSixMonth(yearFilter);
   const { mutateAsync: postJoinDate } = useCreateJoinDate();
+
+  const [downloadYear, setDownloadYear] = useState("2025");
+
+  const handleDownloadYearChange = (e: SelectChangeEvent) => {
+    setDownloadYear(e.target.value);
+  };
+
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
+
+  const { data, isSuccess } = useUserInfo(user.id);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setUserInfo(data.data);
+    }
+  }, [data]);
 
   const onClickFillDate = () => {
     setIsShowDatePopup((prev) => !prev);
@@ -202,13 +224,101 @@ export function DanaPensiun() {
     }
   };
 
+  const onClickDownloadSaldo = () => {
+    setIsDownloadPopupOpen(true);
+  };
+
   if (isFiltering) {
     return <AppLayout menuTitle="Dana Pensiun">{renderFallback}</AppLayout>;
   }
 
   return (
     <>
-      <Box sx={{ width: "100%" }}>
+      <HomeTab />
+      <Card
+        sx={{
+          mt: 3,
+          py: 2,
+          px: 3,
+          bgcolor: "white",
+          display: {
+            xs: "none",
+            lg: "block",
+          },
+        }}
+      >
+        <Stack direction="row">
+          <Stack gap={1} width="50%">
+            <Typography fontSize={12} fontWeight="bold">
+              Nama
+            </Typography>
+            <Typography fontSize={12}>{userInfo.fullName}</Typography>
+          </Stack>
+          <Stack gap={1} width="50%">
+            <Typography fontSize={12} fontWeight="bold">
+              OPU
+            </Typography>
+            <Typography fontSize={12}>{userInfo?.opuCode ?? "-"}</Typography>
+          </Stack>
+        </Stack>
+
+        <Stack direction="row" mt={4}>
+          <Stack gap={1} width="50%">
+            <Typography fontSize={12} fontWeight="bold">
+              No Gaji
+            </Typography>
+            <Typography fontSize={12}>{userInfo.nikEmployee}</Typography>
+          </Stack>
+          <Stack gap={1} width="50%">
+            <Typography fontSize={12} fontWeight="bold">
+              Tanggal Lahir
+            </Typography>
+            <Typography fontSize={12}>
+              {dayjs(userInfo.birthDate).format("DD MMMM YYYY")}
+            </Typography>
+          </Stack>
+        </Stack>
+
+        <Stack direction="row" mt={4}>
+          <Stack gap={1} width="50%">
+            <Typography fontSize={12} fontWeight="bold">
+              Tanggal Masuk DPIP
+            </Typography>
+            <Typography fontSize={12}>-</Typography>
+          </Stack>
+          <Stack gap={1} width="50%">
+            <Typography fontSize={12} fontWeight="bold">
+              Tanggal Masuk Kerja
+            </Typography>
+            <Typography fontSize={12}>
+              {" "}
+              {dayjs(userInfo.joinDate).format("DD MMMM YYYY")}
+            </Typography>
+          </Stack>
+        </Stack>
+
+        <Stack direction="row" mt={4}>
+          <Stack gap={1} width="50%">
+            <Typography fontSize={12} fontWeight="bold">
+              Periode
+            </Typography>
+            <Typography fontSize={12}>-</Typography>
+          </Stack>
+        </Stack>
+      </Card>
+      <Box
+        sx={{
+          width: "100%",
+          mt: {
+            xs: 0,
+            lg: 3,
+          },
+          p: { xs: 0, lg: 2 }, // no padding on mobile, padding on desktop
+          boxShadow: { xs: "none", lg: 3 }, // no shadow on mobile, shadow on desktop
+          borderRadius: { xs: 0, lg: 2 }, // optional: rounded only on desktop
+          backgroundColor: "background.paper",
+        }}
+      >
         <TabContext value={tabIndex}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
@@ -467,6 +577,7 @@ export function DanaPensiun() {
           py: 2,
           mt: 4,
         }}
+        onClick={onClickDownloadSaldo}
       >
         <Box
           component="img"
@@ -546,6 +657,85 @@ export function DanaPensiun() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Drawer
+        anchor="bottom"
+        open={isDownloadPopupOpen}
+        onClose={() => setIsDownloadPopupOpen(false)}
+        PaperProps={{
+          sx: {
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            padding: 2,
+            pb: 4,
+          },
+        }}
+      >
+        <Box display="flex" flexDirection="column" gap={2}>
+          <Box
+            sx={{
+              bgcolor: "#79747E",
+              width: 32,
+              borderRadius: "100px",
+              height: 5,
+              margin: "auto",
+            }}
+          />
+          <Typography variant="h6" align="center">
+            Unduh Saldo Manfaat
+          </Typography>
+          <Typography variant="body2" align="center" color="text.secondary">
+            Pilih tahun dan jenis laporan yang ingin Anda unduh untuk personal
+            balance <strong>Aryo Agung Benardi</strong>
+          </Typography>
+
+          <Typography variant="subtitle2">Tahun</Typography>
+          <Select
+            fullWidth
+            value={downloadYear}
+            onChange={handleDownloadYearChange}
+            size="small"
+          >
+            <MenuItem value="2025">2025</MenuItem>
+            <MenuItem value="2024">2024</MenuItem>
+            <MenuItem value="2023">2023</MenuItem>
+            <MenuItem value="2022">2022</MenuItem>
+            <MenuItem value="2021">2021</MenuItem>
+          </Select>
+
+          <Box display="flex" gap={2} mt={2}>
+            <Button
+              fullWidth
+              variant="outlined"
+              size="large"
+              type="submit"
+              sx={{
+                margin: "auto",
+                borderRadius: 3,
+                py: 1.5,
+                color: "blue.500",
+                borderColor: "blue.500",
+              }}
+            >
+              Kembali ke Beranda
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              size="large"
+              type="submit"
+              sx={{
+                margin: "auto",
+                borderRadius: 3,
+                py: 1.5,
+                backgroundColor: "blue.500",
+              }}
+            >
+              Unduh
+            </Button>
+          </Box>
+        </Box>
+      </Drawer>
     </>
   );
 }

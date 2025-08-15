@@ -2,6 +2,7 @@ import { Box, Button, Card, Stack, Typography } from "@mui/material";
 import { useAuth } from "../../sections/auth/providers/auth";
 import dayjs from "dayjs";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface LeftSideBarSectionProps {
   isAuth: boolean;
@@ -15,6 +16,7 @@ const LeftSideBarSection = ({
   handleLogout,
 }: LeftSideBarSectionProps) => {
   const { userInfo, logout } = useAuth();
+  const navigate = useNavigate();
   return (
     <React.Fragment>
       {/* Top Sidebar */}
@@ -115,7 +117,7 @@ const LeftSideBarSection = ({
         <Box py={2} display="flex" flexDirection="column" gap={2}>
           <Stack direction="row" gap={2} justifyContent="space-between">
             <Typography fontWeight="bold">No KTP</Typography>
-            <Typography>{userInfo.nikEmployee}</Typography>
+            <Typography>{userInfo.noKtp}</Typography>
           </Stack>
           <Stack direction="row" gap={2} justifyContent="space-between">
             <Typography fontWeight="bold">Tanggal Lahir</Typography>
@@ -144,6 +146,7 @@ const LeftSideBarSection = ({
       >
         <Stack gap={2}>
           <Button
+            onClick={() => navigate("/dana-pensiun")}
             sx={{
               display: "flex",
               gap: 2,

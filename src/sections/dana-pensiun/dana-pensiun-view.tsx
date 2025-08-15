@@ -5,7 +5,15 @@ import { renderFallback } from "../../routes/sections";
 
 export function DanaPensiunView() {
   return (
-    <AppLayout menuTitle="Dana Pensiun">
+    <AppLayout
+      menuTitle="Dana Pensiun"
+      containerSx={{
+        p: {
+          xs: 3,
+          lg: 0,
+        },
+      }}
+    >
       <Suspense fallback={renderFallback}>
         <DanaPensiun />
       </Suspense>

@@ -33,6 +33,7 @@ export type AppLayoutProps = {
   };
   menuTitle?: string;
   withPadding?: boolean;
+  containerSx?: SxProps<Theme>;
 };
 
 const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
@@ -167,6 +168,7 @@ export function AppLayout({
   header,
   menuTitle,
   withPadding = true,
+  containerSx,
 }: AppLayoutProps) {
   const { isAuth, logout } = useAuth();
   const location = useLocation();
@@ -251,6 +253,7 @@ export function AppLayout({
                 }
               : 0,
           bgcolor: "white",
+          ...containerSx,
         }}
       >
         {isOpen ? (

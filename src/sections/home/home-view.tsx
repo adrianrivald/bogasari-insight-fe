@@ -238,150 +238,73 @@ export function HomeView() {
           },
         }}
       >
-        <TabContext value={tabIndex}>
-          <Card
-            sx={{
-              pt: 2,
-              px: 3,
-              bgcolor: "white",
-            }}
-          >
-            <Typography fontWeight="bold" fontSize={24}>
-              Dana Pensiun Iuran Pasti (DPIP)
-            </Typography>
-            <Tabs
-              value={tabIndex}
-              onChange={handleChange}
-              aria-label="dana pensiun tab"
-              TabIndicatorProps={{ style: { display: "none" } }} // hide default underline
-              sx={{
-                mt: 4,
-              }}
-            >
-              <Tab
-                sx={{
-                  px: 4,
-                  color: "gray",
-                  "&.Mui-selected": {
-                    color: "blue.500",
-                    borderBottom: "2px solid #4AA1F3",
-                  },
-                }}
-                label="Personal Balance"
-                {...a11yProps(0)}
-              />
-              <Tab
-                sx={{
-                  px: 4,
-                  color: "gray",
-                  "&.Mui-selected": {
-                    color: "blue.500",
-                    borderBottom: "2px solid #4AA1F3",
-                  },
-                }}
-                label="Pencairan Dana"
-                {...a11yProps(1)}
-              />
-            </Tabs>
-          </Card>
+        <Card
+          sx={{
+            py: 2,
+            px: 3,
+            bgcolor: "white",
+          }}
+        >
+          <Stack direction="row">
+            <Stack gap={1} width="50%">
+              <Typography fontSize={12} fontWeight="bold">
+                Nama
+              </Typography>
+              <Typography fontSize={12}>{userInfo.fullName}</Typography>
+            </Stack>
+            <Stack gap={1} width="50%">
+              <Typography fontSize={12} fontWeight="bold">
+                OPU
+              </Typography>
+              {/* TODO: Integrate this */}
+              <Typography fontSize={12}>-</Typography>
+            </Stack>
+          </Stack>
 
-          <TabPanel value={0} sx={{ px: 0 }}>
-            <Card
-              sx={{
-                py: 2,
-                px: 3,
-                bgcolor: "white",
-              }}
-            >
-              <Stack direction="row">
-                <Stack gap={1} width="50%">
-                  <Typography fontSize={12} fontWeight="bold">
-                    Nama
-                  </Typography>
-                  <Typography fontSize={12}>{userInfo.fullName}</Typography>
-                </Stack>
-                <Stack gap={1} width="50%">
-                  <Typography fontSize={12} fontWeight="bold">
-                    OPU
-                  </Typography>
-                  {/* TODO: Integrate this */}
-                  <Typography fontSize={12}>-</Typography>
-                </Stack>
-              </Stack>
+          <Stack direction="row" mt={4}>
+            <Stack gap={1} width="50%">
+              <Typography fontSize={12} fontWeight="bold">
+                No Gaji
+              </Typography>
+              <Typography fontSize={12}>{userInfo.nikEmployee}</Typography>
+            </Stack>
+            <Stack gap={1} width="50%">
+              <Typography fontSize={12} fontWeight="bold">
+                Tanggal Lahir
+              </Typography>
+              <Typography fontSize={12}>
+                {dayjs(userInfo.birthDate).format("DD MMMM YYYY")}
+              </Typography>
+            </Stack>
+          </Stack>
 
-              <Stack direction="row" mt={4}>
-                <Stack gap={1} width="50%">
-                  <Typography fontSize={12} fontWeight="bold">
-                    No Gaji
-                  </Typography>
-                  <Typography fontSize={12}>{userInfo.nikEmployee}</Typography>
-                </Stack>
-                <Stack gap={1} width="50%">
-                  <Typography fontSize={12} fontWeight="bold">
-                    Tanggal Lahir
-                  </Typography>
-                  <Typography fontSize={12}>
-                    {dayjs(userInfo.birthDate).format("DD MMMM YYYY")}
-                  </Typography>
-                </Stack>
-              </Stack>
+          <Stack direction="row" mt={4}>
+            <Stack gap={1} width="50%">
+              <Typography fontSize={12} fontWeight="bold">
+                Tanggal Masuk DPIP
+              </Typography>
+              <Typography fontSize={12}>-</Typography>
+            </Stack>
+            <Stack gap={1} width="50%">
+              <Typography fontSize={12} fontWeight="bold">
+                Tanggal Masuk Kerja
+              </Typography>
+              <Typography fontSize={12}>
+                {" "}
+                {dayjs(userInfo.joinDate).format("DD MMMM YYYY")}
+              </Typography>
+            </Stack>
+          </Stack>
 
-              <Stack direction="row" mt={4}>
-                <Stack gap={1} width="50%">
-                  <Typography fontSize={12} fontWeight="bold">
-                    Tanggal Masuk DPIP
-                  </Typography>
-                  <Typography fontSize={12}>-</Typography>
-                </Stack>
-                <Stack gap={1} width="50%">
-                  <Typography fontSize={12} fontWeight="bold">
-                    Tanggal Masuk Kerja
-                  </Typography>
-                  <Typography fontSize={12}>
-                    {" "}
-                    {dayjs(userInfo.joinDate).format("DD MMMM YYYY")}
-                  </Typography>
-                </Stack>
-              </Stack>
-
-              <Stack direction="row" mt={4}>
-                <Stack gap={1} width="50%">
-                  <Typography fontSize={12} fontWeight="bold">
-                    Periode
-                  </Typography>
-                  <Typography fontSize={12}>-</Typography>
-                </Stack>
-              </Stack>
-            </Card>
-
-            <Card
-              sx={{
-                mt: 3,
-                py: 2,
-                px: 3,
-                bgcolor: "white",
-              }}
-            >
-              <Suspense fallback={renderFallback}>
-                <DanaPensiun />
-              </Suspense>
-            </Card>
-          </TabPanel>
-
-          <TabPanel value={1} sx={{ px: 0 }}>
-            <Card
-              sx={{
-                py: 2,
-                px: 3,
-                bgcolor: "white",
-              }}
-            >
-              <Suspense fallback={renderFallback}>
-                <PencairanDanaPensiun />
-              </Suspense>
-            </Card>
-          </TabPanel>
-        </TabContext>
+          <Stack direction="row" mt={4}>
+            <Stack gap={1} width="50%">
+              <Typography fontSize={12} fontWeight="bold">
+                Periode
+              </Typography>
+              <Typography fontSize={12}>-</Typography>
+            </Stack>
+          </Stack>
+        </Card>
       </Box>
     </AppLayout>
   );
