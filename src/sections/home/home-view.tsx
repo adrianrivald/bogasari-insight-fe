@@ -283,7 +283,11 @@ export function HomeView() {
               <Typography fontSize={12} fontWeight="bold">
                 Tanggal Masuk DPIP
               </Typography>
-              <Typography fontSize={12}>-</Typography>
+              <Typography fontSize={12}>
+                {userInfo.dJoinDate
+                  ? dayjs(userInfo.dJoinDate).format("DD MMMM YYYY")
+                  : "-"}
+              </Typography>
             </Stack>
             <Stack gap={1} width="50%">
               <Typography fontSize={12} fontWeight="bold">
@@ -291,7 +295,9 @@ export function HomeView() {
               </Typography>
               <Typography fontSize={12}>
                 {" "}
-                {dayjs(userInfo.joinDate).format("DD MMMM YYYY")}
+                {userInfo.joinDate
+                  ? dayjs(userInfo.joinDate).format("DD MMMM YYYY")
+                  : "-"}
               </Typography>
             </Stack>
           </Stack>
