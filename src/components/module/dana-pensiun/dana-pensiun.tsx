@@ -42,6 +42,8 @@ import { useUserInfo } from "../../../services/user";
 import HomeTab from "../../ui/home-tab";
 import RekapitulasiPensiunReport from "../../report/rekapitulasi-dana";
 import { pdf } from "@react-pdf/renderer";
+import SaldoManfaatPDF from "../../report/saldo-manfaat";
+import SaldoManfaatDetailPDF from "../../report/saldo-manfaat-detail";
 
 function a11yProps(index: number) {
   return {
@@ -232,7 +234,7 @@ export function DanaPensiun() {
 
   const onExportBalance = async () => {
     // Generate PDF as blob
-    const blob = await pdf(<RekapitulasiPensiunReport />).toBlob();
+    const blob = await pdf(<SaldoManfaatDetailPDF />).toBlob();
 
     // Create object URL
     const url = URL.createObjectURL(blob);
