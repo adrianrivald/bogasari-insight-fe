@@ -40,6 +40,8 @@ import { renderFallback } from "../../../routes/sections";
 import { useAuth } from "../../../sections/auth/providers/auth";
 import { useUserInfo } from "../../../services/user";
 import HomeTab from "../../ui/home-tab";
+import RekapitulasiPensiunReport from "../../report/rekapitulasi-dana";
+import { pdf } from "@react-pdf/renderer";
 
 function a11yProps(index: number) {
   return {
@@ -228,6 +230,19 @@ export function DanaPensiun() {
     setIsDownloadPopupOpen(true);
   };
 
+  const onExportBalance = async () => {
+    // Generate PDF as blob
+    const blob = await pdf(<RekapitulasiPensiunReport />).toBlob();
+
+    // Create object URL
+    const url = URL.createObjectURL(blob);
+
+    // Open in new tab
+    window.open(url, "_blank");
+
+    // (Optional) revoke the object URL later
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
   if (isFiltering) {
     return <AppLayout menuTitle="Dana Pensiun">{renderFallback}</AppLayout>;
   }
@@ -692,7 +707,7 @@ export function DanaPensiun() {
           </Typography>
           <Typography variant="body2" align="center" color="text.secondary">
             Pilih tahun dan jenis laporan yang ingin Anda unduh untuk personal
-            balance <strong>Aryo Agung Benardi</strong>
+            balance <strong>{userInfo.fullName}</strong>
           </Typography>
 
           <Typography variant="subtitle2">Tahun</Typography>
@@ -726,6 +741,7 @@ export function DanaPensiun() {
               Kembali ke Beranda
             </Button>
             <Button
+              onClick={onExportBalance}
               fullWidth
               variant="contained"
               size="large"
