@@ -44,6 +44,8 @@ import RekapitulasiPensiunReport from "../../report/rekapitulasi-dana";
 import { pdf } from "@react-pdf/renderer";
 import SaldoManfaatPDF from "../../report/saldo-manfaat";
 import SaldoManfaatDetailPDF from "../../report/saldo-manfaat-detail";
+import { API_URL } from "../../../constants";
+import { getSession } from "../../../sections/auth/session/session";
 
 function a11yProps(index: number) {
   return {
@@ -233,17 +235,31 @@ export function DanaPensiun() {
   };
 
   const onExportBalance = async () => {
-    // Generate PDF as blob
-    const blob = await pdf(<SaldoManfaatDetailPDF />).toBlob();
+    await window
+      .fetch(`${API_URL}v1/pension/contributions/yearly/me`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${getSession()}`,
+        },
+      })
+      .then((res) =>
+        res.json().then(async (res) => {
+          console.log(res, "resnya");
+          const blob = await pdf(
+            <SaldoManfaatPDF data={res.data} userInfo={userInfo} />
+          ).toBlob();
 
-    // Create object URL
-    const url = URL.createObjectURL(blob);
+          // Create object URL
+          const url = URL.createObjectURL(blob);
 
-    // Open in new tab
-    window.open(url, "_blank");
+          // Open in new tab
+          window.open(url, "_blank");
 
-    // (Optional) revoke the object URL later
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+          // (Optional) revoke the object URL later
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        })
+      ); // Generate PDF as blob
   };
   if (isFiltering) {
     return <AppLayout menuTitle="Dana Pensiun">{renderFallback}</AppLayout>;

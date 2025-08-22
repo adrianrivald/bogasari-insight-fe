@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  StyleSheet,
-  PDFViewer,
-  Image,
-} from "@react-pdf/renderer";
+import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import dayjs from "dayjs";
 
-// Styles
+// Styles (same as before, kept unchanged)
 const styles: any = StyleSheet.create({
   page: {
     padding: 30,
@@ -56,7 +49,7 @@ const styles: any = StyleSheet.create({
     flexDirection: "row",
   },
   tableColHeader: {
-    width: "14.2%",
+    width: "12.5%",
     borderStyle: "solid",
     borderWidth: 1,
     borderLeftWidth: 0,
@@ -67,7 +60,7 @@ const styles: any = StyleSheet.create({
     fontWeight: "bold",
   },
   tableCol: {
-    width: "14.2%",
+    width: "12.5%",
     borderStyle: "solid",
     borderWidth: 1,
     borderLeftWidth: 0,
@@ -79,7 +72,6 @@ const styles: any = StyleSheet.create({
     color: "green",
     fontWeight: "bold",
   },
-
   footer: {
     position: "absolute",
     bottom: 20,
@@ -96,173 +88,224 @@ const styles: any = StyleSheet.create({
   },
 });
 
-// Data types
-interface Contribution {
+// Types
+interface MonthlyData {
+  no: number;
   bulan: string;
   keterangan: string;
-  iuranPeserta: string;
-  iuranPerusahaan: string;
-  hasil: string;
-  pencairan: string;
-  total: string;
+  iuranPeserta: number;
+  iuranPerusahaan: number;
+  hasilPengembangan: number;
+  pencairan: number;
 }
 
-// Mock Data (replace with props or API data)
-const contributions: Contribution[] = [
-  {
-    bulan: "Jan 2025",
-    keterangan: "Transaksi Januari 2025",
-    iuranPeserta: "Rp500.000",
-    iuranPerusahaan: "Rp500.000",
-    hasil: "Rp50.000",
-    pencairan: "Rp0",
-    total: "Rp1.050.000",
-  },
-];
+interface YearlyData {
+  year: number;
+  monthlyData: MonthlyData[];
+  totals: {
+    totalIuranPeserta: number;
+    totalIuranPerusahaan: number;
+    totalHasilPengembangan: number;
+    totalPencairan: number;
+    totalSaldo: number;
+  };
+}
 
-const summary = [
-  { label: "Saldo Awal", value: "Rp0" },
-  { label: "Saldo Iuran Peserta", value: "Rp6.000.000" },
-  { label: "Saldo Iuran Perusahaan", value: "Rp6.000.000" },
-  { label: "Total Pengembangan", value: "Rp0" },
-  { label: "Total Pencairan", value: "Rp0" },
-  { label: "Total Saldo Akhir", value: "Rp6.000.000" },
-];
+interface Props {
+  data: YearlyData[];
+  userInfo: any;
+}
 
-const SaldoManfaatPDF: React.FC = () => (
+// Utility for formatting currency
+const formatRupiah = (val: number) => "Rp" + val.toLocaleString("id-ID");
+
+// Component
+const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
   <Document>
-    <Page size="A4" style={styles.page}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={{ fontSize: 14, fontWeight: "bold" }}>Saldo Manfaat</Text>
-        <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
-        <Text> Periode: 2025 </Text>
-      </View>
+    {data.map((yearData, index) => (
+      <React.Fragment key={yearData.year}>
+        {/* PAGE 1: Monthly Transactions */}
+        <Page size="A4" style={styles.page}>
+          <View style={styles.header}>
+            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+              Saldo Manfaat
+            </Text>
+            <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
+            <Text> Periode: {yearData.year} </Text>
+          </View>
 
-      {/* Personal Info in 3 Columns */}
-      <View style={styles.infoSection}>
-        {/* Column 1 */}
-        <View style={styles.infoColumn}>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Nama Lengkap</Text>
-            <Text style={styles.value}>Indah Sari</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Tanggal Lahir</Text>
-            <Text style={styles.value}>12 Juni 1990</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Tanggal Mulai Bekerja</Text>
-            <Text style={styles.value}>01 Maret 2002</Text>
-          </View>
-        </View>
+          {/* Personal Info */}
+          <View style={styles.infoSection}>
+            {/* Column 1 */}
+            <View style={styles.infoColumn}>
+              <View style={styles.infoRow}>
+                <Text style={styles.label}>Nama Lengkap</Text>
+                <Text style={styles.value}>{userInfo.fullName}</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.label}>Tanggal Lahir</Text>
+                <Text style={styles.value}>
+                  {dayjs(userInfo.birthDate).format("DD MMMM YYYY")}
+                </Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.label}>Tanggal Mulai Bekerja</Text>
+                <Text style={styles.value}>
+                  {userInfo.joinDate
+                    ? dayjs(userInfo.joinDate).format("DD MMMM YYYY")
+                    : "-"}
+                </Text>
+              </View>
+            </View>
 
-        {/* Column 2 */}
-        <View style={styles.infoColumn}>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Nomor Karyawan</Text>
-            <Text style={styles.value}>ID0012834</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>OPU</Text>
-            <Text style={styles.value}>Bogasari Pasta JKT</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Tanggal Bergabung DPIP</Text>
-            <Text style={styles.value}>01 Maret 2002</Text>
-          </View>
-        </View>
+            {/* Column 2 */}
+            <View style={styles.infoColumn}>
+              <View style={styles.infoRow}>
+                <Text style={styles.label}>Nomor Karyawan</Text>
+                <Text style={styles.value}>{userInfo.nikEmployee}</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.label}>OPU</Text>
+                <Text style={styles.value}>{userInfo?.opuCode ?? "-"}</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.label}>Tanggal Bergabung DPIP</Text>
+                <Text style={styles.value}>
+                  {userInfo.dJoinDate
+                    ? dayjs(userInfo.dJoinDate).format("DD MMMM YYYY")
+                    : "-"}
+                </Text>
+              </View>
+            </View>
 
-        {/* Column 3 */}
-        <View style={styles.infoColumn}>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>NIP/NIK</Text>
-            <Text style={styles.value}>148904948494039434</Text>
+            {/* Column 3 */}
+            <View style={styles.infoColumn}>
+              <View style={styles.infoRow}>
+                <Text style={styles.label}>NIP/NIK</Text>
+                <Text style={styles.value}>{userInfo.noKtp}</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.label}>Job Class</Text>
+                <Text style={styles.value}>{userInfo.role}</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.label}>Status Peserta</Text>
+                <Text style={styles.statusActive}>Aktif</Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Job Class</Text>
-            <Text style={styles.value}>Asisten Manager</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Status Peserta</Text>
-            <Text style={styles.statusActive}>Aktif</Text>
-          </View>
-        </View>
-      </View>
 
-      {/* Contribution Summary */}
-      <Text style={styles.sectionTitle}>
-        Riwayat Kontribusi Bulanan - Summary
-      </Text>
-
-      <View style={styles.table}>
-        {/* Table Header */}
-        <View style={styles.tableRow}>
-          <Text style={styles.tableColHeader}>No</Text>
-          <Text style={styles.tableColHeader}>Bulan</Text>
-          <Text style={styles.tableColHeader}>Keterangan</Text>
-          <Text style={styles.tableColHeader}>Iuran Peserta</Text>
-          <Text style={styles.tableColHeader}>Iuran Perusahaan</Text>
-          <Text style={styles.tableColHeader}>Hasil Pengembangan</Text>
-          <Text style={styles.tableColHeader}>Pencairan</Text>
-          <Text style={styles.tableColHeader}>Total Bulanan</Text>
-        </View>
-
-        {/* Table Rows */}
-        {contributions.map((c, i) => (
-          <View key={i} style={styles.tableRow}>
-            <Text style={styles.tableCol}>{i + 1}</Text>
-            <Text style={styles.tableCol}>{c.bulan}</Text>
-            <Text style={styles.tableCol}>{c.keterangan}</Text>
-            <Text style={styles.tableCol}>{c.iuranPeserta}</Text>
-            <Text style={styles.tableCol}>{c.iuranPerusahaan}</Text>
-            <Text style={styles.tableCol}>{c.hasil}</Text>
-            <Text style={styles.tableCol}>{c.pencairan}</Text>
-            <Text style={styles.tableCol}>{c.total}</Text>
-          </View>
-        ))}
-      </View>
-
-      {/* Footer */}
-      <View style={styles.footer}>
-        <Text>
-          Iuran Pasti Bogasari - Jl. Raya Cilincing No.1, Tanjung Priok, Jakarta
-          Utara
-        </Text>
-        <Text>Printed Date: 19 Agustus 2025 | Halaman 1/2</Text>
-      </View>
-    </Page>
-    {/* Page 2 */}
-    <Page size="A4" orientation="portrait" style={styles.page}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={{ fontSize: 14, fontWeight: "bold" }}>Saldo Manfaat</Text>
-        <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
-        <Text> Periode: 2025 </Text>
-      </View>
-
-      {/* Summary */}
-      <Text style={[styles.title, { fontSize: 12, marginBottom: 12 }]}>
-        Ringkasan Saldo Dana Pensiun
-      </Text>
-      {summary.map((s, idx) => (
-        <View style={styles.summaryRow} key={idx}>
-          <Text>{s.label}</Text>
-          <Text style={idx === summary.length - 1 ? styles.bold : {}}>
-            {s.value}
+          {/* Contribution Summary Table */}
+          <Text style={styles.sectionTitle}>
+            Riwayat Kontribusi Bulanan - {yearData.year}
           </Text>
-        </View>
-      ))}
 
-      {/* Footer */}
-      <View style={styles.footer}>
-        <Text>
-          Iuran Pasti Bogasari - Jl. Raya Cilincing No.1, Tanjung Priok, Jakarta
-          Utara
-        </Text>
-        <Text>Printed Date: 19 Agustus 2025 | Halaman 2/2</Text>
-      </View>
-    </Page>
+          <View style={styles.table}>
+            {/* Table Header */}
+            <View style={styles.tableRow}>
+              <Text style={styles.tableColHeader}>No</Text>
+              <Text style={styles.tableColHeader}>Bulan</Text>
+              <Text style={styles.tableColHeader}>Keterangan</Text>
+              <Text style={styles.tableColHeader}>Iuran Peserta</Text>
+              <Text style={styles.tableColHeader}>Iuran Perusahaan</Text>
+              <Text style={styles.tableColHeader}>Hasil Pengembangan</Text>
+              <Text style={styles.tableColHeader}>Pencairan</Text>
+              <Text style={styles.tableColHeader}>Total Bulanan</Text>
+            </View>
+
+            {/* Table Rows */}
+            {yearData.monthlyData.map((c) => {
+              const total =
+                c.iuranPeserta +
+                c.iuranPerusahaan +
+                c.hasilPengembangan -
+                c.pencairan;
+              return (
+                <View key={c.no} style={styles.tableRow}>
+                  <Text style={styles.tableCol}>{c.no}</Text>
+                  <Text style={styles.tableCol}>{c.bulan}</Text>
+                  <Text style={styles.tableCol}>{c.keterangan}</Text>
+                  <Text style={styles.tableCol}>
+                    {formatRupiah(c.iuranPeserta)}
+                  </Text>
+                  <Text style={styles.tableCol}>
+                    {formatRupiah(c.iuranPerusahaan)}
+                  </Text>
+                  <Text style={styles.tableCol}>
+                    {formatRupiah(c.hasilPengembangan)}
+                  </Text>
+                  <Text style={styles.tableCol}>
+                    {formatRupiah(c.pencairan)}
+                  </Text>
+                  <Text style={styles.tableCol}>{formatRupiah(total)}</Text>
+                </View>
+              );
+            })}
+          </View>
+
+          {/* Footer */}
+          <View style={styles.footer}>
+            <Text>
+              Iuran Pasti Bogasari - Jl. Raya Cilincing No.1, Tanjung Priok,
+              Jakarta Utara
+            </Text>
+            <Text>
+              Printed Date: {new Date().toLocaleDateString("id-ID")} | Halaman
+              1/2
+            </Text>
+          </View>
+        </Page>
+
+        {/* PAGE 2: Summary */}
+        <Page size="A4" style={styles.page}>
+          <View style={styles.header}>
+            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+              Saldo Manfaat
+            </Text>
+            <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
+            <Text> Periode: {yearData.year} </Text>
+          </View>
+
+          <Text style={{ fontSize: 12, marginBottom: 12 }}>
+            Ringkasan Saldo Dana Pensiun
+          </Text>
+
+          <View style={styles.summaryRow}>
+            <Text>Saldo Iuran Peserta</Text>
+            <Text>{formatRupiah(yearData.totals.totalIuranPeserta)}</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text>Saldo Iuran Perusahaan</Text>
+            <Text>{formatRupiah(yearData.totals.totalIuranPerusahaan)}</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text>Total Pengembangan</Text>
+            <Text>{formatRupiah(yearData.totals.totalHasilPengembangan)}</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text>Total Pencairan</Text>
+            <Text>{formatRupiah(yearData.totals.totalPencairan)}</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text style={{ fontWeight: "bold" }}>Total Saldo Akhir</Text>
+            <Text style={{ fontWeight: "bold" }}>
+              {formatRupiah(yearData.totals.totalSaldo)}
+            </Text>
+          </View>
+
+          <View style={styles.footer}>
+            <Text>
+              Iuran Pasti Bogasari - Jl. Raya Cilincing No.1, Tanjung Priok,
+              Jakarta Utara
+            </Text>
+            <Text>
+              Printed Date: {new Date().toLocaleDateString("id-ID")} | Halaman
+              2/2
+            </Text>
+          </View>
+        </Page>
+      </React.Fragment>
+    ))}
   </Document>
 );
 
