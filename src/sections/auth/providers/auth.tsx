@@ -107,10 +107,12 @@ export function AuthProvider(props: React.PropsWithChildren) {
       // Ensure session flush completes
       await sessionService.flushSession();
       setAccessToken(null);
+      localStorage.removeItem("loginInfo");
       setUserInfo("{}");
       navigate("/");
     } catch (error) {
       await sessionService.flushSession();
+      localStorage.removeItem("loginInfo");
       setAccessToken(null);
       setUserInfo("{}");
       navigate("/");

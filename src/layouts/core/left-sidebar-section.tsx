@@ -232,7 +232,7 @@ const LeftSideBarSection = ({
                 Login Terakhir
               </Typography>
             </Stack>
-            <Stack>
+            <Stack sx={{ flex: "none", width: "50%", textAlign: "right" }}>
               <Typography fontSize={12}>
                 {dayjs(deviceInfo.lastLogin).format("DD MMM YYYY")}
               </Typography>
@@ -253,7 +253,7 @@ const LeftSideBarSection = ({
                 Perangkat
               </Typography>
             </Stack>
-            <Stack>
+            <Stack sx={{ flex: "none", width: "50%", textAlign: "right" }}>
               <Typography fontSize={12}>{deviceInfo?.device}</Typography>
               {/* <Typography fontSize={12}>ios 17</Typography> */}
             </Stack>
