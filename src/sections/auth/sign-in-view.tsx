@@ -1,8 +1,4 @@
-import {
-  Visibility,
-  VisibilityOff,
-  Google as GoogleIcon,
-} from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -15,11 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useCallback, useState } from "react";
-import { SvgColor } from "../../components/svg-color";
 import { Form } from "../../components/form/form";
 import { LoadingButton } from "@mui/lab";
 import { useAuth } from "./providers/auth";
-import { Bounce, toast } from "react-toastify";
+import dayjs from "dayjs";
+import platform from "platform";
 
 export function SignInView() {
   const { login } = useAuth();
@@ -31,6 +27,27 @@ export function SignInView() {
   const handleSubmit = useCallback(async (formData: any) => {
     setIsSubmitting(true);
     try {
+      // Get platform info
+      const deviceInfo = {
+        name: platform.name, // Browser name
+        version: platform.version, // Browser version
+        os: platform.os?.toString(), // OS (e.g., "iOS 16.5")
+        product: platform.product, // Device product (e.g., "iPhone")
+        manufacturer: platform.manufacturer, // Vendor (e.g., "Apple")
+      };
+
+      // Build a friendly string
+      const deviceName = deviceInfo.manufacturer
+        ? `${deviceInfo.manufacturer} ${deviceInfo.product || ""}`.trim()
+        : `${deviceInfo.name} on ${deviceInfo.os}`;
+
+      localStorage.setItem(
+        "loginInfo",
+        JSON.stringify({
+          device: deviceName,
+          lastLogin: dayjs(new Date()),
+        })
+      );
       await login({ email: formData?.email, password: formData?.password });
       setIsSubmitting(false);
     } catch (error: any) {

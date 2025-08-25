@@ -17,6 +17,7 @@ const LeftSideBarSection = ({
 }: LeftSideBarSectionProps) => {
   const { userInfo, logout } = useAuth();
   const navigate = useNavigate();
+  const deviceInfo = JSON.parse(localStorage.getItem("loginInfo") ?? "{}");
   return (
     <React.Fragment>
       {/* Top Sidebar */}
@@ -232,8 +233,12 @@ const LeftSideBarSection = ({
               </Typography>
             </Stack>
             <Stack>
-              <Typography fontSize={12}>02 Jul 2025</Typography>
-              <Typography fontSize={12}>21:45 WIB</Typography>
+              <Typography fontSize={12}>
+                {dayjs(deviceInfo.lastLogin).format("DD MMM YYYY")}
+              </Typography>
+              <Typography fontSize={12}>
+                {dayjs(deviceInfo?.lastLogin).format("HH:MM")} WIB
+              </Typography>
             </Stack>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
@@ -249,8 +254,8 @@ const LeftSideBarSection = ({
               </Typography>
             </Stack>
             <Stack>
-              <Typography fontSize={12}>iPhone Pro 16</Typography>
-              <Typography fontSize={12}>ios 17</Typography>
+              <Typography fontSize={12}>{deviceInfo?.device}</Typography>
+              {/* <Typography fontSize={12}>ios 17</Typography> */}
             </Stack>
           </Stack>
         </Stack>
