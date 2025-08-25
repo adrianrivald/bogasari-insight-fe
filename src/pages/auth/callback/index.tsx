@@ -1,53 +1,32 @@
-// pages/GoogleCallback.jsx
+// src/pages/GoogleCallback.tsx
 import { useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../../constants";
 
-function GoogleCallback() {
-  const [searchParams] = useSearchParams();
+export default function GoogleCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const code = searchParams.get("code");
-    const error = searchParams.get("error");
-
-    if (error) {
-      console.error("Google login error:", error);
-      navigate("/login"); // or show error UI
-      return;
-    }
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
 
     if (code) {
-      // Send the code to your backend
-      fetch(
-        `http://localhost:3000/v1/auth/google/callback?code=${encodeURIComponent(
-          code
-        )}`,
-        {
-          method: "GET",
-          credentials: "include", // optional: include cookies if needed
-        }
-      )
-        .then(async (response) => {
-          if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "Login failed");
-          }
-          return response.json();
-        })
+      fetch(`${API_URL}v1/auth/google/callback`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // important if backend sets cookies
+        body: JSON.stringify({ code }),
+      })
+        .then((res) => res.json())
         .then((data) => {
-          // Handle success
           console.log("Login success:", data);
-          localStorage.setItem("token", data.token); // Example: save token
-          navigate("/dashboard"); // Redirect after login
+          navigate("/"); // or wherever
         })
         .catch((err) => {
-          console.error("Login failed:", err);
-          navigate("/login");
+          console.error("Login error", err);
         });
     }
-  }, [searchParams, navigate]);
+  }, [navigate]);
 
   return <div>Logging you in with Google...</div>;
 }
-
-export default GoogleCallback;
