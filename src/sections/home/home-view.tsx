@@ -247,31 +247,31 @@ export function HomeView() {
         >
           <Stack direction="row">
             <Stack gap={1} width="50%">
-              <Typography fontSize={14} fontWeight="bold">
+              <Typography fontSize={16} fontWeight="bold">
                 Nama
               </Typography>
-              <Typography fontSize={14}>{userInfo.fullName}</Typography>
+              <Typography fontSize={16}>{userInfo.fullName}</Typography>
             </Stack>
             <Stack gap={1} width="50%">
-              <Typography fontSize={14} fontWeight="bold">
+              <Typography fontSize={16} fontWeight="bold">
                 OPU
               </Typography>
-              <Typography fontSize={14}>{userInfo?.opuCode}</Typography>
+              <Typography fontSize={16}>{userInfo?.opuCode}</Typography>
             </Stack>
           </Stack>
 
           <Stack direction="row" mt={4}>
             <Stack gap={1} width="50%">
-              <Typography fontSize={14} fontWeight="bold">
+              <Typography fontSize={16} fontWeight="bold">
                 No Gaji
               </Typography>
-              <Typography fontSize={14}>{userInfo.nikEmployee}</Typography>
+              <Typography fontSize={16}>{userInfo.nikEmployee}</Typography>
             </Stack>
             <Stack gap={1} width="50%">
-              <Typography fontSize={14} fontWeight="bold">
+              <Typography fontSize={16} fontWeight="bold">
                 Tanggal Lahir
               </Typography>
-              <Typography fontSize={14}>
+              <Typography fontSize={16}>
                 {dayjs(userInfo.birthDate).format("DD MMMM YYYY")}
               </Typography>
             </Stack>
@@ -279,20 +279,20 @@ export function HomeView() {
 
           <Stack direction="row" mt={4}>
             <Stack gap={1} width="50%">
-              <Typography fontSize={14} fontWeight="bold">
+              <Typography fontSize={16} fontWeight="bold">
                 Tanggal Masuk DPIP
               </Typography>
-              <Typography fontSize={14}>
+              <Typography fontSize={16}>
                 {userInfo.dJoinDate
                   ? dayjs(userInfo.dJoinDate).format("DD MMMM YYYY")
                   : "-"}
               </Typography>
             </Stack>
             <Stack gap={1} width="50%">
-              <Typography fontSize={14} fontWeight="bold">
+              <Typography fontSize={16} fontWeight="bold">
                 Tanggal Masuk Kerja
               </Typography>
-              <Typography fontSize={14}>
+              <Typography fontSize={16}>
                 {" "}
                 {userInfo.joinDate
                   ? dayjs(userInfo.joinDate).format("DD MMMM YYYY")
@@ -303,10 +303,10 @@ export function HomeView() {
 
           <Stack direction="row" mt={4}>
             <Stack gap={1} width="50%">
-              <Typography fontSize={14} fontWeight="bold">
+              <Typography fontSize={16} fontWeight="bold">
                 Periode
               </Typography>
-              <Typography fontSize={14}>-</Typography>
+              <Typography fontSize={16}>-</Typography>
             </Stack>
           </Stack>
         </Card>

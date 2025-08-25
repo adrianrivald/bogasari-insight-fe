@@ -245,7 +245,6 @@ export function DanaPensiun() {
       })
       .then((res) =>
         res.json().then(async (res) => {
-          console.log(res, "resnya");
           const blob = await pdf(
             <SaldoManfaatPDF data={res.data} userInfo={userInfo} />
           ).toBlob();
@@ -258,6 +257,17 @@ export function DanaPensiun() {
 
           // (Optional) revoke the object URL later
           setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+          const blob2 = await pdf(<SaldoManfaatDetailPDF />).toBlob();
+
+          // Create object URL
+          const url2 = URL.createObjectURL(blob2);
+
+          // Open in new tab
+          window.open(url2, "_blank");
+
+          // (Optional) revoke the object URL later
+          setTimeout(() => URL.revokeObjectURL(url2), 1000);
         })
       ); // Generate PDF as blob
   };
@@ -282,31 +292,31 @@ export function DanaPensiun() {
       >
         <Stack direction="row">
           <Stack gap={1} width="50%">
-            <Typography fontSize={14} fontWeight="bold">
+            <Typography fontSize={16} fontWeight="bold">
               Nama
             </Typography>
-            <Typography fontSize={14}>{userInfo.fullName}</Typography>
+            <Typography fontSize={16}>{userInfo.fullName}</Typography>
           </Stack>
           <Stack gap={1} width="50%">
-            <Typography fontSize={14} fontWeight="bold">
+            <Typography fontSize={16} fontWeight="bold">
               OPU
             </Typography>
-            <Typography fontSize={14}>{userInfo?.opuCode ?? "-"}</Typography>
+            <Typography fontSize={16}>{userInfo?.opuCode ?? "-"}</Typography>
           </Stack>
         </Stack>
 
         <Stack direction="row" mt={4}>
           <Stack gap={1} width="50%">
-            <Typography fontSize={14} fontWeight="bold">
+            <Typography fontSize={16} fontWeight="bold">
               No Gaji
             </Typography>
-            <Typography fontSize={14}>{userInfo.nikEmployee}</Typography>
+            <Typography fontSize={16}>{userInfo.nikEmployee}</Typography>
           </Stack>
           <Stack gap={1} width="50%">
-            <Typography fontSize={14} fontWeight="bold">
+            <Typography fontSize={16} fontWeight="bold">
               Tanggal Lahir
             </Typography>
-            <Typography fontSize={14}>
+            <Typography fontSize={16}>
               {dayjs(userInfo.birthDate).format("DD MMMM YYYY")}
             </Typography>
           </Stack>
@@ -314,20 +324,20 @@ export function DanaPensiun() {
 
         <Stack direction="row" mt={4}>
           <Stack gap={1} width="50%">
-            <Typography fontSize={14} fontWeight="bold">
+            <Typography fontSize={16} fontWeight="bold">
               Tanggal Masuk DPIP
             </Typography>
-            <Typography fontSize={14}>
+            <Typography fontSize={16}>
               {userInfo.dJoinDate
                 ? dayjs(userInfo.dJoinDate).format("DD MMMM YYYY")
                 : "-"}
             </Typography>
           </Stack>
           <Stack gap={1} width="50%">
-            <Typography fontSize={14} fontWeight="bold">
+            <Typography fontSize={16} fontWeight="bold">
               Tanggal Masuk Kerja
             </Typography>
-            <Typography fontSize={14}>
+            <Typography fontSize={16}>
               {" "}
               {userInfo.joinDate
                 ? dayjs(userInfo.joinDate).format("DD MMMM YYYY")
@@ -338,10 +348,10 @@ export function DanaPensiun() {
 
         <Stack direction="row" mt={4}>
           <Stack gap={1} width="50%">
-            <Typography fontSize={14} fontWeight="bold">
+            <Typography fontSize={16} fontWeight="bold">
               Periode
             </Typography>
-            <Typography fontSize={14}>-</Typography>
+            <Typography fontSize={16}>-</Typography>
           </Stack>
         </Stack>
       </Card>
