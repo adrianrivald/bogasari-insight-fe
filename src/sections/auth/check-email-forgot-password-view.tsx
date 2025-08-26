@@ -35,7 +35,7 @@ export function CheckEmailForgotPasswordView({ email }: { email: string }) {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: 30, md: 48 },
+            fontSize: { xs: 20, md: 24 },
             fontWeight: { xs: "bold" },
             textAlign: {
               md: "center",
@@ -47,7 +47,7 @@ export function CheckEmailForgotPasswordView({ email }: { email: string }) {
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: 14, md: 20 },
+            fontSize: { xs: 12, md: 16 },
             mt: { xs: 1 },
             textAlign: "center",
           }}
@@ -56,7 +56,7 @@ export function CheckEmailForgotPasswordView({ email }: { email: string }) {
           <Typography
             component="span"
             sx={{
-              fontSize: { xs: 14, md: 20 },
+              fontSize: { xs: 12, md: 16 },
               fontWeight: { xs: "bold" },
             }}
           >

@@ -100,10 +100,10 @@ export function HeaderSection({
           <Box
             sx={{
               width: {
-                xs: "100%",
-                md: "auto",
+                xs: "100px",
+                md: "200px",
               },
-              marginY: {
+              marginTop: {
                 md: !isAuth ? "44px" : "",
               },
             }}
