@@ -55,7 +55,7 @@ export function ForgotPasswordView() {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: 20, md: 24 },
+            fontSize: { xs: 20, md: 28 },
             fontWeight: { xs: "bold" },
             textAlign: {
               md: "center",
@@ -67,7 +67,7 @@ export function ForgotPasswordView() {
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: 12, md: 16 },
+            fontSize: { xs: 12, md: 14 },
             mt: { xs: 1 },
             textAlign: {
               md: "center",
