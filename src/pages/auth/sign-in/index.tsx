@@ -7,7 +7,7 @@ export default function SignIn() {
   return (
     <>
       <Helmet>
-        <title> {`Sign in - Bogasari Insight`}</title>
+        <title> {`Sign in - Frendz`}</title>
       </Helmet>
 
       <SignInView />

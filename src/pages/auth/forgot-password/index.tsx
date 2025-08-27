@@ -7,7 +7,7 @@ export default function ForgotPassword() {
   return (
     <>
       <Helmet>
-        <title> {`Sign up - Bogasari Insight`}</title>
+        <title> {`Sign up - Frendz`}</title>
       </Helmet>
 
       <ForgotPasswordView />

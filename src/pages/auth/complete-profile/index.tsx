@@ -8,7 +8,7 @@ export default function CompleteProfile() {
   return (
     <AppLayout>
       <Helmet>
-        <title> {`Complete Profile - Bogasari Insight`}</title>
+        <title> {`Complete Profile - Frendz`}</title>
       </Helmet>
 
       <CompleteProfileView />

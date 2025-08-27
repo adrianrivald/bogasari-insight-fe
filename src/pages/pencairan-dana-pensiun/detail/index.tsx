@@ -7,7 +7,7 @@ export default function DetailPencairanDana() {
   return (
     <>
       <Helmet>
-        <title> {`Pencairan Dana Pensiun - Bogasari Insight`}</title>
+        <title> {`Pencairan Dana Pensiun - Frendz`}</title>
       </Helmet>
 
       <DetailPencairanDanaView />
