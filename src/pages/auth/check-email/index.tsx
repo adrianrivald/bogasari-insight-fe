@@ -7,7 +7,7 @@ export default function CheckEmail() {
   return (
     <>
       <Helmet>
-        <title> {`Sign up - Bogasari Insight`}</title>
+        <title> {`Sign up - Frendz`}</title>
       </Helmet>
 
       <CheckEmailView />

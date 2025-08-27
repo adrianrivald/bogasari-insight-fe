@@ -228,15 +228,15 @@ const LeftSideBarSection = ({
                 width={16}
                 height={16}
               />
-              <Typography fontSize={12} fontWeight="bold">
+              <Typography fontSize={16} fontWeight="bold">
                 Login Terakhir
               </Typography>
             </Stack>
             <Stack sx={{ flex: "none", width: "50%", textAlign: "right" }}>
-              <Typography fontSize={12}>
+              <Typography fontSize={16}>
                 {dayjs(deviceInfo.lastLogin).format("DD MMM YYYY")}
               </Typography>
-              <Typography fontSize={12}>
+              <Typography fontSize={16}>
                 {dayjs(deviceInfo?.lastLogin).format("HH:MM")} WIB
               </Typography>
             </Stack>
@@ -249,12 +249,12 @@ const LeftSideBarSection = ({
                 width={16}
                 height={16}
               />
-              <Typography fontSize={12} fontWeight="bold">
+              <Typography fontSize={16} fontWeight="bold">
                 Perangkat
               </Typography>
             </Stack>
             <Stack sx={{ flex: "none", width: "50%", textAlign: "right" }}>
-              <Typography fontSize={12}>{deviceInfo?.device}</Typography>
+              <Typography fontSize={16}>{deviceInfo?.device}</Typography>
               {/* <Typography fontSize={12}>ios 17</Typography> */}
             </Stack>
           </Stack>
@@ -268,7 +268,7 @@ const LeftSideBarSection = ({
         />
         <Stack
           direction="row"
-          p={4}
+          p={2}
           gap={2}
           sx={{
             cursor: "pointer",
@@ -281,7 +281,7 @@ const LeftSideBarSection = ({
             width={18}
             height={18}
           />
-          <Typography fontSize={12} color="#E40044" fontWeight="bold">
+          <Typography fontSize={16} color="#E40044" fontWeight="bold">
             Keluar
           </Typography>
         </Stack>

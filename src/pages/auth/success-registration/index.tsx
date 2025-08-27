@@ -8,7 +8,7 @@ export default function SuccessRegistration() {
   return (
     <AppLayout>
       <Helmet>
-        <title> {`Sign up - Bogasari Insight`}</title>
+        <title> {`Sign up - Frendz`}</title>
       </Helmet>
 
       <SuccessRegistrationView />

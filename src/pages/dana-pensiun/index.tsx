@@ -7,7 +7,7 @@ export default function DanaPensiun() {
   return (
     <>
       <Helmet>
-        <title> {`Dana Pensiun - Bogasari Insight`}</title>
+        <title> {`Dana Pensiun - Frendz`}</title>
       </Helmet>
 
       <DanaPensiunView />

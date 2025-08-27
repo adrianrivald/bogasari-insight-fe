@@ -10,6 +10,7 @@ import { queryClient } from "./utils/query-client.ts";
 import { AppLayout } from "./layouts/layout.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./styles/fonts.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

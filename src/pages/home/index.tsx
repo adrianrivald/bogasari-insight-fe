@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title> {`Dashboard - Bogasari Insight`}</title>
+        <title> {`Dashboard - Frendz`}</title>
         <meta
           name="description"
           content="The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style"
