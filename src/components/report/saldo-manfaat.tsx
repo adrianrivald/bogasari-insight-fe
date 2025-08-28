@@ -45,10 +45,10 @@ const styles: any = StyleSheet.create({
     marginBottom: 6,
   },
   label: {
-    fontSize: 9,
+    fontSize: 8,
   },
   value: {
-    fontSize: 9,
+    fontSize: 8,
     fontWeight: "bold",
   },
   table: {
@@ -60,16 +60,16 @@ const styles: any = StyleSheet.create({
     flexDirection: "row",
   },
   tableColHeader: {
-    width: "14.2857142857%",
+    width: "15.8333%",
     backgroundColor: "#f0f0f0",
     padding: 4,
-    fontSize: 9,
+    fontSize: 8,
     fontWeight: "bold",
   },
   tableCol: {
-    width: "14.2857142857%",
+    width: "15.8333%",
     padding: 4,
-    fontSize: 9,
+    fontSize: 8,
   },
   statusActive: {
     color: "green",
@@ -159,17 +159,19 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             <View style={styles.infoColumn}>
               <View style={styles.infoRow}>
                 <Text style={styles.label}>Nama Lengkap</Text>
-                <Text style={styles.value}>{userInfo.fullName}</Text>
+                <Text style={{ ...styles.value, fontWeight: "bold" }}>
+                  {userInfo.fullName}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.label}>Tanggal Lahir</Text>
-                <Text style={styles.value}>
+                <Text style={{ ...styles.value, fontWeight: "bold" }}>
                   {dayjs(userInfo.birthDate).format("DD MMMM YYYY")}
                 </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.label}>Tanggal Mulai Bekerja</Text>
-                <Text style={styles.value}>
+                <Text style={{ ...styles.value, fontWeight: "bold" }}>
                   {userInfo.joinDate
                     ? dayjs(userInfo.joinDate).format("DD MMMM YYYY")
                     : "-"}
@@ -181,15 +183,19 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             <View style={styles.infoColumn}>
               <View style={styles.infoRow}>
                 <Text style={styles.label}>Nomor Karyawan</Text>
-                <Text style={styles.value}>{userInfo.nikEmployee}</Text>
+                <Text style={{ ...styles.value, fontWeight: "bold" }}>
+                  {userInfo.nikEmployee}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.label}>OPU</Text>
-                <Text style={styles.value}>{userInfo?.opuCode ?? "-"}</Text>
+                <Text style={{ ...styles.value, fontWeight: "bold" }}>
+                  {userInfo?.opuCode ?? "-"}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.label}>Tanggal Bergabung DPIP</Text>
-                <Text style={styles.value}>
+                <Text style={{ ...styles.value, fontWeight: "bold" }}>
                   {userInfo.dJoinDate
                     ? dayjs(userInfo.dJoinDate).format("DD MMMM YYYY")
                     : "-"}
@@ -201,28 +207,40 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             <View style={styles.infoColumn}>
               <View style={styles.infoRow}>
                 <Text style={styles.label}>NIP/NIK</Text>
-                <Text style={styles.value}>{userInfo.noKtp}</Text>
+                <Text style={{ ...styles.value, fontWeight: "bold" }}>
+                  {userInfo.noKtp}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.label}>Job Class</Text>
-                <Text style={styles.value}>{userInfo.role}</Text>
+                <Text style={{ ...styles.value, fontWeight: "bold" }}>
+                  {userInfo.role}
+                </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.label}>Status Peserta</Text>
-                <Text style={styles.statusActive}>Aktif</Text>
+                <Text style={{ ...styles.value, fontWeight: "bold" }}>
+                  Aktif
+                </Text>
               </View>
             </View>
           </View>
 
           {/* Contribution Summary Table */}
-          <Text style={styles.sectionTitle}>
+          <Text style={{ ...styles.sectionTitle, fontWeight: "bold" }}>
             Riwayat Kontribusi Bulanan - {yearData.year}
           </Text>
 
           <View style={styles.table}>
             {/* Table Header */}
             <View style={styles.tableRow}>
-              <Text style={{ ...styles.tableColHeader, textAlign: "center" }}>
+              <Text
+                style={{
+                  ...styles.tableColHeader,
+                  width: "5%",
+                  textAlign: "center",
+                }}
+              >
                 No
               </Text>
               <Text style={styles.tableColHeader}>Keterangan</Text>
@@ -248,7 +266,13 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
                     backgroundColor: idx % 2 === 0 ? "#ffffff" : "#f0f0f0",
                   }}
                 >
-                  <Text style={{ ...styles.tableCol, textAlign: "center" }}>
+                  <Text
+                    style={{
+                      ...styles.tableCol,
+                      width: "5%",
+                      textAlign: "center",
+                    }}
+                  >
                     {c.no}
                   </Text>
                   <Text style={styles.tableCol}>{c.keterangan}</Text>
@@ -273,45 +297,7 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             })}
           </View>
 
-          {/* Footer */}
-          <View style={styles.footer}>
-            <Text>
-              Iuran Pasti Bogasari - Jl. Raya Cilincing No.1, Tanjung Priok,
-              Jakarta Utara
-            </Text>
-            <Text>
-              Printed Date: {new Date().toLocaleDateString("id-ID")} | Halaman
-              1/2
-            </Text>
-          </View>
-        </Page>
-
-        <Page size="A4" style={styles.page}>
-          <View
-            style={{
-              ...styles.header,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            {/* Left side: text */}
-            <View>
-              <Text style={{ fontSize: 14, fontWeight: "bold" }}>
-                Saldo Manfaat
-              </Text>
-              <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
-              <Text> Periode: {yearData.year} </Text>
-            </View>
-
-            {/* Right side: logo */}
-            <Image
-              src={logo}
-              style={{ width: 50, height: 74 }} // adjust size as needed
-            />
-          </View>
-
-          <Text style={{ fontSize: 12, marginBottom: 12 }}>
+          <Text style={{ fontSize: 12, marginTop: 16 }}>
             Ringkasan Saldo Dana Pensiun
           </Text>
 
@@ -338,6 +324,7 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             </Text>
           </View>
 
+          {/* Footer */}
           <View style={styles.footer}>
             <Text>
               Iuran Pasti Bogasari - Jl. Raya Cilincing No.1, Tanjung Priok,
@@ -345,7 +332,7 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             </Text>
             <Text>
               Printed Date: {new Date().toLocaleDateString("id-ID")} | Halaman
-              2/2
+              1/1
             </Text>
           </View>
         </Page>
