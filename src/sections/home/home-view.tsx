@@ -21,7 +21,7 @@ function a11yProps(index: number) {
 }
 
 export function HomeView() {
-  const { userInfo: user } = useAuth();
+  const { userInfo: user, setUserInfo: setUser } = useAuth();
   const [userInfo, setUserInfo] = useState<any>({});
   const navigate = useNavigate();
   const { data: amountSummary } = useAmountSummary();
@@ -44,6 +44,7 @@ export function HomeView() {
   useEffect(() => {
     if (isSuccess) {
       setUserInfo(data.data);
+      setUser(JSON.stringify(data?.data));
     }
   }, [data]);
 

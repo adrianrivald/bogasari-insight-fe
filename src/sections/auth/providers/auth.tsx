@@ -30,6 +30,7 @@ interface AuthContextValue {
   ) => Promise<LoginResponse>;
   currentInternalCompany?: number | null;
   userInfo: sessionService.User;
+  setUserInfo: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const [useAuth, AuthInternalProvider] = createContext<AuthContextValue>({
@@ -134,6 +135,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
             ? JSON.parse(userInfo ?? "")
             : {}
           : {},
+        setUserInfo,
       }}
     >
       {props?.children}
