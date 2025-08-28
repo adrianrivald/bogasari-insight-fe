@@ -1,13 +1,28 @@
 import React from "react";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Font,
+  Image,
+} from "@react-pdf/renderer";
 import dayjs from "dayjs";
+import PoppinsRegular from "../../../public/fonts/Poppins-Regular.ttf";
+import logo from "../../../public/images/dpip.png";
+
+Font.register({
+  family: "Poppins",
+  src: PoppinsRegular,
+});
 
 // Styles (same as before, kept unchanged)
 const styles: any = StyleSheet.create({
   page: {
     padding: 30,
     fontSize: 10,
-    fontFamily: "Helvetica",
+    fontFamily: "Poppins",
   },
   header: {
     textAlign: "left",
@@ -39,32 +54,20 @@ const styles: any = StyleSheet.create({
   table: {
     display: "table" as unknown as any,
     width: "auto",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
     marginTop: 10,
   },
   tableRow: {
     flexDirection: "row",
   },
   tableColHeader: {
-    width: "12.5%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
+    width: "14.2857142857%",
     backgroundColor: "#f0f0f0",
     padding: 4,
     fontSize: 9,
     fontWeight: "bold",
   },
   tableCol: {
-    width: "12.5%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
+    width: "14.2857142857%",
     padding: 4,
     fontSize: 9,
   },
@@ -126,12 +129,28 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
       <React.Fragment key={yearData.year}>
         {/* PAGE 1: Monthly Transactions */}
         <Page size="A4" style={styles.page}>
-          <View style={styles.header}>
-            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
-              Saldo Manfaat
-            </Text>
-            <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
-            <Text> Periode: {yearData.year} </Text>
+          <View
+            style={{
+              ...styles.header,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            {/* Left side: text */}
+            <View>
+              <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+                Saldo Manfaat
+              </Text>
+              <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
+              <Text> Periode: {yearData.year} </Text>
+            </View>
+
+            {/* Right side: logo */}
+            <Image
+              src={logo}
+              style={{ width: 50, height: 74 }} // adjust size as needed
+            />
           </View>
 
           {/* Personal Info */}
@@ -203,8 +222,9 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
           <View style={styles.table}>
             {/* Table Header */}
             <View style={styles.tableRow}>
-              <Text style={styles.tableColHeader}>No</Text>
-              <Text style={styles.tableColHeader}>Bulan</Text>
+              <Text style={{ ...styles.tableColHeader, textAlign: "center" }}>
+                No
+              </Text>
               <Text style={styles.tableColHeader}>Keterangan</Text>
               <Text style={styles.tableColHeader}>Iuran Peserta</Text>
               <Text style={styles.tableColHeader}>Iuran Perusahaan</Text>
@@ -214,30 +234,40 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             </View>
 
             {/* Table Rows */}
-            {yearData.monthlyData.map((c) => {
+            {yearData.monthlyData.map((c, idx) => {
               const total =
                 c.iuranPeserta +
                 c.iuranPerusahaan +
                 c.hasilPengembangan -
                 c.pencairan;
               return (
-                <View key={c.no} style={styles.tableRow}>
-                  <Text style={styles.tableCol}>{c.no}</Text>
-                  <Text style={styles.tableCol}>{c.bulan}</Text>
+                <View
+                  key={c.no}
+                  style={{
+                    ...styles.tableRow,
+                    backgroundColor: idx % 2 === 0 ? "#ffffff" : "#f0f0f0",
+                  }}
+                >
+                  <Text style={{ ...styles.tableCol, textAlign: "center" }}>
+                    {c.no}
+                  </Text>
                   <Text style={styles.tableCol}>{c.keterangan}</Text>
-                  <Text style={styles.tableCol}>
+                  <Text style={{ ...styles.tableCol, textAlign: "right" }}>
                     {formatRupiah(c.iuranPeserta)}
                   </Text>
-                  <Text style={styles.tableCol}>
+                  <Text style={{ ...styles.tableCol, textAlign: "right" }}>
                     {formatRupiah(c.iuranPerusahaan)}
                   </Text>
-                  <Text style={styles.tableCol}>
+                  <Text style={{ ...styles.tableCol, textAlign: "right" }}>
                     {formatRupiah(c.hasilPengembangan)}
                   </Text>
-                  <Text style={styles.tableCol}>
+                  <Text style={{ ...styles.tableCol, textAlign: "right" }}>
                     {formatRupiah(c.pencairan)}
                   </Text>
-                  <Text style={styles.tableCol}>{formatRupiah(total)}</Text>
+
+                  <Text style={{ ...styles.tableCol, textAlign: "right" }}>
+                    {formatRupiah(total)}
+                  </Text>
                 </View>
               );
             })}
@@ -256,14 +286,29 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
           </View>
         </Page>
 
-        {/* PAGE 2: Summary */}
         <Page size="A4" style={styles.page}>
-          <View style={styles.header}>
-            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
-              Saldo Manfaat
-            </Text>
-            <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
-            <Text> Periode: {yearData.year} </Text>
+          <View
+            style={{
+              ...styles.header,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            {/* Left side: text */}
+            <View>
+              <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+                Saldo Manfaat
+              </Text>
+              <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
+              <Text> Periode: {yearData.year} </Text>
+            </View>
+
+            {/* Right side: logo */}
+            <Image
+              src={logo}
+              style={{ width: 50, height: 74 }} // adjust size as needed
+            />
           </View>
 
           <Text style={{ fontSize: 12, marginBottom: 12 }}>

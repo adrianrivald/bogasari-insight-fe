@@ -113,7 +113,7 @@ export function HomeView() {
           <Suspense fallback={renderFallback}>
             <BalanceCard
               balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
-              percentage="2,5%"
+              percentage={`${amountSummary?.growthPercentage}%`}
             />
           </Suspense>
         </Box>

@@ -286,7 +286,7 @@ export function DanaPensiun() {
           bgcolor: "white",
           display: {
             xs: "none",
-            lg: "block",
+            md: "block",
           },
         }}
       >
@@ -360,11 +360,11 @@ export function DanaPensiun() {
           width: "100%",
           mt: {
             xs: 0,
-            lg: 3,
+            md: 3,
           },
-          p: { xs: 0, lg: 2 }, // no padding on mobile, padding on desktop
-          boxShadow: { xs: "none", lg: 3 }, // no shadow on mobile, shadow on desktop
-          borderRadius: { xs: 0, lg: 2 }, // optional: rounded only on desktop
+          p: { xs: 0, md: 2 }, // no padding on mobile, padding on desktop
+          boxShadow: { xs: "none", md: 3 }, // no shadow on mobile, shadow on desktop
+          borderRadius: { xs: 0, md: 2 }, // optional: rounded only on desktop
           backgroundColor: "background.paper",
         }}
       >
@@ -405,7 +405,7 @@ export function DanaPensiun() {
           {/* Tab Tahunan */}
           <TabPanel value={0} sx={{ px: 0 }}>
             <Box>
-              <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
+              {/* <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography> */}
               <Typography fontWeight="bold" fontSize={24}>
                 {formatRupiah(amountSummary?.totalSaldo ?? 0)}
               </Typography>
@@ -515,7 +515,7 @@ export function DanaPensiun() {
                   <MenuItem value="2021">Tahun 2021</MenuItem>
                 </Select>
               </FormControl>
-              <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography>
+              {/* <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography> */}
               <Typography fontWeight="bold" fontSize={24}>
                 {formatRupiah(chartSixMonth?.total ?? 0)}
               </Typography>

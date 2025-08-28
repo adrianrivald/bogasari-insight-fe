@@ -1,6 +1,19 @@
 import React from "react";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
-
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Font,
+  Image,
+} from "@react-pdf/renderer";
+import PoppinsRegular from "../../../public/fonts/Poppins-Regular.ttf";
+import logo from "../../../public/images/dpip.png";
+Font.register({
+  family: "Poppins",
+  src: PoppinsRegular,
+});
 // Constants
 const ROW_HEIGHT = 18; // adjust this to match desired row height (px-ish)
 
@@ -9,7 +22,7 @@ const styles: any = StyleSheet.create({
   page: {
     padding: 30,
     fontSize: 10,
-    fontFamily: "Helvetica",
+    fontFamily: "Poppins",
   },
   header: {
     textAlign: "left",
@@ -41,10 +54,7 @@ const styles: any = StyleSheet.create({
   table: {
     display: "table" as unknown as any,
     width: "auto",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
+
     marginTop: 10,
   },
   tableRow: {
@@ -52,20 +62,12 @@ const styles: any = StyleSheet.create({
     // don't set fixed height here for grouped rows; we keep it per-cell for flexibility
   },
   tableColHeader: {
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
     backgroundColor: "#f0f0f0",
     padding: 4,
     fontSize: 9,
     fontWeight: "bold",
   },
   tableCol: {
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
     padding: 4,
     fontSize: 9,
   },
@@ -76,10 +78,6 @@ const styles: any = StyleSheet.create({
 
   // styles for the "spanning" cell
   rowspanCell: {
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
     padding: 4,
     fontSize: 9,
     // we'll set height dynamically when rendering
@@ -88,10 +86,6 @@ const styles: any = StyleSheet.create({
   // placeholder cell for rows that are part of a span but not the first: we render a
   // zero-height or borderless cell to keep columns aligned if desired
   placeholderCell: {
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
     padding: 4,
     fontSize: 9,
     // hide text; borders can be adjusted if you want a perfect seamless border
@@ -129,7 +123,7 @@ interface ContributionDetail {
 const contributionDetails: ContributionDetail[] = [
   {
     no: "1",
-    bulanOPU: "Januari 2025 - Jakarta-CG",
+    bulanOPU: "Januari",
     keterangan: "Kontribusi Peserta Kon-DBI-2025289-248972982",
     kode: "01",
     mutasi: "Rp179.078",
@@ -139,8 +133,8 @@ const contributionDetails: ContributionDetail[] = [
   },
   {
     no: "",
-    bulanOPU: "Januari 2025 - Jakarta-CG",
-    keterangan: "Kontribusi Perusahaan [NoTransaksi]",
+    bulanOPU: "Januari",
+    keterangan: "Kontribusi Perusahaan",
     kode: "01",
     mutasi: "Rp500.000",
     dk: "K",
@@ -149,8 +143,8 @@ const contributionDetails: ContributionDetail[] = [
   },
   {
     no: "1",
-    bulanOPU: "Februari 2025 - Jakarta-CG",
-    keterangan: "Hasil Pengembangan [NoTransaksi]",
+    bulanOPU: "Februari",
+    keterangan: "Hasil Pengembangan",
     kode: "02",
     mutasi: "Rp500.000",
     dk: "K",
@@ -159,8 +153,8 @@ const contributionDetails: ContributionDetail[] = [
   },
   {
     no: "2",
-    bulanOPU: "Maret 2025 - Jakarta-CG",
-    keterangan: "Pencairan [NoTransaksi]",
+    bulanOPU: "Maret",
+    keterangan: "Pencairan",
     kode: "03",
     mutasi: "Rp500.000",
     dk: "K",
@@ -212,12 +206,28 @@ const SaldoManfaatDetailPDF: React.FC = () => {
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={{ fontSize: 14, fontWeight: "bold" }}>
-            Saldo Manfaat
-          </Text>
-          <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
-          <Text> Periode: 2025 </Text>
+        <View
+          style={{
+            ...styles.header,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {/* Left side: text */}
+          <View>
+            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
+              Saldo Manfaat
+            </Text>
+            <Text> Dana Pensiun Iuran Pasti Bogasari </Text>
+            <Text> Periode: {2015} </Text>
+          </View>
+
+          {/* Right side: logo */}
+          <Image
+            src={logo}
+            style={{ width: 50, height: 74 }} // adjust size as needed
+          />
         </View>
 
         {/* Personal Info in 3 Columns */}
@@ -276,10 +286,15 @@ const SaldoManfaatDetailPDF: React.FC = () => {
         <View style={styles.table}>
           {/* Table Header */}
           <View style={styles.tableRow}>
-            <Text style={[styles.tableColHeader, { width: "5%" }]}>No</Text>
-            <Text style={[styles.tableColHeader, { width: "20%" }]}>
-              Bulan & OPU - Job Class
+            <Text
+              style={[
+                styles.tableColHeader,
+                { width: "5%", textAlign: "center" },
+              ]}
+            >
+              No
             </Text>
+            <Text style={[styles.tableColHeader, { width: "20%" }]}>Bulan</Text>
             <Text style={[styles.tableColHeader, { width: "30%" }]}>
               Keterangan
             </Text>
@@ -296,25 +311,32 @@ const SaldoManfaatDetailPDF: React.FC = () => {
 
           {/* Table Rows with simulated rowspan */}
           {rowsWithSpans.map((r, idx) => {
-            // compute height for a normal row and for the rowspan cell
             const normalRowHeight = ROW_HEIGHT;
             const rowspanHeight = r.isFirstOfGroup
               ? ROW_HEIGHT * r.groupSize
               : undefined;
 
+            // Determine row background for columns other than No and Bulan
+            const rowBackground = idx % 2 === 0 ? "#ffffff" : "#f0f0f0";
+
             return (
               <View key={idx} style={styles.tableRow}>
-                {/* No */}
+                {/* No column - keep transparent */}
                 <Text
                   style={[
                     styles.tableCol,
-                    { width: "5%", minHeight: normalRowHeight },
+                    {
+                      width: "5%",
+                      minHeight: normalRowHeight,
+                      textAlign: "center",
+                      backgroundColor: "transparent",
+                    },
                   ]}
                 >
                   {r.no}
                 </Text>
 
-                {/* Bulan & OPU - simulate rowspan by rendering only on first row with increased height */}
+                {/* Bulan column - keep transparent, simulate rowspan */}
                 {r.isFirstOfGroup ? (
                   <Text
                     style={[
@@ -323,78 +345,96 @@ const SaldoManfaatDetailPDF: React.FC = () => {
                         width: "20%",
                         height: rowspanHeight,
                         minHeight: ROW_HEIGHT,
+                        backgroundColor: "transparent",
                       },
                     ]}
                   >
                     {r.bulanOPU}
                   </Text>
                 ) : (
-                  // Option: render an empty placeholder to keep column widths; tweak borderTopWidth if needed
                   <Text
                     style={[
                       styles.placeholderCell,
-                      { width: "20%", minHeight: normalRowHeight },
+                      {
+                        width: "20%",
+                        minHeight: normalRowHeight,
+                        backgroundColor: "transparent",
+                      },
                     ]}
-                  >
-                    {/* empty for visual rowspan */}
-                  </Text>
+                  ></Text>
                 )}
 
-                {/* Keterangan */}
+                {/* Remaining columns - apply alternating background */}
                 <Text
                   style={[
                     styles.tableCol,
-                    { width: "30%", minHeight: normalRowHeight },
+                    {
+                      width: "30%",
+                      minHeight: normalRowHeight,
+                      backgroundColor: rowBackground,
+                    },
                   ]}
                 >
                   {r.keterangan}
                 </Text>
-
-                {/* Kode */}
                 <Text
                   style={[
                     styles.tableCol,
-                    { width: "8%", minHeight: normalRowHeight },
+                    {
+                      width: "8%",
+                      minHeight: normalRowHeight,
+                      backgroundColor: rowBackground,
+                    },
                   ]}
                 >
                   {r.kode}
                 </Text>
-
-                {/* Mutasi */}
                 <Text
                   style={[
                     styles.tableCol,
-                    { width: "12%", minHeight: normalRowHeight },
+                    {
+                      width: "12%",
+                      minHeight: normalRowHeight,
+                      textAlign: "right",
+                      backgroundColor: rowBackground,
+                    },
                   ]}
                 >
                   {r.mutasi}
                 </Text>
-
-                {/* D/K */}
                 <Text
                   style={[
                     styles.tableCol,
-                    { width: "5%", minHeight: normalRowHeight },
+                    {
+                      width: "5%",
+                      minHeight: normalRowHeight,
+                      backgroundColor: rowBackground,
+                    },
                   ]}
                 >
                   {r.dk}
                 </Text>
-
-                {/* HP */}
                 <Text
                   style={[
                     styles.tableCol,
-                    { width: "10%", minHeight: normalRowHeight },
+                    {
+                      width: "10%",
+                      minHeight: normalRowHeight,
+                      backgroundColor: rowBackground,
+                    },
                   ]}
                 >
                   {r.hp}
                 </Text>
-
-                {/* Saldo */}
                 <Text
                   style={[
                     styles.tableCol,
-                    { width: "10%", minHeight: normalRowHeight },
+                    {
+                      width: "10%",
+                      minHeight: normalRowHeight,
+                      textAlign: "right",
+                      backgroundColor: rowBackground,
+                    },
                   ]}
                 >
                   {r.saldo}
@@ -428,7 +468,7 @@ const SaldoManfaatDetailPDF: React.FC = () => {
             Iuran Pasti Bogasari - Jl. Raya Cilincing No.1, Tanjung Priok,
             Jakarta Utara
           </Text>
-          <Text>Printed Date: 19 Agustus 2025 | Halaman 2/2</Text>
+          <Text>Printed Date: 19 Agustus 2025 | Halaman 1/2</Text>
         </View>
       </Page>
     </Document>

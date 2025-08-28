@@ -31,7 +31,7 @@ const HomeTab = () => {
         bgcolor: "white",
         display: {
           xs: "none",
-          lg: "block",
+          md: "block",
         },
       }}
     >
