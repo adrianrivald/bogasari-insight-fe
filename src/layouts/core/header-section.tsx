@@ -101,7 +101,7 @@ export function HeaderSection({
             sx={{
               width: {
                 xs: "100px",
-                md: "200px",
+                md: "150px",
               },
               marginTop: {
                 md: !isAuth ? "44px" : "",
