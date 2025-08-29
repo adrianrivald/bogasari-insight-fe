@@ -3,6 +3,8 @@ import { useAuth } from "../../sections/auth/providers/auth";
 import dayjs from "dayjs";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowRightIcon } from "@mui/x-date-pickers";
+import { getSession } from "../../sections/auth/session/session";
 
 interface LeftSideBarSectionProps {
   isAuth: boolean;
@@ -18,6 +20,7 @@ const LeftSideBarSection = ({
   const { userInfo, logout } = useAuth();
   const navigate = useNavigate();
   const deviceInfo = JSON.parse(localStorage.getItem("loginInfo") ?? "{}");
+
   return (
     <React.Fragment>
       {/* Top Sidebar */}
@@ -259,6 +262,37 @@ const LeftSideBarSection = ({
             </Stack>
           </Stack>
         </Stack>
+        <Stack
+          component="a"
+          direction="row"
+          p={2}
+          gap={2}
+          sx={{
+            cursor: "pointer",
+            textDecoration: "none",
+          }}
+          href={`https://uat-saving.frendz.id/?token=${getSession()}`}
+        >
+          <Button
+            sx={{
+              display: "flex",
+              gap: 2,
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderRadius: "12px",
+              py: 1.5,
+              px: 2,
+              backgroundColor: "blue.50",
+              width: "100%",
+            }}
+          >
+            <Typography fontWeight="bold" color="black">
+              Pergi ke Dapen
+            </Typography>
+            <ArrowRightIcon />
+          </Button>
+        </Stack>
+
         <Box
           sx={{
             borderTopWidth: 1,
