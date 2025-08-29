@@ -6,8 +6,16 @@ import {
   Document,
   StyleSheet,
   pdf,
+  Font,
+  Image,
 } from "@react-pdf/renderer";
+import PoppinsRegular from "../../../public/fonts/Poppins-Regular.ttf";
+import logo from "../../../public/images/dpip.png";
 
+Font.register({
+  family: "Poppins",
+  src: PoppinsRegular,
+});
 // Define styles
 const styles = StyleSheet.create({
   page: {
@@ -16,6 +24,7 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
   },
   header: {
+    textAlign: "left",
     marginBottom: 20,
   },
   title: {
@@ -30,36 +39,27 @@ const styles = StyleSheet.create({
   table: {
     display: "flex",
     width: "100%",
-    borderStyle: "solid",
-    borderWidth: 1,
+
     borderRightWidth: 0,
     borderBottomWidth: 0,
   },
   tableRow: {
     flexDirection: "row",
+    backgroundColor: "#f0f0f0",
   },
   tableColSmall: {
     width: "4%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
+
     padding: 3,
   },
   tableColWide: {
     width: "15%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
+
     padding: 3,
   },
   tableColMoney: {
     width: "7%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
+
     padding: 3,
   },
   tableCellHeader: {
@@ -68,6 +68,16 @@ const styles = StyleSheet.create({
   },
   tableCell: {
     fontSize: 7,
+  },
+
+  footer: {
+    position: "absolute",
+    bottom: 20,
+    left: 40,
+    right: 40,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    fontSize: 8,
   },
 });
 
@@ -95,13 +105,28 @@ const participants = [
 const RekapitulasiPensiunReport: React.FC = () => (
   <Document>
     <Page size="A4" orientation="landscape" style={styles.page}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Rekapitulasi Dana Pensiun Peserta</Text>
-        <Text style={styles.subtitle}>Dana Pensiun Iuran Pasti Bogasari</Text>
-        <Text style={styles.subtitle}>
-          Periode: 2025 | Status: Aktif | OPU: Bogasari Pasta JKT
-        </Text>
+      <View
+        style={{
+          ...styles.header,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        {/* Left side: text */}
+        <View>
+          <Text style={styles.title}>Rekapitulasi Dana Pensiun Peserta</Text>
+          <Text style={styles.subtitle}>Dana Pensiun Iuran Pasti Bogasari</Text>
+          <Text style={styles.subtitle}>
+            Periode: 2025 | Status: Aktif | OPU: Bogasari Pasta JKT
+          </Text>{" "}
+        </View>
+
+        {/* Right side: logo */}
+        <Image
+          src={logo}
+          style={{ width: 50, height: 74 }} // adjust size as needed
+        />
       </View>
 
       {/* Table Header */}
@@ -140,8 +165,14 @@ const RekapitulasiPensiunReport: React.FC = () => (
         </View>
 
         {/* Table Rows */}
-        {participants.map((p) => (
-          <View key={p.no} style={styles.tableRow}>
+        {participants.map((p, idx) => (
+          <View
+            key={p.no}
+            style={{
+              ...styles.tableRow,
+              backgroundColor: idx % 2 === 0 ? "#ffffff" : "#f0f0f0",
+            }}
+          >
             <View style={styles.tableColSmall}>
               <Text style={styles.tableCell}>{p.no}</Text>
             </View>
@@ -165,6 +196,38 @@ const RekapitulasiPensiunReport: React.FC = () => (
             </View>
           </View>
         ))}
+      </View>
+
+      {/* Footer */}
+      <View style={styles.footer}>
+        {/* Left */}
+        <Text>
+          <Text style={{ fontWeight: "bold" }}>Iuran Pasti Bogasari{"\n"}</Text>
+          Jl. Raya Cilincing No.1 - Tanjung Priok, Jakarta Utara
+        </Text>
+
+        {/* Center */}
+        <Text>
+          <Text style={{ fontWeight: "bold" }}>Printed Date{"\n"}</Text>
+          {new Date().toLocaleDateString("id-ID", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
+          ,{" "}
+          {new Date().toLocaleTimeString("id-ID", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          })}{" "}
+          WIB
+        </Text>
+
+        {/* Right */}
+        <Text>
+          <Text style={{ fontWeight: "bold" }}>Halaman{"\n"}</Text>
+          1/3
+        </Text>
       </View>
     </Page>
   </Document>

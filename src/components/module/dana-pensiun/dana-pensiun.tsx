@@ -268,9 +268,29 @@ export function DanaPensiun() {
 
           // (Optional) revoke the object URL later
           setTimeout(() => URL.revokeObjectURL(url2), 1000);
+
+          const blob3 = await pdf(<RekapitulasiPensiunReport />).toBlob();
+
+          // Create object URL
+          const url3 = URL.createObjectURL(blob3);
+
+          // Open in new tab
+          window.open(url3, "_blank");
+
+          // (Optional) revoke the object URL later
+          setTimeout(() => URL.revokeObjectURL(url3), 1000);
         })
       ); // Generate PDF as blob
   };
+
+  const joinYear = dayjs(userInfo?.dJoinDate).year();
+  const currentYear = dayjs().year(); // get current year (e.g., 2025)
+
+  // generate an array of years
+  const years = Array.from(
+    { length: currentYear - joinYear + 1 },
+    (_, i) => joinYear + i
+  );
   if (isFiltering) {
     return <AppLayout menuTitle="Dana Pensiun">{renderFallback}</AppLayout>;
   }
@@ -508,11 +528,13 @@ export function DanaPensiun() {
                   displayEmpty
                   sx={{ mb: 4 }}
                 >
-                  <MenuItem value="2025">Tahun 2025</MenuItem>
-                  <MenuItem value="2024">Tahun 2024</MenuItem>
-                  <MenuItem value="2023">Tahun 2023</MenuItem>
-                  <MenuItem value="2022">Tahun 2022</MenuItem>
-                  <MenuItem value="2021">Tahun 2021</MenuItem>
+                  {years
+                    .map((year) => (
+                      <MenuItem key={year} value={String(year)}>
+                        {year}
+                      </MenuItem>
+                    ))
+                    .reverse()}
                 </Select>
               </FormControl>
               {/* <Typography>Dana Pensiun {"(2019 - 2025)"}</Typography> */}
@@ -745,11 +767,13 @@ export function DanaPensiun() {
             onChange={handleDownloadYearChange}
             size="small"
           >
-            <MenuItem value="2025">2025</MenuItem>
-            <MenuItem value="2024">2024</MenuItem>
-            <MenuItem value="2023">2023</MenuItem>
-            <MenuItem value="2022">2022</MenuItem>
-            <MenuItem value="2021">2021</MenuItem>
+            {years
+              .map((year) => (
+                <MenuItem key={year} value={String(year)}>
+                  {year}
+                </MenuItem>
+              ))
+              .reverse()}
           </Select>
 
           <Box display="flex" gap={2} mt={2}>
