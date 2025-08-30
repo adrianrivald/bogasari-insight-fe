@@ -5,6 +5,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightIcon } from "@mui/x-date-pickers";
 import { getSession } from "../../sections/auth/session/session";
+import Cookies from "js-cookie";
+import { DOMAIN_NAME } from "../../constants";
 
 interface LeftSideBarSectionProps {
   isAuth: boolean;
@@ -17,9 +19,19 @@ const LeftSideBarSection = ({
   exceptionRoutes,
   handleLogout,
 }: LeftSideBarSectionProps) => {
-  const { userInfo, logout } = useAuth();
+  const { userInfo, tokenExpiry } = useAuth();
   const navigate = useNavigate();
   const deviceInfo = JSON.parse(localStorage.getItem("loginInfo") ?? "{}");
+
+  const onGoToDapen = () => {
+    Cookies.set("cookies", getSession() ?? "", {
+      expires: new Date(tokenExpiry ?? ""),
+      domain: DOMAIN_NAME,
+    });
+    setTimeout(() => {
+      window.location.href = "https://uat-saving.frendz.id/";
+    }, 1000);
+  };
 
   return (
     <React.Fragment>
@@ -263,7 +275,6 @@ const LeftSideBarSection = ({
           </Stack>
         </Stack>
         <Stack
-          component="a"
           direction="row"
           p={2}
           gap={2}
@@ -271,7 +282,6 @@ const LeftSideBarSection = ({
             cursor: "pointer",
             textDecoration: "none",
           }}
-          href={`https://uat-saving.frendz.id/?token=${getSession()}`}
         >
           <Button
             sx={{
@@ -285,6 +295,7 @@ const LeftSideBarSection = ({
               backgroundColor: "blue.50",
               width: "100%",
             }}
+            onClick={onGoToDapen}
           >
             <Typography fontWeight="bold" color="black">
               Pergi ke Dapen

@@ -31,6 +31,7 @@ interface AuthContextValue {
   currentInternalCompany?: number | null;
   userInfo: sessionService.User;
   setUserInfo: React.Dispatch<React.SetStateAction<string | null>>;
+  tokenExpiry: string;
 }
 
 const [useAuth, AuthInternalProvider] = createContext<AuthContextValue>({
@@ -58,6 +59,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
   const [accessToken, setAccessToken] = React.useState<
     string | undefined | null
   >(() => sessionService.getSession());
+  const [tokenExpiry, setTokenExpiry] = React.useState("");
   const [userInfo, setUserInfo] = React.useState<string | null>(() =>
     sessionService.getUser()
   );
@@ -68,6 +70,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
 
     sessionService.setSession(token, expires, rest);
     setAccessToken(token);
+    setTokenExpiry(expires);
     setUserInfo(JSON.stringify(rest));
     navigate("/");
     return res;
@@ -88,6 +91,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
 
       sessionService.setSession(token, expires, rest);
       setAccessToken(token);
+      setTokenExpiry(expires);
       setUserInfo(JSON.stringify(rest));
       navigate("/complete-profile");
     }
@@ -108,6 +112,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
       // Ensure session flush completes
       await sessionService.flushSession();
       setAccessToken(null);
+      setTokenExpiry("");
       localStorage.removeItem("loginInfo");
       setUserInfo("{}");
       navigate("/");
@@ -115,6 +120,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
       await sessionService.flushSession();
       localStorage.removeItem("loginInfo");
       setAccessToken(null);
+      setTokenExpiry("");
       setUserInfo("{}");
       navigate("/");
     }
@@ -130,6 +136,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
         forgotPassword,
         resetPassword,
         verifyOtp,
+        tokenExpiry,
         userInfo: accessToken
           ? userInfo
             ? JSON.parse(userInfo ?? "")
