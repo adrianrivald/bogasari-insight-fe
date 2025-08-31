@@ -197,6 +197,27 @@ const RekapitulasiPensiunReport: React.FC = () => (
           </View>
         ))}
       </View>
+      {/* Summary Section (before footer) */}
+      <View style={{ marginTop: 20, marginBottom: 40 }}>
+        <Text style={{ fontSize: 10, fontWeight: "bold", marginBottom: 6 }}>
+          Semua Ringkasan
+        </Text>
+
+        <View style={{ flexDirection: "row", marginBottom: 4 }}>
+          <Text style={{ width: "20%" }}>Total OPU</Text>
+          <Text>: 20</Text>
+        </View>
+
+        <View style={{ flexDirection: "row", marginBottom: 4 }}>
+          <Text style={{ width: "20%" }}>Total Saldo Awal</Text>
+          <Text>: Rp3.098.048</Text>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+          <Text style={{ width: "20%" }}>Total Saldo Akhir</Text>
+          <Text>: Rp1.032.000</Text>
+        </View>
+      </View>
 
       {/* Footer */}
       <View style={styles.footer}>
