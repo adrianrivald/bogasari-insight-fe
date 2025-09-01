@@ -16,6 +16,7 @@ import { LoadingButton } from "@mui/lab";
 import { useAuth } from "./providers/auth";
 import dayjs from "dayjs";
 import platform from "platform";
+import { API_URL } from "../../constants";
 
 export function SignInView() {
   const { login } = useAuth();
@@ -64,8 +65,7 @@ export function SignInView() {
   }, []);
 
   const handleGoogleLogin = () => {
-    window.location.href =
-      "https://bogasari-insight-backend.onrender.com/v1/auth/google";
+    window.location.href = `${API_URL}v1/auth/google`;
   };
   return (
     <Box

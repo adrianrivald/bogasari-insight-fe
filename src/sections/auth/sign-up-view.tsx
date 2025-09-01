@@ -22,6 +22,7 @@ import { useAuth } from "./providers/auth";
 import { CheckEmailView } from "./check-email-view";
 import { Bounce, toast } from "react-toastify";
 import { VerifyOtpView } from "./verify-otp-view";
+import { API_URL } from "../../constants";
 
 export function SignUpView() {
   const { register } = useAuth();
@@ -60,8 +61,7 @@ export function SignUpView() {
   }, []);
 
   const handleGoogleLogin = () => {
-    window.location.href =
-      "https://bogasari-insight-backend.onrender.com/v1/auth/google";
+    window.location.href = `${API_URL}v1/auth/google`;
   };
   if (isSubmitted) {
     return <VerifyOtpView email={inputtedEmail} />;
