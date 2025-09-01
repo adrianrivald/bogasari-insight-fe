@@ -12,6 +12,7 @@ export interface User {
   division?: string;
   fullName?: string;
   googleId?: string;
+  dJoinDate?: string;
   joinDate?: string;
   level?: string;
   location?: string;

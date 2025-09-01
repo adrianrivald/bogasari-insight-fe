@@ -91,7 +91,12 @@ const LeftSideBarSection = ({
               width={12}
               height={12}
             />
-            <Typography>Bergabung 24 Jun 2020</Typography>
+            <Typography>
+              Bergabung{" "}
+              {userInfo.dJoinDate
+                ? dayjs(userInfo.dJoinDate).format("DD MMM YYYY")
+                : "-"}
+            </Typography>
           </Stack>
           <Button
             sx={{

@@ -244,11 +244,21 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
                 No
               </Text>
               <Text style={styles.tableColHeader}>Keterangan</Text>
-              <Text style={styles.tableColHeader}>Iuran Peserta</Text>
-              <Text style={styles.tableColHeader}>Iuran Perusahaan</Text>
-              <Text style={styles.tableColHeader}>Hasil Pengembangan</Text>
-              <Text style={styles.tableColHeader}>Pencairan</Text>
-              <Text style={styles.tableColHeader}>Total Bulanan</Text>
+              <Text style={{ ...styles.tableColHeader, textAlign: "right" }}>
+                Iuran Peserta
+              </Text>
+              <Text style={{ ...styles.tableColHeader, textAlign: "right" }}>
+                Iuran Perusahaan
+              </Text>
+              <Text style={{ ...styles.tableColHeader, textAlign: "right" }}>
+                Hasil Pengembangan
+              </Text>
+              <Text style={{ ...styles.tableColHeader, textAlign: "right" }}>
+                Pencairan
+              </Text>
+              <Text style={{ ...styles.tableColHeader, textAlign: "right" }}>
+                Total Bulanan
+              </Text>
             </View>
 
             {/* Table Rows */}
