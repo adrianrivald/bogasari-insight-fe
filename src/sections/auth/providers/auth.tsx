@@ -32,6 +32,10 @@ interface AuthContextValue {
   userInfo: sessionService.User;
   setUserInfo: React.Dispatch<React.SetStateAction<string | null>>;
   tokenExpiry: string;
+  setAccessToken: React.Dispatch<
+    React.SetStateAction<string | null | undefined>
+  >;
+  setTokenExpiry: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const [useAuth, AuthInternalProvider] = createContext<AuthContextValue>({
@@ -143,6 +147,8 @@ export function AuthProvider(props: React.PropsWithChildren) {
             : {}
           : {},
         setUserInfo,
+        setAccessToken,
+        setTokenExpiry,
       }}
     >
       {props?.children}

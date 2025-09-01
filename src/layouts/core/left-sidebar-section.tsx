@@ -24,6 +24,7 @@ const LeftSideBarSection = ({
   const deviceInfo = JSON.parse(localStorage.getItem("loginInfo") ?? "{}");
 
   const onGoToDapen = () => {
+    console.log(DOMAIN_NAME, "DOMAIN_NAME");
     Cookies.set("cookies", getSession() ?? "", {
       expires: new Date(tokenExpiry ?? ""),
       domain: DOMAIN_NAME,
@@ -34,7 +35,7 @@ const LeftSideBarSection = ({
       } else {
         window.location.href = "https://bogasari-dapen-fe.vercel.app/";
       }
-    }, 1000);
+    }, 500);
   };
 
   return (
