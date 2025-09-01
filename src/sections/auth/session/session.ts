@@ -31,7 +31,6 @@ export function getUser() {
 }
 
 export function setSession(newSession: string, expires?: string, user?: User) {
-  console.log(DOMAIN_NAME,'domain name')
   Cookies.set(STORAGE_KEY, newSession, {
     expires: new Date(expires ?? ""),
     // domain: DOMAIN_NAME

@@ -2,7 +2,7 @@ import { Box, Button, Card, Stack, Typography } from "@mui/material";
 import { useAuth } from "../../sections/auth/providers/auth";
 import dayjs from "dayjs";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowRightIcon } from "@mui/x-date-pickers";
 import { getSession } from "../../sections/auth/session/session";
 import Cookies from "js-cookie";
@@ -29,7 +29,11 @@ const LeftSideBarSection = ({
       domain: DOMAIN_NAME,
     });
     setTimeout(() => {
-      window.location.href = "https://uat-saving.frendz.id/";
+      if (window.location.origin?.includes("frendz.id")) {
+        window.location.href = "https://uat-saving.frendz.id/";
+      } else {
+        window.location.href = "https://bogasari-dapen-fe.vercel.app/";
+      }
     }, 1000);
   };
 
