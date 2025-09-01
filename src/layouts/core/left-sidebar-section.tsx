@@ -24,11 +24,6 @@ const LeftSideBarSection = ({
   const deviceInfo = JSON.parse(localStorage.getItem("loginInfo") ?? "{}");
 
   const onGoToDapen = () => {
-    console.log(DOMAIN_NAME, "DOMAIN_NAME");
-    Cookies.set("cookies", getSession() ?? "", {
-      expires: new Date(tokenExpiry ?? ""),
-      domain: DOMAIN_NAME,
-    });
     setTimeout(() => {
       if (window.location.origin?.includes("frendz.id")) {
         window.location.href = "https://uat-saving.frendz.id/";

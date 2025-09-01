@@ -33,8 +33,13 @@ export function getUser() {
 export function setSession(newSession: string, expires?: string, user?: User) {
   Cookies.set(STORAGE_KEY, newSession, {
     expires: new Date(expires ?? ""),
-    // domain: DOMAIN_NAME
   });
+  
+  Cookies.set("cookies", newSession, {
+    expires: new Date(expires ?? ""),
+    domain: DOMAIN_NAME
+  });
+
   window.localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
