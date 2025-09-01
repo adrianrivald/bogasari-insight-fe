@@ -60,10 +60,9 @@ export function SignUpView() {
   }, []);
 
   const handleGoogleLogin = () => {
-    console.log("Google login");
-    // Add your Google login logic here
+    window.location.href =
+      "https://bogasari-insight-backend.onrender.com/v1/auth/google";
   };
-
   if (isSubmitted) {
     return <VerifyOtpView email={inputtedEmail} />;
   }

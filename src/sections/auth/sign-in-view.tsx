@@ -64,10 +64,8 @@ export function SignInView() {
   }, []);
 
   const handleGoogleLogin = () => {
-    console.log("Google login");
     window.location.href =
       "https://bogasari-insight-backend.onrender.com/v1/auth/google";
-    // Add your Google login logic here
   };
   return (
     <Box
