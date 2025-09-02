@@ -257,7 +257,7 @@ export function HomeView() {
               <Typography fontSize={16} fontWeight="bold">
                 OPU
               </Typography>
-              <Typography fontSize={16}>{userInfo?.opuCode}</Typography>
+              <Typography fontSize={16}>{userInfo?.opuDescription}</Typography>
             </Stack>
           </Stack>
 

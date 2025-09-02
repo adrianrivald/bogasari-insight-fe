@@ -269,6 +269,30 @@ export function DanaPensiun() {
           // (Optional) revoke the object URL later
           setTimeout(() => URL.revokeObjectURL(url2), 1000);
 
+          const dummy = {
+            success: true,
+            data: {
+              header: {
+                emp_name: "John Doe",
+                emp_no: "ID0012834",
+                join_date: "2010-03-15T00:00:00.000Z",
+              },
+              content: [
+                {
+                  transaction_date: "2024-05-01T00:00:00.000Z",
+                  transaction: "Iuran Peserta",
+                  amount: 500000,
+                },
+              ],
+              footer: {
+                saldo_awal: 100000000,
+                mutasi_kredit: 500000,
+                mutasi_debet: 0,
+                saldo_akhir: 100500000,
+              },
+            },
+          };
+
           const blob3 = await pdf(<RekapitulasiPensiunReport />).toBlob();
 
           // Create object URL
@@ -321,7 +345,9 @@ export function DanaPensiun() {
             <Typography fontSize={16} fontWeight="bold">
               OPU
             </Typography>
-            <Typography fontSize={16}>{userInfo?.opuCode ?? "-"}</Typography>
+            <Typography fontSize={16}>
+              {userInfo?.opuDescription ?? "-"}
+            </Typography>
           </Stack>
         </Stack>
 
