@@ -261,51 +261,27 @@ export function DanaPensiun() {
           // (Optional) revoke the object URL later
           setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-          const blob2 = await pdf(<SaldoManfaatDetailPDF />).toBlob();
+          // const blob2 = await pdf(<SaldoManfaatDetailPDF />).toBlob();
 
-          // Create object URL
-          const url2 = URL.createObjectURL(blob2);
+          // // Create object URL
+          // const url2 = URL.createObjectURL(blob2);
 
-          // Open in new tab
-          window.open(url2, "_blank");
+          // // Open in new tab
+          // window.open(url2, "_blank");
 
-          // (Optional) revoke the object URL later
-          setTimeout(() => URL.revokeObjectURL(url2), 1000);
+          // // (Optional) revoke the object URL later
+          // setTimeout(() => URL.revokeObjectURL(url2), 1000);
 
-          const dummy = {
-            success: true,
-            data: {
-              header: {
-                emp_name: "John Doe",
-                emp_no: "ID0012834",
-                join_date: "2010-03-15T00:00:00.000Z",
-              },
-              content: [
-                {
-                  transaction_date: "2024-05-01T00:00:00.000Z",
-                  transaction: "Iuran Peserta",
-                  amount: 500000,
-                },
-              ],
-              footer: {
-                saldo_awal: 100000000,
-                mutasi_kredit: 500000,
-                mutasi_debet: 0,
-                saldo_akhir: 100500000,
-              },
-            },
-          };
+          // const blob3 = await pdf(<RekapitulasiPensiunReport />).toBlob();
 
-          const blob3 = await pdf(<RekapitulasiPensiunReport />).toBlob();
+          // // Create object URL
+          // const url3 = URL.createObjectURL(blob3);
 
-          // Create object URL
-          const url3 = URL.createObjectURL(blob3);
+          // // Open in new tab
+          // window.open(url3, "_blank");
 
-          // Open in new tab
-          window.open(url3, "_blank");
-
-          // (Optional) revoke the object URL later
-          setTimeout(() => URL.revokeObjectURL(url3), 1000);
+          // // (Optional) revoke the object URL later
+          // setTimeout(() => URL.revokeObjectURL(url3), 1000);
         })
       ); // Generate PDF as blob
   };
