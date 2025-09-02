@@ -10,11 +10,14 @@ import {
 } from "@react-pdf/renderer";
 import dayjs from "dayjs";
 import PoppinsRegular from "../../../public/fonts/Poppins-Regular.ttf";
+import PoppinsBold from "../../../public/fonts/Poppins-Bold.ttf";
 import logo from "../../../public/images/dpip.png";
-
 Font.register({
   family: "Poppins",
-  src: PoppinsRegular,
+  fonts: [
+    { src: PoppinsRegular, fontWeight: "normal" },
+    { src: PoppinsBold, fontWeight: "bold" },
+  ],
 });
 
 // Styles (same as before, kept unchanged)

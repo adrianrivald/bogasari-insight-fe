@@ -10,18 +10,21 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import PoppinsRegular from "../../../public/fonts/Poppins-Regular.ttf";
+import PoppinsBold from "../../../public/fonts/Poppins-Bold.ttf";
 import logo from "../../../public/images/dpip.png";
-
 Font.register({
   family: "Poppins",
-  src: PoppinsRegular,
+  fonts: [
+    { src: PoppinsRegular, fontWeight: "normal" },
+    { src: PoppinsBold, fontWeight: "bold" },
+  ],
 });
 // Define styles
 const styles = StyleSheet.create({
   page: {
     padding: 30,
     fontSize: 7,
-    fontFamily: "Helvetica",
+    fontFamily: "Poppins",
   },
   header: {
     textAlign: "left",
