@@ -236,13 +236,16 @@ export function DanaPensiun() {
 
   const onExportBalance = async () => {
     await window
-      .fetch(`${API_URL}v1/pension/contributions/yearly/me`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${getSession()}`,
-        },
-      })
+      .fetch(
+        `${API_URL}v1/pension/contributions/yearly/me?years=${downloadYear}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${getSession()}`,
+          },
+        }
+      )
       .then((res) =>
         res.json().then(async (res) => {
           const blob = await pdf(

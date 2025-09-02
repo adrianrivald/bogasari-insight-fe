@@ -11,12 +11,14 @@ import {
 } from "@react-pdf/renderer";
 import PoppinsRegular from "../../../public/fonts/Poppins-Regular.ttf";
 import PoppinsBold from "../../../public/fonts/Poppins-Bold.ttf";
+import PoppinsItalic from "../../../public/fonts/Poppins-Italic.ttf";
 import logo from "../../../public/images/dpip.png";
 Font.register({
   family: "Poppins",
   fonts: [
     { src: PoppinsRegular, fontWeight: "normal" },
     { src: PoppinsBold, fontWeight: "bold" },
+    { src: PoppinsItalic, fontStyle: "italic" },
   ],
 });
 // Define styles
@@ -142,7 +144,9 @@ const RekapitulasiPensiunReport: React.FC = () => (
             <Text style={styles.tableCellHeader}>Nama & No Peserta</Text>
           </View>
           <View style={styles.tableColMoney}>
-            <Text style={styles.tableCellHeader}>Saldo Awal</Text>
+            <Text style={{ ...styles.tableCellHeader, fontWeight: "bold" }}>
+              Saldo Awal
+            </Text>
           </View>
           {[
             "Jan",
@@ -159,11 +163,15 @@ const RekapitulasiPensiunReport: React.FC = () => (
             "Des",
           ].map((m) => (
             <View key={m} style={styles.tableColMoney}>
-              <Text style={styles.tableCellHeader}>{m}</Text>
+              <Text style={{ ...styles.tableCellHeader, fontWeight: "bold" }}>
+                {m}
+              </Text>
             </View>
           ))}
           <View style={styles.tableColMoney}>
-            <Text style={styles.tableCellHeader}>Saldo Akhir</Text>
+            <Text style={{ ...styles.tableCellHeader, fontWeight: "bold" }}>
+              Saldo Akhir
+            </Text>
           </View>
         </View>
 
@@ -180,25 +188,69 @@ const RekapitulasiPensiunReport: React.FC = () => (
               <Text style={styles.tableCell}>{p.no}</Text>
             </View>
             <View style={styles.tableColWide}>
-              <Text style={styles.tableCell}>
+              <Text style={{ ...styles.tableCell, textAlign: "right" }}>
                 {p.name}
                 {"\n"}
                 {p.noPeserta}
               </Text>
             </View>
             <View style={styles.tableColMoney}>
-              <Text style={styles.tableCell}>{p.saldoAwal}</Text>
+              <Text style={{ ...styles.tableCell, textAlign: "right" }}>
+                {p.saldoAwal}
+              </Text>
             </View>
             {p.saldoBulanan.map((val, idx) => (
               <View key={idx} style={styles.tableColMoney}>
-                <Text style={styles.tableCell}>{val}</Text>
+                <Text style={{ ...styles.tableCell, textAlign: "right" }}>
+                  {val}
+                </Text>
               </View>
             ))}
             <View style={styles.tableColMoney}>
-              <Text style={styles.tableCell}>{p.saldoAkhir}</Text>
+              <Text style={{ ...styles.tableCell, textAlign: "right" }}>
+                {p.saldoAkhir}
+              </Text>
             </View>
           </View>
         ))}
+        <View
+          style={{
+            ...styles.tableRow,
+            backgroundColor: "#ffffff",
+          }}
+        >
+          <View style={styles.tableColSmall}>
+            <Text style={styles.tableCell}></Text>
+          </View>
+          <View style={styles.tableColWide}>
+            <Text style={styles.tableCell}></Text>
+          </View>
+          <View style={styles.tableColMoney}>
+            <Text style={{ ...styles.tableCell, textAlign: "right" }}>
+              {" "}
+              <Text style={{ fontSize: 5, fontStyle: "italic" }}>
+                Total Saldo
+              </Text>
+              {"\n"}
+              Rp.3.000.060
+            </Text>
+          </View>
+          {Array.from({ length: 12 }).map((val, idx) => (
+            <View key={idx} style={styles.tableColMoney}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+          ))}
+          <View style={styles.tableColMoney}>
+            <Text style={{ ...styles.tableCell, textAlign: "right" }}>
+              {" "}
+              <Text style={{ fontSize: 5, fontStyle: "italic" }}>
+                Total Saldo
+              </Text>
+              {"\n"}
+              Rp.3.000.060
+            </Text>
+          </View>
+        </View>
       </View>
       {/* Summary Section (before footer) */}
       <View style={{ marginTop: 20, marginBottom: 40 }}>

@@ -452,7 +452,12 @@ const SaldoManfaatDetailPDF: React.FC = () => {
         <Text
           style={[
             styles.title,
-            { fontSize: 12, marginTop: 48, marginBottom: 12 },
+            {
+              fontSize: 12,
+              marginTop: 48,
+              marginBottom: 12,
+              fontWeight: "bold",
+            },
           ]}
         >
           Ringkasan Saldo Dana Pensiun

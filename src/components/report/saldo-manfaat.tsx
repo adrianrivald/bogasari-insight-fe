@@ -310,7 +310,7 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             })}
           </View>
 
-          <Text style={{ fontSize: 12, marginTop: 16 }}>
+          <Text style={{ fontSize: 12, marginTop: 16, fontWeight: "bold" }}>
             Ringkasan Saldo Dana Pensiun
           </Text>
 
