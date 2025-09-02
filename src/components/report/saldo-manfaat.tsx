@@ -316,22 +316,30 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
 
           <View style={styles.summaryRow}>
             <Text>Saldo Iuran Peserta</Text>
-            <Text>{formatRupiah(yearData.totals.totalIuranPeserta)}</Text>
+            <Text style={{ fontWeight: "bold" }}>
+              {formatRupiah(yearData.totals.totalIuranPeserta)}
+            </Text>
           </View>
           <View style={styles.summaryRow}>
             <Text>Saldo Iuran Perusahaan</Text>
-            <Text>{formatRupiah(yearData.totals.totalIuranPerusahaan)}</Text>
+            <Text style={{ fontWeight: "bold" }}>
+              {formatRupiah(yearData.totals.totalIuranPerusahaan)}
+            </Text>
           </View>
           <View style={styles.summaryRow}>
             <Text>Total Pengembangan</Text>
-            <Text>{formatRupiah(yearData.totals.totalHasilPengembangan)}</Text>
+            <Text style={{ fontWeight: "bold" }}>
+              {formatRupiah(yearData.totals.totalHasilPengembangan)}
+            </Text>
           </View>
           <View style={styles.summaryRow}>
             <Text>Total Pencairan</Text>
-            <Text>{formatRupiah(yearData.totals.totalPencairan)}</Text>
+            <Text style={{ fontWeight: "bold" }}>
+              {formatRupiah(yearData.totals.totalPencairan)}
+            </Text>
           </View>
           <View style={styles.summaryRow}>
-            <Text style={{ fontWeight: "bold" }}>Total Saldo Akhir</Text>
+            <Text>Total Saldo Akhir</Text>
             <Text style={{ fontWeight: "bold" }}>
               {formatRupiah(yearData.totals.totalSaldo)}
             </Text>

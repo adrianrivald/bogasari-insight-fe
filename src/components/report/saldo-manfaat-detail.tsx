@@ -465,9 +465,7 @@ const SaldoManfaatDetailPDF: React.FC = () => {
         {summary.map((s, idx) => (
           <View style={styles.summaryRow} key={idx}>
             <Text>{s.label}</Text>
-            <Text style={idx === summary.length - 1 ? styles.bold : {}}>
-              {s.value}
-            </Text>
+            <Text style={{ fontWeight: "bold" }}>{s.value}</Text>
           </View>
         ))}
 

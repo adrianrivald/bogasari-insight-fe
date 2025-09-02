@@ -260,17 +260,17 @@ const RekapitulasiPensiunReport: React.FC = () => (
 
         <View style={{ flexDirection: "row", marginBottom: 4 }}>
           <Text style={{ width: "20%" }}>Total OPU</Text>
-          <Text>: 20</Text>
+          <Text style={{ fontWeight: "bold" }}>: 20</Text>
         </View>
 
         <View style={{ flexDirection: "row", marginBottom: 4 }}>
           <Text style={{ width: "20%" }}>Total Saldo Awal</Text>
-          <Text>: Rp3.098.048</Text>
+          <Text style={{ fontWeight: "bold" }}>: Rp3.098.048</Text>
         </View>
 
         <View style={{ flexDirection: "row" }}>
           <Text style={{ width: "20%" }}>Total Saldo Akhir</Text>
-          <Text>: Rp1.032.000</Text>
+          <Text style={{ fontWeight: "bold" }}>: Rp1.032.000</Text>
         </View>
       </View>
 
