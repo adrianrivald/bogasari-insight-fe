@@ -308,6 +308,7 @@ export function DanaPensiun() {
           px: 3,
           bgcolor: "white",
           display: {
+            position: "relative",
             xs: "none",
             md: "block",
           },
@@ -641,28 +642,47 @@ export function DanaPensiun() {
         </TabContext>
       </Box>
 
-      <Button
+      <Box
         sx={{
+          position: "sticky", // float inside parent scroll area
+          bottom: 0, // stick to bottom of parent box
+          bgcolor: "white", // white background
+          width: "100%", // match parent width
+          p: 2, // padding around button
+          boxShadow: "0 -2px 10px rgba(0,0,0,0.05)", // subtle top shadow
+          borderTop: "1px solid #eee",
           display: "flex",
-          alignItems: "center",
-          gap: 3,
-          border: "1px solid",
-          borderColor: "blue.500",
-          borderRadius: "50px",
-          width: "100%",
-          py: 2,
+          justifyContent: "center",
+          zIndex: 10,
           mt: 4,
+          borderRadius: 2,
         }}
-        onClick={onClickDownloadSaldo}
       >
-        <Box
-          component="img"
-          src="/images/icons/download.svg"
-          width={24}
-          height={24}
-        />
-        <Typography color="blue.500">Unduh Saldo Manfaat</Typography>
-      </Button>
+        <Button
+          variant="outlined"
+          onClick={onClickDownloadSaldo}
+          sx={{
+            width: "80%",
+            borderRadius: "50px",
+            px: 3,
+            py: 1.5,
+            borderColor: "blue.500",
+            color: "blue.500",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
+        >
+          <Box
+            component="img"
+            src="/images/icons/download.svg"
+            width={20}
+            height={20}
+          />
+          Unduh Saldo Manfaat
+        </Button>
+      </Box>
+
       <Dialog
         open={isShowDatePopup}
         onClose={() => setIsShowDatePopup(false)}
