@@ -15,7 +15,7 @@ const RightSideBarSection = ({
   exceptionRoutes,
 }: RightSideBarSectionProps) => {
   const { data: amountSummary } = useAmountSummary();
-
+  const isProfileComplete = amountSummary?.user !== null;
   return (
     <Box
       sx={{
@@ -29,6 +29,7 @@ const RightSideBarSection = ({
         <BalanceCard
           balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
           percentage={`${amountSummary?.growthPercentage}%`}
+          isProfileComplete={isProfileComplete}
         />
       </Suspense>
       <Card

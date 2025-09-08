@@ -3,9 +3,14 @@ import { Box, Typography } from "@mui/material";
 interface BalanceCardProps {
   balance: string;
   percentage: string;
+  isProfileComplete: boolean;
 }
 
-const BalanceCard = ({ balance, percentage }: BalanceCardProps) => {
+const BalanceCard = ({
+  balance,
+  percentage,
+  isProfileComplete,
+}: BalanceCardProps) => {
   return (
     <Box
       sx={{
@@ -47,15 +52,17 @@ const BalanceCard = ({ balance, percentage }: BalanceCardProps) => {
         Total Saldo Terkini
       </Typography>
       <Typography variant="h5" fontSize={42} fontWeight="bold" sx={{ mt: 1 }}>
-        {balance}
+        {isProfileComplete ? balance : 0}
       </Typography>
-      <Typography
-        variant="body2"
-        sx={{ mt: 1, color: "#00e676", fontWeight: 600 }}
-      >
-        ▲ {percentage}
-        <span style={{ color: "white", fontWeight: 400 }}>bulan lalu</span>
-      </Typography>
+      {isProfileComplete && (
+        <Typography
+          variant="body2"
+          sx={{ mt: 1, color: "#00e676", fontWeight: 600 }}
+        >
+          ▲ {percentage}
+          <span style={{ color: "white", fontWeight: 400 }}>bulan lalu</span>
+        </Typography>
+      )}
     </Box>
   );
 };
