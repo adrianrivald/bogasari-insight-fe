@@ -25,6 +25,8 @@ export function HomeView() {
   const [userInfo, setUserInfo] = useState<any>({});
   const navigate = useNavigate();
   const { data: amountSummary } = useAmountSummary();
+  const isProfileComplete = amountSummary?.user !== null;
+
   const onClickPenarikanDana = () => {
     navigate("/pencairan-dana-pensiun");
   };
@@ -114,6 +116,7 @@ export function HomeView() {
             <BalanceCard
               balance={formatRupiah(amountSummary?.totalSaldo ?? 0)}
               percentage={`${amountSummary?.growthPercentage}%`}
+              isProfileComplete={isProfileComplete}
             />
           </Suspense>
         </Box>
