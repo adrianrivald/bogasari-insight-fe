@@ -28,7 +28,7 @@ export function HomeView() {
   const isProfileComplete = amountSummary?.user !== null;
 
   const onClickPenarikanDana = () => {
-    navigate("/pencairan-dana-pensiun");
+    // navigate("/pencairan-dana-pensiun");
   };
 
   const onClickDapen = () => {

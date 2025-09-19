@@ -70,7 +70,7 @@ const HomeTab = () => {
             },
           }}
           label="Pencairan Dana"
-          onClick={() => onClickMenu("/pencairan-dana-pensiun")}
+          // onClick={() => onClickMenu("/pencairan-dana-pensiun")}
           {...a11yProps(1)}
         />
       </Tabs>
