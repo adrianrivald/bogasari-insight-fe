@@ -190,7 +190,7 @@ export function HomeView() {
         </Box>
 
         {/* Penarikan Dana */}
-        <Box
+        {/* <Box
           my={4}
           sx={{
             px: {
@@ -229,7 +229,7 @@ export function HomeView() {
               height={20}
             />
           </Card>
-        </Box>
+        </Box> */}
       </Box>
 
       {/* Desktop Home */}

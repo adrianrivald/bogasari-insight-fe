@@ -60,7 +60,7 @@ const HomeTab = () => {
           onClick={() => onClickMenu("/dana-pensiun")}
           {...a11yProps(0)}
         />
-        <Tab
+        {/* <Tab
           sx={{
             px: 4,
             color: "gray",
@@ -72,7 +72,7 @@ const HomeTab = () => {
           label="Pencairan Dana"
           // onClick={() => onClickMenu("/pencairan-dana-pensiun")}
           {...a11yProps(1)}
-        />
+        /> */}
       </Tabs>
     </Card>
   );
