@@ -37,6 +37,7 @@ export type AppLayoutProps = {
 };
 
 const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
+  const { userInfo } = useAuth();
   const navigate = useNavigate();
   return (
     <Container
@@ -93,7 +94,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                         component="span"
                         fontSize={20}
                       >
-                        example@gmail.com
+                        {userInfo.email}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -106,7 +107,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                 </Stack>
               </Card>
             </Link>
-            <Link
+            {/* <Link
               href="/dana-pensiun"
               underline="none"
               sx={{
@@ -133,7 +134,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                   <Typography>DPP</Typography>
                 </Stack>
               </Card>
-            </Link>
+            </Link> */}
           </Box>
 
           <Card
