@@ -28,7 +28,10 @@ export function HomeView() {
 
   useEffect(() => {
     if (isSuccess) {
-      if (data.data.nikEmployee === null) {
+      if (
+        data.data.nikEmployee === null &&
+        data.data.email !== "admin@gmail.com"
+      ) {
         navigate("/complete-profile");
         return;
       }
