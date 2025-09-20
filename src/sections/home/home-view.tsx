@@ -123,7 +123,7 @@ export function HomeView() {
 
         {/* Menus */}
         <Box
-          mt={4}
+          my={4}
           sx={{
             px: {
               xs: 3,
