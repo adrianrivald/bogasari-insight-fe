@@ -135,7 +135,7 @@ export function HomeView() {
           <Stack direction="row" gap={2} mt={2}>
             <Card
               sx={{
-                width: "50%",
+                width: "100%",
                 p: 2,
                 cursor: "pointer",
               }}
@@ -154,7 +154,7 @@ export function HomeView() {
               </Typography>
               <Typography>Tabungan untuk masa pensiun</Typography>
             </Card>
-            <Card
+            {/* <Card
               sx={{
                 width: "50%",
                 p: 2,
@@ -185,7 +185,7 @@ export function HomeView() {
                 Koperasi
               </Typography>
               <Typography>Usaha milik dan untuk anggota</Typography>
-            </Card>
+            </Card> */}
           </Stack>
         </Box>
 

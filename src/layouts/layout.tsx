@@ -14,8 +14,10 @@ import {
   DialogTitle,
   Stack,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../sections/auth/providers/auth";
 import { Bounce, toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -60,7 +62,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
           justifyContent="space-between"
         >
           <Box display="flex" flexDirection="column" width="100%" gap={3}>
-            <Link
+            {/* <Link
               href="/profile"
               underline="none"
               sx={{
@@ -68,45 +70,45 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                   textDecoration: "none",
                 },
               }}
+            > */}
+            <Card
+              sx={{
+                p: 2,
+                cursor: "pointer",
+              }}
             >
-              <Card
-                sx={{
-                  p: 2,
-                  cursor: "pointer",
-                }}
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
               >
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Stack direction="row" gap={2}>
-                    <Box
-                      component="img"
-                      src="/images/ava-dummy.png"
-                      width={50}
-                      height={50}
-                    />
-                    <Stack direction="column">
-                      <Typography>Selamat Pagi</Typography>
-                      <Typography
-                        fontWeight="bold"
-                        component="span"
-                        fontSize={20}
-                      >
-                        {userInfo.email}
-                      </Typography>
-                    </Stack>
-                  </Stack>
+                <Stack direction="row" gap={2}>
                   <Box
+                    component="img"
+                    src="/images/ava-dummy.png"
+                    width={50}
+                    height={50}
+                  />
+                  <Stack direction="column">
+                    <Typography>Selamat Pagi</Typography>
+                    <Typography
+                      fontWeight="bold"
+                      component="span"
+                      fontSize={20}
+                    >
+                      {userInfo.email}
+                    </Typography>
+                  </Stack>
+                </Stack>
+                {/* <Box
                     component="img"
                     src="/images/icons/chevron-right.svg"
                     width={20}
                     height={20}
-                  />
-                </Stack>
-              </Card>
-            </Link>
+                  /> */}
+              </Stack>
+            </Card>
+            {/* </Link> */}
             {/* <Link
               href="/dana-pensiun"
               underline="none"
@@ -179,6 +181,16 @@ export function AppLayout({
   const layoutQuery: Breakpoint = "md";
   const [isOpen, setIsOpen] = useState(false);
   const [isLogoutPopupOpen, setIsLogoutPopupOpen] = useState(false);
+
+  // detect screen size
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up(layoutQuery));
+
+  useEffect(() => {
+    if (isDesktop && isOpen) {
+      setIsOpen(false); // close dashboard when switching back to desktop
+    }
+  }, [isDesktop, isOpen]);
 
   const handleLogout = useCallback(async () => {
     try {
