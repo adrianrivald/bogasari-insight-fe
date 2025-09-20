@@ -1,24 +1,14 @@
-import { Box, Card, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Card, Stack, Typography } from "@mui/material";
 import { useAuth } from "../auth/providers/auth";
 import BalanceCard from "../../components/ui/balance-card";
 import { useNavigate } from "react-router-dom";
 import { AppLayout } from "../../layouts/layout";
 import { useAmountSummary } from "../../services/dana-pensiun/use-amount-summary";
 import { formatRupiah } from "../../utils/format-rupiah";
-import { TabContext, TabPanel } from "@mui/lab";
 import { Suspense, useEffect, useState } from "react";
-import { DanaPensiun } from "../../components/module/dana-pensiun/dana-pensiun";
 import { renderFallback } from "../../routes/sections";
-import { PencairanDanaPensiun } from "../../components/module/dana-pensiun/pencairan-dana-pensiun";
 import dayjs from "dayjs";
 import { useUserInfo } from "../../services/user";
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 export function HomeView() {
   const { userInfo: user, setUserInfo: setUser } = useAuth();
@@ -27,24 +17,21 @@ export function HomeView() {
   const { data: amountSummary } = useAmountSummary();
   const isProfileComplete = amountSummary?.user !== null;
 
-  const onClickPenarikanDana = () => {
-    // navigate("/pencairan-dana-pensiun");
-  };
-
   const onClickDapen = () => {
     navigate("/dana-pensiun");
   };
 
   // Desktop Home states
   const [tabIndex, setTabIndex] = useState(0);
-  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setTabIndex(newValue);
-  };
 
   const { data, isSuccess } = useUserInfo(user.id);
 
   useEffect(() => {
     if (isSuccess) {
+      if (data.data.nikEmployee === null) {
+        navigate("/complete-profile");
+        return;
+      }
       setUserInfo(data.data);
       setUser(JSON.stringify(data?.data));
     }

@@ -32,7 +32,7 @@ const RightSideBarSection = ({
           isProfileComplete={isProfileComplete}
         />
       </Suspense>
-      <Card
+      {/* <Card
         sx={{
           p: 2,
           mt: 4,
@@ -64,7 +64,7 @@ const RightSideBarSection = ({
             </Typography>
           </Stack>
         </Box>
-      </Card>
+      </Card> */}
     </Box>
   );
 };

@@ -1,11 +1,9 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import "./global.css";
 
 import { renderFallback, Router } from "./routes/sections";
 import { useEffect } from "react";
 import { getSession, setSession } from "./sections/auth/session/session";
-import { useAuth } from "./sections/auth/providers/auth";
-import { useUserInfo } from "./services/user";
 import { API_URL } from "./constants";
 // ----------------------------------------------------------------------
 

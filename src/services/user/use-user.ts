@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { http } from "../../utils/http";
 import { useAuth } from "../../sections/auth/providers/auth";
-// import { TransactionHistory } from "./types";
 
 async function fetchUserInfo(userId: number) {
   const data = await http<any>(`/v1/auth/users/${userId}`);
