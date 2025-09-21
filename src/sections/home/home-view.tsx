@@ -9,6 +9,7 @@ import { Suspense, useEffect, useState } from "react";
 import { renderFallback } from "../../routes/sections";
 import dayjs from "dayjs";
 import { useUserInfo } from "../../services/user";
+import { getTimeOfDay } from "../../helper/get-time-of-day";
 
 export function HomeView() {
   const { userInfo: user, setUserInfo: setUser } = useAuth();
@@ -84,7 +85,7 @@ export function HomeView() {
               height={50}
             />
             <Stack direction="column">
-              <Typography>Selamat Pagi</Typography>
+              <Typography>Selamat {getTimeOfDay()}</Typography>
               <Typography fontWeight="bold" component="span" fontSize={20}>
                 {userInfo.email}
               </Typography>

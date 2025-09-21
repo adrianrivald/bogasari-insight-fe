@@ -24,6 +24,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
 import LeftSideBarSection from "./core/left-sidebar-section";
 import RightSideBarSection from "./core/right-sidebar-section";
+import { getTimeOfDay } from "../helper/get-time-of-day";
 
 // ----------------------------------------------------------------------
 
@@ -90,7 +91,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                     height={50}
                   />
                   <Stack direction="column">
-                    <Typography>Selamat Pagi</Typography>
+                    <Typography>Selamat {getTimeOfDay()}</Typography>
                     <Typography
                       fontWeight="bold"
                       component="span"
