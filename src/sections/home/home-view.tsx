@@ -85,7 +85,7 @@ export function HomeView() {
               height={50}
             />
             <Stack direction="column">
-              <Typography>Selamat {getTimeOfDay()}</Typography>
+              <Typography>Halo</Typography>
               <Typography fontWeight="bold" component="span" fontSize={20}>
                 {userInfo.email}
               </Typography>

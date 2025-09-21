@@ -91,7 +91,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                     height={50}
                   />
                   <Stack direction="column">
-                    <Typography>Selamat {getTimeOfDay()}</Typography>
+                    <Typography>Halo</Typography>
                     <Typography
                       fontWeight="bold"
                       component="span"
