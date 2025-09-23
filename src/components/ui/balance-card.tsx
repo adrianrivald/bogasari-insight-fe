@@ -51,7 +51,17 @@ const BalanceCard = ({
       <Typography variant="subtitle2" sx={{ opacity: 0.9 }}>
         Total Saldo Terkini
       </Typography>
-      <Typography variant="h5" fontSize={42} fontWeight="bold" sx={{ mt: 1 }}>
+      <Typography
+        variant="h5"
+        fontWeight="bold"
+        sx={{
+          mt: 1,
+          fontSize: {
+            sm: 32,
+            md: 42,
+          },
+        }}
+      >
         {isProfileComplete ? balance : 0}
       </Typography>
       {isProfileComplete && (
