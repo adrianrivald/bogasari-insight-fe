@@ -212,6 +212,9 @@ export function CompleteProfileView() {
                   variant="outlined"
                   {...register("phoneNumber", {
                     required: "NO HP harus diisi",
+                    validate: (value) =>
+                      !value.includes("-") ||
+                      "Format salah. Mohon masukkan angka saja",
                   })}
                   onChange={(e) => {
                     setValue("phoneNumber", e.target.value);
