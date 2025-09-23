@@ -304,6 +304,7 @@ export function HomeView() {
                 Sisa Masa Kerja
               </Typography>
               <Typography fontSize={16}>
+                {/* 55 Tahun - usia */}
                 {55 - dayjs().diff(dayjs(userInfo.joinDate), "year")} tahun
               </Typography>
             </Stack>
