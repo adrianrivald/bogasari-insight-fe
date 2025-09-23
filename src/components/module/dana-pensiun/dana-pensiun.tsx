@@ -375,9 +375,11 @@ export function DanaPensiun() {
         <Stack direction="row" mt={4}>
           <Stack gap={1} width="50%">
             <Typography fontSize={16} fontWeight="bold">
-              Periode
+              Sisa Masa Kerja
             </Typography>
-            <Typography fontSize={16}>-</Typography>
+            <Typography fontSize={16}>
+              {55 - dayjs().diff(dayjs(userInfo.joinDate), "year")} tahun
+            </Typography>
           </Stack>
         </Stack>
       </Card>
