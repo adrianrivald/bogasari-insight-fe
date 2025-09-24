@@ -379,7 +379,7 @@ export function DanaPensiun() {
             </Typography>
             <Typography fontSize={16}>
               {/* 55 Tahun - usia */}
-              {55 - dayjs().diff(dayjs(userInfo.joinDate), "year")} tahun
+              {55 - dayjs().diff(dayjs(userInfo.birthDate), "year")} tahun
             </Typography>
           </Stack>
         </Stack>
