@@ -87,7 +87,7 @@ export function HomeView() {
             <Stack direction="column">
               <Typography>Halo</Typography>
               <Typography fontWeight="bold" component="span" fontSize={20}>
-                {userInfo.email}
+                {userInfo.fullName}
               </Typography>
             </Stack>
           </Stack>

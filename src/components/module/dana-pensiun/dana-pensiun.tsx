@@ -119,7 +119,7 @@ export function DanaPensiun() {
   const handleChangeDate = (newValue: Dayjs | null) => {
     setDateValue(newValue);
   };
-
+  console.log(chartYearly, "chartYearly");
   // Chart States
   const series = [
     {
@@ -127,6 +127,7 @@ export function DanaPensiun() {
       data: chartYearly?.data?.map((item) => item.total) as any,
     },
   ];
+  const allData = chartYearly?.data.sort((a, b) => a.year - b.year); // oldest → newest
 
   const options: any = {
     chart: {
@@ -142,6 +143,8 @@ export function DanaPensiun() {
     },
     xaxis: {
       categories: chartYearly?.data?.map((item) => item.year),
+      min: (allData ?? [])?.length - 4, // show last 5 points initially
+      max: allData?.length,
     },
     yaxis: {
       labels: {

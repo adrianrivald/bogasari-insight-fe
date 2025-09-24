@@ -357,20 +357,6 @@ export function SignUpView() {
               Masuk
             </Link>
           </Typography>
-
-          <Typography variant="caption" sx={{ color: "#999" }}>
-            powered by{" "}
-            <Link
-              href="#"
-              sx={{
-                color: "#1976d2",
-                textDecoration: "none",
-                fontWeight: "bold",
-              }}
-            >
-              Tadda
-            </Link>
-          </Typography>
         </Box>
       </Box>
     </Box>

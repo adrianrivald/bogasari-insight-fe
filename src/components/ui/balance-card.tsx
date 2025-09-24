@@ -57,9 +57,9 @@ const BalanceCard = ({
         sx={{
           mt: 1,
           fontSize: {
-            xs: 32,
+            xs: 18,
             sm: 40,
-            md: 24,
+            md: 18,
           },
         }}
       >

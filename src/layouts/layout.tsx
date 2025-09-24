@@ -97,7 +97,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
                       component="span"
                       fontSize={20}
                     >
-                      {userInfo.email}
+                      {userInfo.fullName}
                     </Typography>
                   </Stack>
                 </Stack>

@@ -144,7 +144,10 @@ export function VerifyOtpView({
             xs: "absolute",
             md: "relative",
           },
-          bottom: 0,
+          bottom: {
+            xs: 40,
+            md: 0,
+          },
           left: "50%",
           transform: "translateX(-50%)",
           width: "100%",
