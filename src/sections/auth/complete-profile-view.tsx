@@ -22,6 +22,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import { useCompleteProfile } from "../../services/user";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./providers/auth";
 
 const countries = [
   { code: "+62", label: "🇮🇩", name: "Indonesia" },
@@ -32,6 +33,7 @@ const countries = [
 
 export function CompleteProfileView() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const { mutate: completeProfile, isError, isSuccess } = useCompleteProfile();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dataIsNotValid, setDataIsNotValid] = useState(false);
@@ -270,6 +272,23 @@ export function CompleteProfileView() {
             </>
           )}
         </Form>
+
+        <Box mt={4}>
+          <Typography
+            onClick={logout}
+            sx={{
+              color: "#1976d2",
+              cursor: "pointer",
+              textAlign: "center",
+              textDecoration: "none",
+              "&:hover": {
+                textDecoration: "underline",
+              },
+            }}
+          >
+            Kembali ke Halaman Awal
+          </Typography>
+        </Box>
       </Box>
 
       <Dialog

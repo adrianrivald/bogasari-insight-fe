@@ -809,6 +809,7 @@ export function DanaPensiun() {
 
           <Box display="flex" gap={2} mt={2}>
             <Button
+              onClick={() => setIsDownloadPopupOpen(false)}
               fullWidth
               variant="outlined"
               size="large"

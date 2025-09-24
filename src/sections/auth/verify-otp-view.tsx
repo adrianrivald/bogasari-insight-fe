@@ -137,20 +137,9 @@ export function VerifyOtpView({
         )}
       </Box>
       <Box
-        display="flex"
-        justifyContent="center"
         sx={{
-          position: {
-            xs: "absolute",
-            md: "relative",
-          },
-          bottom: {
-            xs: 40,
-            md: 0,
-          },
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "100%",
+          mt: { xs: "auto", md: 8 }, // push to bottom on mobile, small margin on desktop
+          mb: { xs: 2, md: 0 }, // small bottom padding on mobile, none on desktop
         }}
       >
         <LoadingButton
@@ -164,11 +153,6 @@ export function VerifyOtpView({
           size="large"
           type="submit"
           sx={{
-            margin: "auto",
-            marginTop: {
-              xs: 30,
-              md: 4,
-            },
             borderRadius: 3,
             py: 1.5,
             backgroundColor: "blue.500",
