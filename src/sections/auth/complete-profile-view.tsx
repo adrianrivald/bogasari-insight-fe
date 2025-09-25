@@ -210,7 +210,7 @@ export function CompleteProfileView() {
               <Box sx={{ mb: 3 }}>
                 <TextField
                   fullWidth
-                  placeholder="Masukkan angka saja & diawali dengan 8"
+                  placeholder="Input angka saja & awali dengan 8"
                   variant="outlined"
                   {...register("phoneNumber", {
                     required: "NO HP harus diisi",
