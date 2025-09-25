@@ -210,7 +210,7 @@ export function CompleteProfileView() {
               <Box sx={{ mb: 3 }}>
                 <TextField
                   fullWidth
-                  placeholder="Input angka saja & awali dengan 8"
+                  // placeholder="Input angka saja & awali dengan 8"
                   variant="outlined"
                   {...register("phoneNumber", {
                     required: "NO HP harus diisi",
@@ -245,6 +245,9 @@ export function CompleteProfileView() {
                     ),
                   }}
                 />
+                <FormHelperText>
+                  Input angka saja & awali dengan 8
+                </FormHelperText>
                 {formState?.errors?.phoneNumber && (
                   <FormHelperText sx={{ color: "error.main" }}>
                     {String(formState?.errors?.phoneNumber?.message)}
