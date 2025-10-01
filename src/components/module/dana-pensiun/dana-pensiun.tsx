@@ -240,7 +240,7 @@ export function DanaPensiun() {
   const onExportBalance = async () => {
     await window
       .fetch(
-        `${API_URL}v1/pension/contributions/yearly/me?years=${downloadYear}`,
+        `${API_URL}/v1/contribution/summary-detail-employee?empNo=${userInfo.nikEmployee}&year=${downloadYear}`,
         {
           method: "GET",
           headers: {
@@ -251,40 +251,28 @@ export function DanaPensiun() {
       )
       .then((res) =>
         res.json().then(async (res) => {
-          const blob = await pdf(
-            <SaldoManfaatPDF data={res.data} userInfo={userInfo} />
-          ).toBlob();
+          try {
+            const component = await import(
+              "../../report/detail/detail-benefits"
+            );
+            const blob = await pdf(
+              component.default({
+                period: downloadYear,
+                data: res.data,
+              })
+            ).toBlob();
 
-          // Create object URL
-          const url = URL.createObjectURL(blob);
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
 
-          // Open in new tab
-          window.open(url, "_blank");
-
-          // (Optional) revoke the object URL later
-          setTimeout(() => URL.revokeObjectURL(url), 1000);
-
-          // const blob2 = await pdf(<SaldoManfaatDetailPDF />).toBlob();
-
-          // // Create object URL
-          // const url2 = URL.createObjectURL(blob2);
-
-          // // Open in new tab
-          // window.open(url2, "_blank");
-
-          // // (Optional) revoke the object URL later
-          // setTimeout(() => URL.revokeObjectURL(url2), 1000);
-
-          // const blob3 = await pdf(<RekapitulasiPensiunReport />).toBlob();
-
-          // // Create object URL
-          // const url3 = URL.createObjectURL(blob3);
-
-          // // Open in new tab
-          // window.open(url3, "_blank");
-
-          // // (Optional) revoke the object URL later
-          // setTimeout(() => URL.revokeObjectURL(url3), 1000);
+            link.href = url;
+            link.download = `detail_${res?.data?.header?.nama_lengkap}_${downloadYear}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          } catch (error) {
+            console.error("Error generating PDF:", error);
+          }
         })
       ); // Generate PDF as blob
   };
