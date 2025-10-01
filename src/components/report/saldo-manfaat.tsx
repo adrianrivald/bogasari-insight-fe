@@ -114,6 +114,8 @@ interface YearlyData {
     totalHasilPengembangan: number;
     totalPencairan: number;
     totalSaldo: number;
+    totalEarlyYear: number;
+    totalEndYear: number;
   };
 }
 
@@ -314,6 +316,14 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             Ringkasan Saldo Dana Pensiun
           </Text>
 
+          {!!yearData?.totals?.totalEarlyYear && (
+            <View style={styles.summaryRow}>
+              <Text>Total saldo awal di tahun {yearData.year}</Text>
+              <Text style={{ fontWeight: "bold" }}>
+                {formatRupiah(yearData.totals?.totalEarlyYear)}
+              </Text>
+            </View>
+          )}
           <View style={styles.summaryRow}>
             <Text>Saldo Iuran Peserta</Text>
             <Text style={{ fontWeight: "bold" }}>
@@ -339,11 +349,19 @@ const SaldoManfaatPDF: React.FC<Props> = ({ data, userInfo }) => (
             </Text>
           </View>
           <View style={styles.summaryRow}>
-            <Text>Total Saldo Akhir</Text>
+            <Text>Saldo tahun {yearData.year}</Text>
             <Text style={{ fontWeight: "bold" }}>
               {formatRupiah(yearData.totals.totalSaldo)}
             </Text>
           </View>
+          {!!yearData?.totals?.totalEndYear && (
+            <View style={styles.summaryRow}>
+              <Text>Total saldo akhir di tahun {yearData.year}</Text>
+              <Text style={{ fontWeight: "bold" }}>
+                {formatRupiah(yearData.totals?.totalEndYear)}
+              </Text>
+            </View>
+          )}
 
           {/* Footer */}
           <View style={styles.footer}>
