@@ -23,6 +23,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useCompleteProfile } from "../../services/user";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./providers/auth";
+import { HttpError } from "../../utils/http";
 
 const countries = [
   { code: "+62", label: "🇮🇩", name: "Indonesia" },
@@ -31,53 +32,66 @@ const countries = [
   // Add more if needed
 ];
 
+const defaultError = `Data yang Anda masukkan tidak valid. Mohon periksa kembali data Anda. 
+Jika masalah terus berlanjut, silakan hubungi administrator.`;
+
 export function CompleteProfileView() {
   const navigate = useNavigate();
   const { logout } = useAuth();
-  const { mutate: completeProfile, isError, isSuccess } = useCompleteProfile();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { mutate: completeProfile, isPending } = useCompleteProfile();
+
+  const [errorMessage, setErrorMessage] = useState("");
   const [dataIsNotValid, setDataIsNotValid] = useState(false);
   const [dateValue, setDateValue] = useState<Dayjs | null>(null);
   const [countryCode, setCountryCode] = useState("+62");
 
   const handleSubmit = useCallback(
     async (formData: any) => {
-      if (!dateValue) {
-        setDataIsNotValid(true);
-        return;
-      }
-
       const formattedDate = dayjs(dateValue).format("DD-MM-YYYY");
-      setIsSubmitting(true);
-      try {
-        await completeProfile({
+
+      completeProfile(
+        {
           fullName: formData.fullName,
           birthDate: formattedDate,
           nikEmployee: formData.nikEmployee,
           noKtp: formData.noKtp,
           phoneNumber: formData.phoneNumber,
-        });
-        setIsSubmitting(false);
-      } catch (error: any) {
-        setDataIsNotValid(true);
-      } finally {
-        setIsSubmitting(false);
-      }
+        },
+        {
+          onError: (error) => {
+            const { info } = error as HttpError;
+            const errorInfo = info as any;
+
+            let errMsg = defaultError;
+
+            if ("error" in errorInfo) {
+              if (typeof errorInfo?.error === "string") {
+                errMsg = errorInfo?.error;
+              } else if (typeof errorInfo?.error === "object") {
+                const humanizeKey = (key: string): string => {
+                  return key
+                    .replace(/([A-Z])/g, " $1")
+                    .replace(/^./, (str) => str.toUpperCase());
+                };
+
+                errMsg =
+                  Object.entries(errorInfo?.error)
+                    .map(([key, message]) => `${humanizeKey(key)}: ${message}`)
+                    .join("\n");
+              }
+            }
+
+            setDataIsNotValid(true);
+            setErrorMessage(errMsg);
+          },
+          onSuccess: () => {
+            navigate("/success-registration");
+          },
+        }
+      );
     },
     [dateValue, completeProfile]
   );
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate("/success-registration");
-    }
-  }, [isSuccess]);
-
-  useEffect(() => {
-    if (isError) {
-      setDataIsNotValid(true);
-    }
-  }, [isError]);
 
   const handleChangeDate = (newValue: Dayjs | null) => {
     setDateValue(newValue);
@@ -135,6 +149,10 @@ export function CompleteProfileView() {
                   }}
                   {...register("noKtp", {
                     required: "No. KTP harus diisi",
+                    minLength: {
+                      value: 16,
+                      message: "Harap masukkan 16 digit angka",
+                    },
                   })}
                 />
                 {formState?.errors?.noKtp && (
@@ -260,7 +278,7 @@ export function CompleteProfileView() {
                 variant="contained"
                 size="large"
                 type="submit"
-                loading={isSubmitting}
+                loading={isPending}
                 loadingIndicator={
                   <CircularProgress sx={{ color: "#FFF" }} size={20} />
                 }
@@ -269,6 +287,7 @@ export function CompleteProfileView() {
                   py: 1.5,
                   backgroundColor: "blue.500",
                 }}
+                disabled={!dateValue}
               >
                 Lanjut
               </LoadingButton>
@@ -307,8 +326,7 @@ export function CompleteProfileView() {
             id="alert-dialog-description"
             sx={{ color: "#49454F" }}
           >
-            Data yang Anda masukkan tidak valid. Mohon periksa kembali data
-            Anda. Jika masalah terus berlanjut, silakan hubungi administrator.
+            {errorMessage}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
