@@ -53,7 +53,7 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
       <Box
         position="relative"
         sx={{
-          minHeight: "80vh",
+          minHeight: "80dvh",
         }}
       >
         <Stack

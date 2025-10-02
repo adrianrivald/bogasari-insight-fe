@@ -89,7 +89,7 @@ export function VerifyOtpView({
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        minHeight: "85vh",
+        height: "85dvh",
       }}
       maxWidth={{
         md: 600,

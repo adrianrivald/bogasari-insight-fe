@@ -17,6 +17,12 @@ export function SuccessRegistrationView() {
       marginX={{
         md: "auto",
       }}
+      sx={{
+        height: {
+          xs: "83dvh",
+          md: "auto",
+        },
+      }}
     >
       {/* Check email image */}
       <Box
@@ -71,9 +77,9 @@ export function SuccessRegistrationView() {
         size="large"
         type="submit"
         sx={{
-          margin: "auto",
+          marginInline: "auto",
           marginTop: {
-            xs: 30,
+            xs: "auto",
             md: 4,
           },
           borderRadius: 3,

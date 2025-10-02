@@ -1,5 +1,5 @@
 import React, { useRef, Dispatch, SetStateAction } from "react";
-import { Box, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 
 interface PinInputProps {
   values: string[];
@@ -56,58 +56,62 @@ const PinInput = ({
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      gap={{ xs: 1, sm: 2 }}
-      flexWrap="nowrap"
-      sx={{
-        overflowX: "auto", // put overflow styles inside sx
-        "&::-webkit-scrollbar": { display: "none" }, // optional: hide scrollbar
-      }}
-    >
+    <Grid container spacing={{ xs: 1, sm: 2 }} sx={{ flexWrap: "nowrap" }}>
       {values.map((value, i) => (
-        <TextField
+        <Grid
           key={i}
-          inputRef={(el) => (inputRefs.current[i] = el)}
-          value={value}
-          onChange={(e) => handleChange(i, e.target.value)}
-          onPaste={handlePaste}
-          onKeyDown={(e) => handleKeyDown(e, i)}
-          error={isError}
-          inputProps={{
-            maxLength: 1,
-            style: {
-              textAlign: "center",
-              fontSize: "1.75rem",
-              fontWeight: "bold",
-              padding: "12px 0",
-              width: "50px",
-              height: "60px",
-            },
-          }}
           sx={{
-            "& .MuiOutlinedInput-root": {
-              borderRadius: "12px",
-              transition: "all 0.2s ease-in-out",
-              "&:hover fieldset": {
-                borderColor: isError ? "red" : "primary.main",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: isError ? "red" : "primary.main",
-                boxShadow: isError
-                  ? "0 0 0 2px rgba(255,0,0,0.2)"
-                  : "0 0 0 2px rgba(25,118,210,0.2)",
-              },
-            },
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: isError ? "red" : "grey.400",
-            },
+            display: "flex",
+            flex: `1 1 ${100 / values.length}%`,
           }}
-        />
+        >
+          <TextField
+            key={i}
+            inputRef={(el) => (inputRefs.current[i] = el)}
+            value={value}
+            onChange={(e) => handleChange(i, e.target.value)}
+            onPaste={handlePaste}
+            onKeyDown={(e) => handleKeyDown(e, i)}
+            error={isError}
+            slotProps={{
+              input: {
+                sx: {
+                  textAlign: "center",
+                  justifyContent: "center",
+                  "& input": {
+                    textAlign: "center",
+                  },
+                  fontSize: "1.5rem",
+                },
+              },
+            }}
+            sx={{
+              flex: "1",
+              aspectRatio: "1 / 1",
+              "& .MuiInputBase-root": {
+                height: "100%",
+              },
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "12px",
+                transition: "all 0.2s ease-in-out",
+                "&:hover fieldset": {
+                  borderColor: isError ? "red" : "primary.main",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: isError ? "red" : "primary.main",
+                  boxShadow: isError
+                    ? "0 0 0 2px rgba(255,0,0,0.2)"
+                    : "0 0 0 2px rgba(25,118,210,0.2)",
+                },
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: isError ? "red" : "grey.400",
+              },
+            }}
+          />
+        </Grid>
       ))}
-    </Box>
+    </Grid>
   );
 };
 
