@@ -645,7 +645,7 @@ export function DanaPensiun() {
           p: 2, // padding around button
           boxShadow: "0 -2px 10px rgba(0,0,0,0.05)", // subtle top shadow
           borderTop: "1px solid #eee",
-          display: "none", // hide temporary request by product
+          display: "flex", // hide temporary request by product
           justifyContent: "center",
           zIndex: 10,
           mt: 4,
