@@ -240,7 +240,7 @@ export function DanaPensiun() {
   const onExportBalance = async () => {
     await window
       .fetch(
-        `${API_URL}/v1/contribution/summary-detail-employee?empNo=${userInfo.nikEmployee}&year=${downloadYear}`,
+        `${API_URL}v1/contribution/summary-detail-employee?empNo=${userInfo.nikEmployee}&year=${downloadYear}`,
         {
           method: "GET",
           headers: {
@@ -251,6 +251,10 @@ export function DanaPensiun() {
       )
       .then((res) =>
         res.json().then(async (res) => {
+          if (!res?.data) {
+            throw new Error(res?.message ?? "Terjadi kesalahan.");
+          }
+
           try {
             const component = await import(
               "../../report/detail/detail-benefits"
@@ -274,7 +278,24 @@ export function DanaPensiun() {
             console.error("Error generating PDF:", error);
           }
         })
-      ); // Generate PDF as blob
+      )
+      .catch((error) => {
+        const errorResponse = error as Error;
+        const errorMessage =
+          errorResponse?.message ?? "Terjadi error, silakan coba lagi";
+
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }); // Generate PDF as blob
   };
 
   const joinYear = dayjs(userInfo?.dJoinDate).year();
