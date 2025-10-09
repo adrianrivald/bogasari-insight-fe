@@ -136,17 +136,17 @@ const LeftSideBarSection = ({
 
         {/* Bottom Section */}
         <Box py={2} display="flex" flexDirection="column" gap={2}>
-          <Stack direction="row" gap={2} justifyContent="space-between">
+          <Stack direction="column" justifyContent="space-between">
             <Typography fontWeight="bold">No KTP</Typography>
             <Typography>{userInfo.noKtp}</Typography>
           </Stack>
-          <Stack direction="row" gap={2} justifyContent="space-between">
+          <Stack direction="column" justifyContent="space-between">
             <Typography fontWeight="bold">Tanggal Lahir</Typography>
             <Typography>
               {dayjs(userInfo.birthDate).format("DD MMMM YYYY")}
             </Typography>
           </Stack>
-          <Stack direction="row" gap={2} justifyContent="space-between">
+          <Stack direction="column" justifyContent="space-between">
             <Typography fontWeight="bold">No HP</Typography>
             <Typography>0{userInfo.phoneNumber}</Typography>
           </Stack>
